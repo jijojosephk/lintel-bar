@@ -7,13 +7,13 @@ let _Control_onClick = new WeakMap();
 class Control {
 	/**
 	 * Creates a new control
-	 * @param {Control} control 
+	 * @param {CreateControlOptions} options 
 	 */
 	// eslint-disable-next-line no-unused-vars
-	constructor(control = {}) {
-		this.onClick = control.onClick;
-		this.text = control.text;
-		this.title = control.title;
+	constructor(options = {}) {
+		this.text = options.text;
+		this.title = options.title;
+		this.onClick = options.onClick;
 	}
 
 	/**
@@ -25,16 +25,6 @@ class Control {
 
 	onRemove() {
 		throw new Error(constants.messages.errors.methodNotImplemented);
-	}
-
-	get onClick() {
-		return _Control_onClick.get(this);
-	}
-
-	set onClick(value) {
-		if (typeof (value) == 'function') {
-			_Control_onClick.set(this, value);
-		}
 	}
 
 	/**
@@ -62,20 +52,100 @@ class Control {
 			_Control_title.set(this, value);
 		}
 	}
-}
 
-let _ControlGroup_controls = new WeakMap();
-class ControlGroup extends Control {
 	/**
-	 * 
-	 * @param {ControlGroup} group 
+	 * @type {(event:ControlEvent)=>void}
 	 */
-	constructor(group = {}) {
-		super(group);
+	get onClick() {
+		return _Control_onClick.get(this);
 	}
 
-	get controls() {
-		return _ControlGroup_controls.get(this);
+	set onClick(value) {
+		if (typeof (value) == 'function') {
+			_Control_onClick.set(this, value);
+		}
+	}
+}
+
+let _CreateControlOptions_text = new WeakMap();
+let _CreateControlOptions_title = new WeakMap();
+let _CreateControlOptions_onClick = new WeakMap();
+// eslint-disable-next-line no-unused-vars
+class CreateControlOptions {
+	/**
+	 * Creates a new CreateControlOptions instance
+	 * @param {CreateControlOptions} options 
+	 */
+	constructor(options = {}) {
+		this.text = options.text;
+		this.title = options.title;
+		this.onClick = options.onClick;
+	}
+
+	/**
+	 * @type {string}
+	 */
+	get text() {
+		return _CreateControlOptions_text.get(this);
+	}
+
+	set text(value) {
+		if (typeof (value) == 'string') {
+			_CreateControlOptions_text.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {string}
+	 */
+	get title() {
+		return _CreateControlOptions_title.get(this);
+	}
+
+	set title(value) {
+		if (typeof (value) == 'string') {
+			_CreateControlOptions_title.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {(event:ControlEvent)=>void}
+	 */
+	get onClick() {
+		return _CreateControlOptions_onClick.get(this);
+	}
+
+	set onClick(value) {
+		if (typeof (value) == 'function') {
+			_CreateControlOptions_onClick.set(this, value);
+		}
+	}
+}
+
+// eslint-disable-next-line no-unused-vars
+class ControlEvent {
+	constructor() {
+	}
+}
+
+class ControlGroup extends Control {
+	/**
+	 * Creates a control group
+	 * @param {CreateControlGroupOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+	}
+}
+
+// eslint-disable-next-line no-unused-vars
+class CreateControlGroupOptions extends CreateControlOptions {
+	/**
+	 * 
+	 * @param {CreateControlGroupOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
 	}
 }
 
