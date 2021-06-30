@@ -1,6 +1,6 @@
 {
   "name": "lintel-bar",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Custom title bar for Electron based cross-platform applications",
   "main": "index.js",
   "author": "Jijo Joseph <jijojosephk@hotmail.com>",
@@ -21,5 +21,13 @@
   },
   "dependencies": {
     "@electron/remote": "^1.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jijojosephk/lintel-bar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jijojosephk/lintel-bar/issues"
+  },
+  "homepage": "https://github.com/jijojosephk/lintel-bar#readme"
 }
