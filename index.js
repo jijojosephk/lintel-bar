@@ -1,40 +1,26 @@
 /* eslint-disable no-unused-vars */
 const { BrowserWindow } = require('electron');
+const { ControlGroup, CreateControlGroupOptions } = require('./modules/controls');
 
-let _LintelBarCreateOptions_enableMultiTabSupport = new WeakMap();
-// eslint-disable-next-line no-unused-vars
-class LintelBarCreateOptions {
+class LintelBarCreateOptions extends CreateControlGroupOptions {
 	/**
-	 * 
-	 * @param {LintelBarCreateOptions} createOptions 
+	 * @param {LintelBarCreateOptions} options 
 	 */
-	constructor(createOptions = {}) {
-		this.enableMultiTabSupport = createOptions.enableMultiTabSupport;
+	constructor(options = {}) {
+		super(options);
 	}
-
-	/**
-	 * @type {boolean}
-	 */
-	get enableMultiTabSupport() {
-		return _LintelBarCreateOptions_enableMultiTabSupport.get(this);
-	}
-
-	set enableMultiTabSupport(value) {
-		_LintelBarCreateOptions_enableMultiTabSupport.set(this, typeof (value) == 'boolean' && value);
-	}
-
 }
 
 let _LintelBar_window = new WeakMap();
-class LintelBar {
+class LintelBar extends ControlGroup {
 	/**
-	 * 
-	 * @param {LintelBarCreateOptions} createOptions 
+	 * @param {LintelBarCreateOptions} options 
 	 */
-	create(createOptions) {
+	constructor(options = {}) {
+		super(options);
+		this.element = document.createElement('div');
+		this.element.appendChild(document.createTextNode(this.text));
 		_LintelBar_window.set(this, require('@electron/remote').getCurrentWindow());
-		console.log(createOptions.enableMultiTabSupport);
-		console.log(this.window.title);
 	}
 
 	/**
@@ -44,4 +30,14 @@ class LintelBar {
 		return _LintelBar_window.get(this);
 	}
 }
-module.exports = new LintelBar();
+
+/**
+ * @param {LintelBarCreateOptions} options 
+ */
+function create(options = {}) {
+	let body = document.querySelector('body');
+	let lintelBar = new LintelBar(options);
+	body.insertBefore(lintelBar.element, body.childNodes[0]);
+}
+
+module.exports = { create };

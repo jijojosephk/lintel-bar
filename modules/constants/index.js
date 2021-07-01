@@ -2,7 +2,8 @@ function defineConstants() {
 	return {
 		messages: {
 			errors: {
-				methodNotImplemented: 'Method is not implemented'
+				methodNotImplemented: 'Method is not implemented',
+				elementOnlyOnce: 'The property \'element\' can be set only once'
 			}
 		},
 		events: {

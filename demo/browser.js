@@ -1,4 +1,7 @@
-const lintelBar = require('../');
-lintelBar.create({
-	enableMultiTabSupport: true
+document.addEventListener('DOMContentLoaded', () => {
+	const lintelBar = require('../');
+	lintelBar.create({
+		text: 'This is a demo'
+	});
 });
+

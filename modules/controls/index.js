@@ -3,28 +3,16 @@ const constants = require('../constants');
 let _Control_text = new WeakMap();
 let _Control_title = new WeakMap();
 let _Control_onClick = new WeakMap();
-// eslint-disable-next-line no-unused-vars
+let _Control_element = new WeakMap();
 class Control {
 	/**
 	 * Creates a new control
 	 * @param {CreateControlOptions} options 
 	 */
-	// eslint-disable-next-line no-unused-vars
 	constructor(options = {}) {
 		this.text = options.text;
 		this.title = options.title;
 		this.onClick = options.onClick;
-	}
-
-	/**
-	 * @returns {HTMLElement}
-	 */
-	onAdd() {
-		throw new Error(constants.messages.errors.methodNotImplemented);
-	}
-
-	onRemove() {
-		throw new Error(constants.messages.errors.methodNotImplemented);
 	}
 
 	/**
@@ -65,12 +53,26 @@ class Control {
 			_Control_onClick.set(this, value);
 		}
 	}
+
+	/**
+	 * @type {HTMLElement}
+	 */
+	get element() {
+		return _Control_element.get(this);
+	}
+
+	set element(value) {
+		if (this.element) {
+			throw new Error(constants.messages.errors.elementOnlyOnce);
+		} else {
+			_Control_element.set(this, value);
+		}
+	}
 }
 
 let _CreateControlOptions_text = new WeakMap();
 let _CreateControlOptions_title = new WeakMap();
 let _CreateControlOptions_onClick = new WeakMap();
-// eslint-disable-next-line no-unused-vars
 class CreateControlOptions {
 	/**
 	 * Creates a new CreateControlOptions instance
@@ -122,7 +124,6 @@ class CreateControlOptions {
 	}
 }
 
-// eslint-disable-next-line no-unused-vars
 class ControlEvent {
 	constructor() {
 	}
@@ -138,7 +139,6 @@ class ControlGroup extends Control {
 	}
 }
 
-// eslint-disable-next-line no-unused-vars
 class CreateControlGroupOptions extends CreateControlOptions {
 	/**
 	 * 
@@ -159,30 +159,39 @@ class Button extends Control {
 	}
 }
 
-// eslint-disable-next-line no-unused-vars
 class CloseButton extends Button {
 	constructor(button = {}) {
 		super(button);
 	}
 }
 
-// eslint-disable-next-line no-unused-vars
 class ResizeButton extends Button {
 	constructor(button = {}) {
 		super(button);
 	}
 }
 
-// eslint-disable-next-line no-unused-vars
 class MinimizeButton extends Button {
 	constructor(button = {}) {
 		super(button);
 	}
 }
 
-// eslint-disable-next-line no-unused-vars
 class WindowControls extends ControlGroup {
 	constructor() {
 		super();
 	}
 }
+
+module.exports = {
+	Control,
+	CreateControlOptions,
+	ControlEvent,
+	ControlGroup,
+	CreateControlGroupOptions,
+	Button,
+	CloseButton,
+	ResizeButton,
+	MinimizeButton,
+	WindowControls
+};
