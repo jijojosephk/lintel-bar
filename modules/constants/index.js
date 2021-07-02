@@ -13,6 +13,7 @@ function defineConstants() {
 		},
 		css: {
 			titleBar: 'lintel-bar',
+			titleBarDragRegion: 'lintel-bar-drag-region',
 			control: 'lintel-bar-control',
 			button: 'lintel-bar-button',
 			controlIcon: 'lintel-bar-control-icon',

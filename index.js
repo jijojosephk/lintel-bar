@@ -21,9 +21,11 @@ class LintelBar extends ControlGroup {
 	constructor(options = {}) {
 		super(options);
 		this.element = document.createElement('div');
-		this.element.classList.add(...[constants.css.titleBar]);
+		this.element.classList.add(constants.css.titleBar);
 		this.element.appendChild(document.createTextNode(this.text));
-		this.onClick = () => this.window.close();
+		let dragRegion = document.createElement('div');
+		dragRegion.classList.add(constants.css.titleBarDragRegion);
+		this.element.appendChild(dragRegion);
 		_LintelBar_window.set(this, require('@electron/remote').getCurrentWindow());
 	}
 
