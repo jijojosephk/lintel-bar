@@ -19,7 +19,7 @@ class Control {
 	 * @type {string}
 	 */
 	get text() {
-		return _Control_text.get(this);
+		return _Control_text.get(this) ?? '';
 	}
 
 	set text(value) {
@@ -32,7 +32,7 @@ class Control {
 	 * @type {string}
 	 */
 	get title() {
-		return _Control_title.get(this);
+		return _Control_title.get(this) ?? '';
 	}
 
 	set title(value) {
@@ -49,8 +49,9 @@ class Control {
 	}
 
 	set onClick(value) {
-		if (typeof (value) == 'function') {
+		if (typeof (value) == 'function' && this.element) {
 			_Control_onClick.set(this, value);
+			this.element.onclick = this.onClick;
 		}
 	}
 
