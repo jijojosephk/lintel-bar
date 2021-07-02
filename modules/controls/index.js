@@ -3,15 +3,13 @@ const { BrowserWindow } = require('electron');
 const path = require('path');
 const constants = require('../constants');
 
-// Control definitions
-let _Control_text = new WeakMap();
-let _Control_title = new WeakMap();
-let _Control_onClick = new WeakMap();
-let _Control_element = new WeakMap();
-class Control {
+let _CreateElementOptions_text = new WeakMap();
+let _CreateElementOptions_title = new WeakMap();
+let _CreateElementOptions_onClick = new WeakMap();
+// eslint-disable-next-line no-unused-vars
+class CreateElementOptions {
 	/**
-	 * Creates a new control
-	 * @param {CreateControlOptions} options 
+	 * @param {CreateElementOptions} options 
 	 */
 	constructor(options = {}) {
 		this.text = options.text;
@@ -23,12 +21,12 @@ class Control {
 	 * @type {string}
 	 */
 	get text() {
-		return _Control_text.get(this) ?? '';
+		return _CreateElementOptions_text.get(this) ?? '';
 	}
 
 	set text(value) {
 		if (typeof (value) == 'string') {
-			_Control_text.set(this, value);
+			_CreateElementOptions_text.set(this, value);
 		}
 	}
 
@@ -36,25 +34,79 @@ class Control {
 	 * @type {string}
 	 */
 	get title() {
-		return _Control_title.get(this) ?? '';
+		return _CreateElementOptions_title.get(this) ?? '';
 	}
 
 	set title(value) {
 		if (typeof (value) == 'string') {
-			_Control_title.set(this, value);
+			_CreateElementOptions_title.set(this, value);
 		}
 	}
 
 	/**
-	 * @type {(event:ControlEvent)=>void}
+	 * @type {(event: ControlEvent)=>void}
 	 */
 	get onClick() {
-		return _Control_onClick.get(this);
+		return _CreateElementOptions_onClick.get(this);
 	}
 
 	set onClick(value) {
 		if (typeof (value) == 'function') {
-			_Control_onClick.set(this, value);
+			_CreateElementOptions_onClick.set(this, value);
+		}
+	}
+}
+
+let _Element_text = new WeakMap();
+let _Element_title = new WeakMap();
+let _Element_onClick = new WeakMap();
+let _Element_element = new WeakMap();
+class Element {
+	/**
+	 * @param {CreateElementOptions} options 
+	 */
+	constructor(options = {}) {
+		this.text = options.text;
+		this.title = options.title;
+		this.onClick = options.onClick;
+	}
+
+	/**
+	 * @type {string}
+	 */
+	get text() {
+		return _Element_text.get(this) ?? '';
+	}
+
+	set text(value) {
+		if (typeof (value) == 'string') {
+			_Element_text.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {string}
+	 */
+	get title() {
+		return _Element_title.get(this) ?? '';
+	}
+
+	set title(value) {
+		if (typeof (value) == 'string') {
+			_Element_title.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {(event: ControlEvent)=>void}
+	 */
+	get onClick() {
+		return _Element_onClick.get(this);
+	}
+
+	set onClick(value) {
+		if (typeof (value) == 'function') {
+			_Element_onClick.set(this, value);
 		}
 	}
 
@@ -62,70 +114,54 @@ class Control {
 	 * @type {HTMLElement}
 	 */
 	get element() {
-		return _Control_element.get(this);
+		return _Element_element.get(this);
 	}
 
 	set element(value) {
 		if (this.element) {
 			throw new Error(constants.messages.errors.elementOnlyOnce);
 		} else {
-			_Control_element.set(this, value);
+			_Element_element.set(this, value);
 		}
 	}
 }
 
-let _CreateControlOptions_text = new WeakMap();
-let _CreateControlOptions_title = new WeakMap();
-let _CreateControlOptions_onClick = new WeakMap();
+class Icon extends Element {
+	/**
+	 * @param {CreateElementOptions} options 
+	 */
+	constructor(options) {
+		super(options);
+	}
+}
+
+// eslint-disable-next-line no-unused-vars
+class FontIcon extends Icon {
+	constructor() {
+		super();
+		this.element = document.createElement('i');
+	}
+}
+
+// eslint-disable-next-line no-unused-vars
+class ImageIcon extends Icon {
+	constructor() {
+		super();
+		this.element = document.createElement('img');
+	}
+}
+
 let _CreateControlOptions_theme = new WeakMap();
-class CreateControlOptions {
+let _CreateControlOptions_icon = new WeakMap();
+class CreateControlOptions extends CreateElementOptions {
 	/**
 	 * Creates a new CreateControlOptions instance
 	 * @param {CreateControlOptions} options 
 	 */
 	constructor(options = {}) {
-		this.text = options.text;
-		this.title = options.title;
-		this.onClick = options.onClick;
-	}
-
-	/**
-	 * @type {string}
-	 */
-	get text() {
-		return _CreateControlOptions_text.get(this);
-	}
-
-	set text(value) {
-		if (typeof (value) == 'string') {
-			_CreateControlOptions_text.set(this, value);
-		}
-	}
-
-	/**
-	 * @type {string}
-	 */
-	get title() {
-		return _CreateControlOptions_title.get(this);
-	}
-
-	set title(value) {
-		if (typeof (value) == 'string') {
-			_CreateControlOptions_title.set(this, value);
-		}
-	}
-
-	/**
-	 * @type {(event:ControlEvent)=>void}
-	 */
-	get onClick() {
-		return _CreateControlOptions_onClick.get(this);
-	}
-
-	set onClick(value) {
-		if (typeof (value) == 'function') {
-			_CreateControlOptions_onClick.set(this, value);
-		}
+		super(options);
+		this.theme = options.theme;
+		this.icon = options.icon;
 	}
 
 	/**
@@ -140,6 +176,62 @@ class CreateControlOptions {
 			return t == value;
 		})) {
 			_CreateControlOptions_theme.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {Icon}
+	 */
+	get icon() {
+		return _CreateControlOptions_icon.get(this);
+	}
+
+	set icon(value) {
+		if (typeof (value) == 'object') {
+			_CreateControlOptions_icon.set(this, value);
+		}
+	}
+}
+
+let _Control_theme = new WeakMap();
+let _Control_icon = new WeakMap();
+class Control extends Element {
+	/**
+	 * Creates a new control
+	 * @param {CreateControlOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.text = options.text;
+		this.title = options.title;
+		this.onClick = options.onClick;
+	}
+
+	/**
+	 * @type {'default'|'teams'|'slack'|'github'}
+	 */
+	get theme() {
+		return _Control_theme.get(this) ?? 'default';
+	}
+
+	set theme(value) {
+		if (typeof (value) == 'string' && constants.themes.some(t => {
+			return t == value;
+		})) {
+			_Control_theme.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {Icon}
+	 */
+	get icon() {
+		return _Control_icon.get(this);
+	}
+
+	set icon(value) {
+		if (typeof (value) == 'object') {
+			_Control_icon.set(this, value);
 		}
 	}
 }
@@ -169,6 +261,13 @@ class CreateControlGroupOptions extends CreateControlOptions {
 	}
 }
 
+// eslint-disable-next-line no-unused-vars
+class CreateButtonControlOptions extends CreateControlOptions {
+	constructor(options) {
+		super(options);
+	}
+}
+
 class Button extends Control {
 	/**
 	 * Creates a new button
@@ -176,6 +275,10 @@ class Button extends Control {
 	 */
 	constructor(options = {}) {
 		super(options);
+		this.icon = new FontIcon();
+		this.element = document.createElement('a');
+		this.element.appendChild(this.icon.element);
+		this.element.appendChild(document.createTextNode(this.text));
 	}
 }
 
@@ -256,6 +359,7 @@ class LintelBar extends ControlGroup {
 		let dragRegion = document.createElement('div');
 		dragRegion.classList.add(constants.css.titleBarDragRegion);
 		this.element.appendChild(dragRegion);
+		this.element.appendChild(new Button().element);
 		_LintelBar_window.set(this, require('@electron/remote').getCurrentWindow());
 	}
 
