@@ -26,7 +26,17 @@ function defineConstants() {
 				float: 'icon-float',
 				settings: 'icon-settings'
 			}
-		}
+		},
+		themes: [
+			'default',
+			'teams',
+			'slack',
+			'github'
+		],
+		templates: [
+			'default',
+			'tabby'
+		]
 	};
 }
 

@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const lintelBar = require('../');
-	lintelBar.create({
-		text:'Demo'
+	const { LintelBar } = require('../');
+	LintelBar.create({
+		template:'default',
+		theme:'teams'
 	});
 });
 
