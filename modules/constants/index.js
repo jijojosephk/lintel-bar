@@ -8,23 +8,31 @@ function defineConstants() {
 		},
 		events: {
 			dom: {
+				click: 'click',
+				resize: 'resize'
 				// All DOM events should be defined here.
 			}
 		},
 		css: {
-			titleBar: 'lintel-bar',
-			titleBarDragRegion: 'lintel-bar-drag-region',
-			control: 'lintel-bar-control',
-			button: 'lintel-bar-button',
-			controlIcon: 'lintel-bar-control-icon',
+			controls: {
+				titleBar: 'lintel-bar',
+				control: 'lintel-bar-control',
+				titleBarDragRegion: 'lintel-bar-drag-region',
+				button: 'lintel-bar-button'
+			},
 			controlIcons: {
-				close: 'icon-close',
-				maximize: 'icon-maximize',
-				minimize: 'icon-minimize',
-				restore: 'icon-restore',
-				toggle: 'icon-toggle',
-				float: 'icon-float',
-				settings: 'icon-settings'
+				controlIcon: 'lintel-bar-control-icon',
+				primary: 'mdi',
+				minimize: 'mdi-window-minimize',
+				maximize: 'mdi-window-maximize',
+				restore: 'mdi-window-restore',
+				close: 'mdi-close'
+			},
+			controlActions: {
+				minimize: 'minimize',
+				maximize: 'maximize',
+				restore: 'restore',
+				close: 'close'
 			}
 		},
 		themes: [
@@ -36,7 +44,12 @@ function defineConstants() {
 		templates: [
 			'default',
 			'tabby'
-		]
+		],
+		types: {
+			string: 'string',
+			function: 'function',
+			object: 'object'
+		}
 	};
 }
 

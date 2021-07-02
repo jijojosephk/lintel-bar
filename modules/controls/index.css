@@ -8,6 +8,7 @@ body {
   background-color: blue;
   -webkit-user-select: none;
   user-select: none;
+  display: flex;
 }
 
 .lintel-bar-drag-region {
@@ -18,4 +19,28 @@ body {
   position: absolute;
   left: 0;
   top: 0;
+}
+
+.lintel-bar-control {
+	display: flex;
+  -webkit-app-region: no-drag;
+}
+
+.lintel-bar-control.lintel-bar-button {
+  width: 1.5rem;
+  height: 100%;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #fff;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.lintel-bar-control.lintel-bar-button:hover {
+  background-color: rgb(255, 255, 255, 0.3);
+}
+
+.lintel-bar-control.lintel-bar-button.close:hover {
+  background-color: red;
 }

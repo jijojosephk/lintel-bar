@@ -25,7 +25,7 @@ class CreateElementOptions {
 	}
 
 	set text(value) {
-		if (typeof (value) == 'string') {
+		if (typeof (value) == constants.types.string) {
 			_CreateElementOptions_text.set(this, value);
 		}
 	}
@@ -38,7 +38,7 @@ class CreateElementOptions {
 	}
 
 	set title(value) {
-		if (typeof (value) == 'string') {
+		if (typeof (value) == constants.types.string) {
 			_CreateElementOptions_title.set(this, value);
 		}
 	}
@@ -51,7 +51,7 @@ class CreateElementOptions {
 	}
 
 	set onClick(value) {
-		if (typeof (value) == 'function') {
+		if (typeof (value) == constants.types.function) {
 			_CreateElementOptions_onClick.set(this, value);
 		}
 	}
@@ -79,7 +79,7 @@ class Element {
 	}
 
 	set text(value) {
-		if (typeof (value) == 'string') {
+		if (typeof (value) == constants.types.string) {
 			_Element_text.set(this, value);
 		}
 	}
@@ -92,7 +92,7 @@ class Element {
 	}
 
 	set title(value) {
-		if (typeof (value) == 'string') {
+		if (typeof (value) == constants.types.string) {
 			_Element_title.set(this, value);
 		}
 	}
@@ -105,7 +105,7 @@ class Element {
 	}
 
 	set onClick(value) {
-		if (typeof (value) == 'function') {
+		if (typeof (value) == constants.types.function) {
 			_Element_onClick.set(this, value);
 		}
 	}
@@ -172,7 +172,7 @@ class CreateControlOptions extends CreateElementOptions {
 	}
 
 	set theme(value) {
-		if (typeof (value) == 'string' && constants.themes.some(t => {
+		if (typeof (value) == constants.types.string && constants.themes.some(t => {
 			return t == value;
 		})) {
 			_CreateControlOptions_theme.set(this, value);
@@ -187,12 +187,13 @@ class CreateControlOptions extends CreateElementOptions {
 	}
 
 	set icon(value) {
-		if (typeof (value) == 'object') {
+		if (typeof (value) == constants.types.object) {
 			_CreateControlOptions_icon.set(this, value);
 		}
 	}
 }
 
+let _window = require('@electron/remote').getCurrentWindow();
 let _Control_theme = new WeakMap();
 let _Control_icon = new WeakMap();
 class Control extends Element {
@@ -208,6 +209,13 @@ class Control extends Element {
 	}
 
 	/**
+	 * @type {BrowserWindow}
+	 */
+	get window() {
+		return _window;
+	}
+
+	/**
 	 * @type {'default'|'teams'|'slack'|'github'}
 	 */
 	get theme() {
@@ -215,7 +223,7 @@ class Control extends Element {
 	}
 
 	set theme(value) {
-		if (typeof (value) == 'string' && constants.themes.some(t => {
+		if (typeof (value) == constants.types.string && constants.themes.some(t => {
 			return t == value;
 		})) {
 			_Control_theme.set(this, value);
@@ -230,7 +238,7 @@ class Control extends Element {
 	}
 
 	set icon(value) {
-		if (typeof (value) == 'object') {
+		if (typeof (value) == constants.types.object) {
 			_Control_icon.set(this, value);
 		}
 	}
@@ -241,6 +249,7 @@ class ControlEvent {
 	}
 }
 
+let _ControlGroup_controls = new WeakMap();
 class ControlGroup extends Control {
 	/**
 	 * Creates a control group
@@ -248,6 +257,14 @@ class ControlGroup extends Control {
 	 */
 	constructor(options = {}) {
 		super(options);
+		_ControlGroup_controls.set(this, []);
+	}
+
+	/**
+	 * @type {Array<Control>}
+	 */
+	get controls() {
+		return _ControlGroup_controls.get(this);
 	}
 }
 
@@ -276,7 +293,9 @@ class Button extends Control {
 	constructor(options = {}) {
 		super(options);
 		this.icon = new FontIcon();
+		this.icon.element.classList.add(constants.css.controlIcons.primary);
 		this.element = document.createElement('a');
+		this.element.classList.add(...[constants.css.controls.control, constants.css.controls.button]);
 		this.element.appendChild(this.icon.element);
 		this.element.appendChild(document.createTextNode(this.text));
 	}
@@ -289,6 +308,9 @@ class CloseButton extends Button {
 	 */
 	constructor(options = {}) {
 		super(options);
+		this.element.classList.add(constants.css.controlActions.close);
+		this.icon.element.classList.add(constants.css.controlIcons.close);
+		this.element.addEventListener(constants.events.dom.click, () => _window.close());
 	}
 }
 
@@ -299,6 +321,26 @@ class ResizeButton extends Button {
 	 */
 	constructor(options = {}) {
 		super(options);
+		this.icon.element.classList.add(_window.isMaximized() ? constants.css.controlIcons.restore : constants.css.controlIcons.maximize);
+		this.element.addEventListener(constants.events.dom.click, () => ResizeButton.prototype.onClick.call(this));
+		_window.on(constants.events.dom.resize, () => ResizeButton.prototype.onResize.call(this));
+	}
+	onResize() {
+		if (_window.isMaximized()) {
+			this.icon.element.classList.remove(constants.css.controlIcons.maximize);
+			this.icon.element.classList.add(constants.css.controlIcons.restore);
+		} else {
+			this.icon.element.classList.add(constants.css.controlIcons.maximize);
+			this.icon.element.classList.remove(constants.css.controlIcons.restore);
+		}
+	}
+
+	onClick() {
+		if (_window.isMaximized()) {
+			_window.restore();
+		} else {
+			_window.maximize();
+		}
 	}
 }
 
@@ -309,16 +351,23 @@ class MinimizeButton extends Button {
 	 */
 	constructor(options = {}) {
 		super(options);
+		this.icon.element.classList.add(constants.css.controlIcons.minimize);
+		this.element.addEventListener(constants.events.dom.click, () => _window.minimize());
 	}
 }
 
-class WindowControls extends ControlGroup {
+class WindowControlsGroup extends ControlGroup {
 	/**
 	 * Creates a new button
 	 * @param {CreateControlGroupOptions} options 
 	 */
 	constructor(options = {}) {
 		super(options);
+		this.element = document.createElement('div');
+		this.element.classList.add(constants.css.controls.control);
+		this.element.appendChild(new MinimizeButton().element);
+		this.element.appendChild(new ResizeButton().element);
+		this.element.appendChild(new CloseButton().element);
 	}
 }
 
@@ -346,7 +395,6 @@ class LintelBarCreateOptions extends CreateControlGroupOptions {
 	}
 }
 
-let _LintelBar_window = new WeakMap();
 class LintelBar extends ControlGroup {
 	/**
 	 * @param {LintelBarCreateOptions} options 
@@ -354,20 +402,12 @@ class LintelBar extends ControlGroup {
 	constructor(options = {}) {
 		super(options);
 		this.element = document.createElement('div');
-		this.element.classList.add(constants.css.titleBar);
+		this.element.classList.add(constants.css.controls.titleBar);
 		this.element.appendChild(document.createTextNode(this.text));
 		let dragRegion = document.createElement('div');
-		dragRegion.classList.add(constants.css.titleBarDragRegion);
+		dragRegion.classList.add(constants.css.controls.titleBarDragRegion);
 		this.element.appendChild(dragRegion);
-		this.element.appendChild(new Button().element);
-		_LintelBar_window.set(this, require('@electron/remote').getCurrentWindow());
-	}
-
-	/**
-	 * @type {BrowserWindow}
-	 */
-	get window() {
-		return _LintelBar_window.get(this);
+		this.element.appendChild(new WindowControlsGroup().element);
 	}
 
 	/**
@@ -375,10 +415,14 @@ class LintelBar extends ControlGroup {
  */
 	static create(options = {}) {
 		let head = document.querySelector('head');
-		let css = document.createElement('link');
-		css.rel = 'stylesheet';
-		css.href = path.join(__dirname, 'index.css');
-		head.appendChild(css);
+		let materialCss = document.createElement('link');
+		materialCss.rel = 'stylesheet';
+		materialCss.href = path.join(__dirname, 'materialdesignicons.min.css');
+		let customCss = document.createElement('link');
+		customCss.rel = 'stylesheet';
+		customCss.href = path.join(__dirname, 'index.css');
+		head.appendChild(materialCss);
+		head.appendChild(customCss);
 		let body = document.querySelector('body');
 		let lintelBar = new LintelBar(options);
 		body.insertBefore(lintelBar.element, body.childNodes[0]);
@@ -395,6 +439,6 @@ module.exports = {
 	CloseButton,
 	ResizeButton,
 	MinimizeButton,
-	WindowControls,
+	WindowControlsGroup,
 	LintelBar
 };
