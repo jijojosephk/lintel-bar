@@ -1,10 +1,12 @@
 const constants = require('../constants');
-const { ControlGroup } = require('./controlGroup');
+const { Container } = require('./container');
 const { MinimizeButton, ResizeButton, CloseButton } = require('./windowButtons');
-class WindowControlsGroup extends ControlGroup {
+// eslint-disable-next-line no-unused-vars
+const { CreateContainerOptions } = require('./createContainerOptions');
+class WindowControls extends Container {
 	/**
 	 * Creates a new button
-	 * @param {CreateControlGroupOptions} options 
+	 * @param {CreateContainerOptions} options 
 	 */
 	constructor(options = {}) {
 		super(options);
@@ -16,4 +18,4 @@ class WindowControlsGroup extends ControlGroup {
 	}
 }
 
-module.exports = { WindowControlsGroup };
+module.exports = { WindowControls };

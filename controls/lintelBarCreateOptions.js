@@ -1,7 +1,7 @@
 const constants = require('../constants');
-const { CreateControlGroupOptions } = require('./createControlGroupOptions');
+const { CreateContainerOptions } = require('./createContainerOptions');
 let _LintelBarCreateOptions_template = new WeakMap();
-class LintelBarCreateOptions extends CreateControlGroupOptions {
+class LintelBarCreateOptions extends CreateContainerOptions {
 	/**
 	 * @param {LintelBarCreateOptions} options 
 	 */

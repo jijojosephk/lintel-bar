@@ -1,10 +1,10 @@
 const path = require('path');
 const constants = require('../constants');
-const { ControlGroup } = require('./controlGroup');
-const { WindowControlsGroup } = require('./windowControlsGroup');
+const { Container } = require('./container');
+const { WindowControls } = require('./windowControls');
 // eslint-disable-next-line no-unused-vars
 const { LintelBarCreateOptions } = require('./lintelBarCreateOptions');
-class LintelBar extends ControlGroup {
+class LintelBar extends Container {
 	/**
 	 * @param {LintelBarCreateOptions} options 
 	 */
@@ -16,7 +16,7 @@ class LintelBar extends ControlGroup {
 		let dragRegion = document.createElement('div');
 		dragRegion.classList.add(constants.css.controls.titleBarDragRegion);
 		this.element.appendChild(dragRegion);
-		this.element.appendChild(new WindowControlsGroup({
+		this.element.appendChild(new WindowControls({
 			position: constants.controls.position.right
 		}).element);
 		this.window.show();
