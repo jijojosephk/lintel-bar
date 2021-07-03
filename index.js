@@ -1,1 +1,1 @@
-module.exports = require('./modules/controls');
+module.exports = require('./controls');
