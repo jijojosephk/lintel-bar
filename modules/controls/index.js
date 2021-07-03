@@ -267,7 +267,6 @@ class Control extends Element {
 	}
 
 	set position(value) {
-		console.log(value);
 		if (typeof (value) == constants.types.string) {
 			_Control_position.set(this, constants.controls.position[value]);
 		}
@@ -328,6 +327,7 @@ class Button extends Control {
 		this.element.classList.add(...[constants.css.controls.control, constants.css.controls.button, constants.css.controlPosition[this.position]]);
 		this.element.appendChild(this.icon.element);
 		this.element.appendChild(document.createTextNode(this.text));
+		this.element.addEventListener(constants.events.dom.click, this.onClick);
 	}
 }
 
@@ -391,6 +391,24 @@ class MinimizeButton extends Button {
 	}
 }
 
+// eslint-disable-next-line no-unused-vars
+class AlwaysOnTopToggle extends Button {
+	/**
+	 * Creates a new minimize button
+	 * @param {CreateControlOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.icon.element.classList.add(constants.css.controlIcons.alwaysOnTopToggle);
+		this.element.addEventListener(constants.events.dom.click, this.toggle);
+		this.element.title = 'Always on top';
+	}
+
+	toggle() {
+		_window.setAlwaysOnTop(!_window.isAlwaysOnTop());
+	}
+}
+
 class WindowControlsGroup extends ControlGroup {
 	/**
 	 * Creates a new button
@@ -400,6 +418,7 @@ class WindowControlsGroup extends ControlGroup {
 		super(options);
 		this.element = document.createElement('div');
 		this.element.classList.add(...[constants.css.controls.control, constants.css.controlPosition[this.position]]);
+		this.element.appendChild(new AlwaysOnTopToggle().element);
 		this.element.appendChild(new MinimizeButton().element);
 		this.element.appendChild(new ResizeButton().element);
 		this.element.appendChild(new CloseButton().element);
@@ -442,9 +461,6 @@ class LintelBar extends ControlGroup {
 		let dragRegion = document.createElement('div');
 		dragRegion.classList.add(constants.css.controls.titleBarDragRegion);
 		this.element.appendChild(dragRegion);
-		this.element.appendChild(new WindowControlsGroup({
-			position: constants.controls.position.right
-		}).element);
 		this.element.appendChild(new WindowControlsGroup({
 			position: constants.controls.position.right
 		}).element);

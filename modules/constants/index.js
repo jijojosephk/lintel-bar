@@ -26,6 +26,7 @@ function defineConstants() {
 				minimize: 'mdi-window-minimize',
 				maximize: 'mdi-window-maximize',
 				restore: 'mdi-window-restore',
+				alwaysOnTopToggle: 'mdi-chevron-up',
 				close: 'mdi-close'
 			},
 			controlActions: {
