@@ -33,6 +33,11 @@ function defineConstants() {
 				maximize: 'maximize',
 				restore: 'restore',
 				close: 'close'
+			},
+			controlPosition: {
+				left: 'position-left',
+				center: 'position-center',
+				right: 'position-right'
 			}
 		},
 		themes: [
@@ -49,6 +54,13 @@ function defineConstants() {
 			string: 'string',
 			function: 'function',
 			object: 'object'
+		},
+		controls: {
+			position: {
+				left: 'left',
+				center: 'center',
+				right: 'right'
+			}
 		}
 	};
 }
