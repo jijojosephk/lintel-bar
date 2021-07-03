@@ -47,10 +47,10 @@ function defineConstants() {
 			'slack',
 			'github'
 		],
-		templates: [
-			'default',
-			'tabby'
-		],
+		templates: {
+			default: 'default',
+			tabbed: 'tabbed'
+		},
 		types: {
 			string: 'string',
 			function: 'function',

@@ -30,14 +30,17 @@ body {
   width: 1.5rem;
   align-items: center;
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: #fff;
   padding-right: 0.25rem;
-  margin-left: 0.25rem;
+  padding-left: 0.25rem;
+  margin-left: 0.5rem;
+  opacity: 0.8;
 }
 
 .lintel-bar-control.lintel-bar-button:hover {
   background-color: rgb(255, 255, 255, 0.3);
+	opacity: 1;
 }
 
 .lintel-bar-control.lintel-bar-button.close:hover {

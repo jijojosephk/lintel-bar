@@ -9,6 +9,7 @@ let mainWindow;
 function createMainWindow() {
 	mainWindow = new BrowserWindow({
 		frame: false,
+		show: false,
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
