@@ -1,11 +1,11 @@
 const { Control } = require('./control');
 // eslint-disable-next-line no-unused-vars
-const { CreateControlGroupOptions } = require('./createContainerOptions');
+const { CreateContainerOptions } = require('./createContainerOptions');
 let _Container_controls = new WeakMap();
 class Container extends Control {
 	/**
 	 * Creates a control group
-	 * @param {CreateControlGroupOptions} options 
+	 * @param {CreateContainerOptions} options 
 	 */
 	constructor(options = {}) {
 		super(options);
