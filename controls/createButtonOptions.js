@@ -1,8 +1,11 @@
 const { CreateControlOptions } = require('./createControlOptions');
-class CreateButtonControlOptions extends CreateControlOptions {
-	constructor(options) {
+class CreateButtonOptions extends CreateControlOptions {
+	/**
+	 * @param {CreateButtonOptions} options 
+	 */
+	constructor(options = {}) {
 		super(options);
 	}
 }
 
-module.exports = { CreateButtonControlOptions };
+module.exports = { CreateButtonOptions };

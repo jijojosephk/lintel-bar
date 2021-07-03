@@ -69,6 +69,10 @@ class Element {
 			_Element_element.set(this, value);
 		}
 	}
+
+	remove() {
+		this.element.remove();
+	}
 }
 
 module.exports = { Element };

@@ -3,10 +3,10 @@ const constants = require('../constants');
 const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
 // eslint-disable-next-line no-unused-vars
-const { LintelBarCreateOptions } = require('./lintelBarCreateOptions');
+const { CreateLintelBarOptions } = require('./createLintelBarOptions');
 class LintelBar extends Container {
 	/**
-	 * @param {LintelBarCreateOptions} options 
+	 * @param {CreateLintelBarOptions} options 
 	 */
 	constructor(options = {}) {
 		super(options);
@@ -23,7 +23,7 @@ class LintelBar extends Container {
 	}
 
 	/**
- * @param {LintelBarCreateOptions} options 
+ * @param {CreateLintelBarOptions} options 
  */
 	static create(options = {}) {
 		let head = document.querySelector('head');

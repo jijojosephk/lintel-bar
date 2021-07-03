@@ -1,4 +1,5 @@
 const { Control } = require('./control');
+const { ControlList } = require('./controlList');
 // eslint-disable-next-line no-unused-vars
 const { CreateContainerOptions } = require('./createContainerOptions');
 let _Container_controls = new WeakMap();
@@ -9,11 +10,11 @@ class Container extends Control {
 	 */
 	constructor(options = {}) {
 		super(options);
-		_Container_controls.set(this, []);
+		_Container_controls.set(this, new ControlList(this));
 	}
 
 	/**
-	 * @type {Array<Control>}
+	 * @type {ControlList}
 	 */
 	get controls() {
 		return _Container_controls.get(this);

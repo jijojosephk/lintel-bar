@@ -1,9 +1,11 @@
 const { CreateControlOptions } = require('./createControlOptions');
-
-class CreatWindowTitleOptions extends CreateControlOptions {
-	constructor() {
-		super();
+class CreateWindowTitleOptions extends CreateControlOptions {
+	/**
+	 * @param {CreateWindowTitleOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
 	}
 }
 
-module.exports = { CreatWindowTitleOptions };
+module.exports = { CreateWindowTitleOptions };
