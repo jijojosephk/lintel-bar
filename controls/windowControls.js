@@ -2,11 +2,11 @@ const constants = require('../constants');
 const { Container } = require('./container');
 const { MinimizeButton, ResizeButton, CloseButton } = require('./windowButtons');
 // eslint-disable-next-line no-unused-vars
-const { CreateContainerOptions } = require('./createContainerOptions');
+const { CreateWindowControlsOptions } = require('./createWindowControlsOptions');
 class WindowControls extends Container {
 	/**
 	 * Creates a new button
-	 * @param {CreateContainerOptions} options 
+	 * @param {CreateWindowControlsOptions} options 
 	 */
 	constructor(options = {}) {
 		super(options);
@@ -15,6 +15,14 @@ class WindowControls extends Container {
 		this.element.appendChild(new MinimizeButton().element);
 		this.element.appendChild(new ResizeButton().element);
 		this.element.appendChild(new CloseButton().element);
+	}
+
+	get items() {
+		return super.controls;
+	}
+
+	set items(value) {
+		super.controls = value;
 	}
 }
 

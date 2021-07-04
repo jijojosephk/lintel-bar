@@ -1,12 +1,15 @@
 const constants = require('../constants');
-const { CreateContainerOptions } = require('./createContainerOptions');
+// eslint-disable-next-line no-unused-vars
+const { Control } = require('./control');
 let _CreateLintelBarOptions_template = new WeakMap();
-class CreateLintelBarOptions extends CreateContainerOptions {
+let _CreateLintelBarOptions_controls = new WeakMap();
+class CreateLintelBarOptions {
 	/**
 	 * @param {CreateLintelBarOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		this.template = options.template;
+		this.controls = options.controls;
 	}
 
 	/**
@@ -20,6 +23,17 @@ class CreateLintelBarOptions extends CreateContainerOptions {
 		if (typeof (value) == 'string') {
 			_CreateLintelBarOptions_template.set(this, constants.templates[value]);
 		}
+	}
+
+	/**
+	 * @type {Array<Control>}
+	 */
+	get controls() {
+		return _CreateLintelBarOptions_controls.get(this);
+	}
+
+	set controls(value) {
+		_CreateLintelBarOptions_controls.set(this, Array.isArray(value) ? value : []);
 	}
 }
 
