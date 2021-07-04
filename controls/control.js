@@ -1,7 +1,8 @@
 const constants = require('../constants');
 const { Element } = require('./element');
 // eslint-disable-next-line no-unused-vars
-const {BrowserWindow} = require('electron');
+const { BrowserWindow } = require('electron');
+const { CreateControlOptions } = require('./createControlOptions');
 
 let _window = require('@electron/remote').getCurrentWindow();
 let _Control_theme = new WeakMap();
@@ -13,11 +14,12 @@ class Control extends Element {
 	 * @param {CreateControlOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
-		this.text = options.text;
-		this.title = options.title;
-		this.onClick = options.onClick;
-		this.position = options.position;
+		const params = CreateControlOptions.fromJSON(options);
+		super(params);
+		this.text = params.text;
+		this.title = params.title;
+		this.onClick = params.onClick;
+		this.position = params.position;
 	}
 
 	/**

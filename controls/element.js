@@ -11,9 +11,10 @@ class Element {
 	 * @param {CreateElementOptions} options 
 	 */
 	constructor(options = {}) {
-		this.text = options.text;
-		this.title = options.title;
-		this.onClick = options.onClick;
+		const params = CreateElementOptions.fromJSON(options);
+		this.text = params.text;
+		this.title = params.title;
+		this.onClick = params.onClick;
 	}
 
 	/**

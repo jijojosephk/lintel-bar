@@ -52,6 +52,14 @@ class CreateElementOptions {
 			_CreateElementOptions_onClick.set(this, value);
 		}
 	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateElementOptions) {
+			return object;
+		} else {
+			return new CreateElementOptions(object);
+		}
+	}
 }
 
 module.exports = { CreateElementOptions };

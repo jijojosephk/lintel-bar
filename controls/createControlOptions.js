@@ -12,6 +12,7 @@ class CreateControlOptions extends CreateElementOptions {
 		super(options);
 		this.theme = options.theme;
 		this.icon = options.icon;
+		this.position = options.position;
 	}
 
 	/**
@@ -52,6 +53,14 @@ class CreateControlOptions extends CreateElementOptions {
 	set position(value) {
 		if (typeof (value) == constants.types.string) {
 			_CreateControlOptions_position.set(this, constants.controls.position[value]);
+		}
+	}
+	
+	static fromJSON(object) {
+		if (object instanceof CreateControlOptions) {
+			return object;
+		} else {
+			return new CreateControlOptions(object);
 		}
 	}
 }
