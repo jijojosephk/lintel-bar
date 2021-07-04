@@ -1,20 +1,25 @@
 const { CreateContainerOptions } = require('./createContainerOptions');
+// eslint-disable-next-line no-unused-vars
+const { CreateTabOptions } = require('./createTabOptions');
 let _CreateTabContainerOptions_showAddButton = new WeakMap();
-let _CreateTabContainerOptions_tabs = new WeakMap();
 class CreateTabContainerOptions extends CreateContainerOptions {
 	/**
 	 * @param {CreateTabContainerOptions} options 
 	 */
 	constructor(options = {}) {
 		super(options);
-		this.enableAdd = options.showAddButton;
+		this.showAddButton = options.showAddButton;
 	}
 
 	/**
-	 * @type {Array<Control>}
+	 * @type {Array<CreateTabOptions>}
 	 */
-	get tabs() {
-		return _CreateTabContainerOptions_tabs.get(this);
+	get items() {
+		return super.items;
+	}
+
+	set items(value) {
+		super.items = value;
 	}
 
 	get showAddButton() {

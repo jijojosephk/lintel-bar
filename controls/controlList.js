@@ -1,50 +1,52 @@
 // eslint-disable-next-line no-unused-vars
 const { Control } = require('./control');
-let _ControlList_list = new WeakMap();
-class ControlList {
-	/**
-	 * @param {Container} container 
-	 */
+const { List } = require('./list');
+
+class ControlList extends List {
 	constructor() {
-		_ControlList_list.set(this, []);
+		super();
+	}
+
+	/**
+	 * @param {number} index 
+	 * @returns {Control}
+	 */
+	get(index) {
+		return super.get(index);
+	}
+
+	/**
+	 * @type {Array<Control>}
+	 */
+	get controls() {
+		return super.items;
 	}
 
 	/**
 	 * @param {Control} control 
+	 * @returns {Control}
 	 */
 	add(control) {
-		/**
-		 * @type {Array<Control>}
-		 */
-		let controls = _ControlList_list.get(this);
-		controls.push(control);
+		return super.add(control);
 	}
 
 	/**
- * @param {number} index 
+ * @param {number} index
+ * @returns {Control}
  */
 	remove(index) {
-		/**
-		 * @type {Array<Control>}
-		 */
-		let controls = _ControlList_list.get(this);
-		let item = controls[index];
-		if (item) {
-			item.remove();
-			controls.splice(index, 1);
-		}
+		return super.remove(index);
 	}
 
-	removeAll() {
-		/**
-		 * @type {Array<Control>}
-		 */
-		let controls = _ControlList_list.get(this);
-		let item = controls.pop();
-		while (item) {
-			item.remove();
-			item = controls.pop();
-		}
+	/**
+	 * @param {(control:Control)=>} callback 
+	 */
+	removeAll(callback) {
+		super.removeAll((item) => {
+			if (typeof (callback) == 'function') {
+				callback(item);
+			}
+		});
 	}
 }
 
