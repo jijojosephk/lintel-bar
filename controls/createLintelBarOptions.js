@@ -16,7 +16,7 @@ class CreateLintelBarOptions {
 	 * @type {'default'|'tabbed'}
 	 */
 	get template() {
-		return _CreateLintelBarOptions_template.get(this) ?? constants.templates.default;
+		return _CreateLintelBarOptions_template.get(this);
 	}
 
 	set template(value) {

@@ -13,8 +13,12 @@ class CreateWindowControlsOptions extends CreateControlOptions {
 		this.maximize = options.maximize;
 		this.close = options.close;
 		this.alwaysOnTopToggle = options.alwaysOnTopToggle;
+		this.position = options.position ? options.position : 'right';
 	}
 
+	/**
+	 * @type {boolean}
+	 */
 	get minimize() {
 		return _CreateWindowControlsOptions_minimize.get(this);
 	}
@@ -23,6 +27,9 @@ class CreateWindowControlsOptions extends CreateControlOptions {
 		_CreateWindowControlsOptions_minimize.set(this, typeof (value) == 'boolean' ? value : true);
 	}
 
+	/**
+	 * @type {boolean}
+	 */
 	get maximize() {
 		return _CreateWindowControlsOptions_maximize.get(this);
 	}
@@ -31,7 +38,9 @@ class CreateWindowControlsOptions extends CreateControlOptions {
 		_CreateWindowControlsOptions_maximize.set(this, typeof (value) == 'boolean' ? value : true);
 	}
 
-
+	/**
+	 * @type {boolean}
+	 */
 	get close() {
 		return _CreateWindowControlsOptions_close.get(this);
 	}
@@ -40,6 +49,9 @@ class CreateWindowControlsOptions extends CreateControlOptions {
 		_CreateWindowControlsOptions_close.set(this, typeof (value) == 'boolean' ? value : true);
 	}
 
+	/**
+	 * @type {boolean}
+	 */
 	get alwaysOnTopToggle() {
 		return _CreateWindowControlsOptions_alwaysOnTopToggle.get(this);
 	}
