@@ -29,6 +29,14 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 	set showAddButton(value) {
 		_CreateTabContainerOptions_showAddButton.set(this, typeof (value) == 'boolean' ? value : false);
 	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateTabContainerOptions) {
+			return object;
+		} else {
+			return new CreateTabContainerOptions(object);
+		}
+	}
 }
 
 module.exports = { CreateTabContainerOptions };

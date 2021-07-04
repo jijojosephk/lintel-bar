@@ -9,7 +9,8 @@ class Container extends Control {
 	 * @param {CreateContainerOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateContainerOptions.fromJSON(options);
+		super(params);
 		_Container_controls.set(this, new ControlList(this));
 	}
 

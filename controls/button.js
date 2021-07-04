@@ -2,14 +2,15 @@ const constants = require('../constants');
 const { Control } = require('./control');
 const { FontIcon } = require('./icons');
 // eslint-disable-next-line no-unused-vars
-const { CreateControlOptions } = require('./createControlOptions');
+const { CreateButtonOptions } = require('./createButtonOptions');
 class Button extends Control {
 	/**
 	 * Creates a new button
-	 * @param {CreateControlOptions} options 
+	 * @param {CreateButtonOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateButtonOptions.fromJSON(options);
+		super(params);
 		this.icon = new FontIcon();
 		this.icon.element.classList.add(constants.css.controlIcons.primary);
 		this.element = document.createElement('a');

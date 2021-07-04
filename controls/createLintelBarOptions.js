@@ -35,6 +35,14 @@ class CreateLintelBarOptions {
 	set controls(value) {
 		_CreateLintelBarOptions_controls.set(this, Array.isArray(value) ? value : []);
 	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateLintelBarOptions) {
+			return object;
+		} else {
+			return new CreateLintelBarOptions(object);
+		}
+	}
 }
 
 module.exports = { CreateLintelBarOptions };

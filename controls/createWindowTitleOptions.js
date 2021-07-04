@@ -6,6 +6,14 @@ class CreateWindowTitleOptions extends CreateControlOptions {
 	constructor(options = {}) {
 		super(options);
 	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateWindowTitleOptions) {
+			return object;
+		} else {
+			return new CreateWindowTitleOptions(object);
+		}
+	}
 }
 
 module.exports = { CreateWindowTitleOptions };

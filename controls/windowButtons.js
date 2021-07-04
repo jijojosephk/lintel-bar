@@ -1,12 +1,14 @@
 const constants = require('../constants');
 const { Button } = require('./button');
+const { CreateButtonOptions } = require('./createButtonOptions');
 class CloseButton extends Button {
 	/**
 	 * Creates a new close button
-	 * @param {CreateControlOptions} options 
+	 * @param {CreateButtonOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateButtonOptions.fromJSON(options);
+		super(params);
 		this.element.classList.add(constants.css.controlActions.close);
 		this.icon.element.classList.add(constants.css.controlIcons.close);
 		this.element.title = 'Close';
@@ -17,10 +19,11 @@ class CloseButton extends Button {
 class ResizeButton extends Button {
 	/**
 	 * Creates a new resize button
-	 * @param {CreateControlOptions} options 
+	 * @param {CreateButtonOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateButtonOptions.fromJSON(options);
+		super(params);
 		this.icon.element.classList.add(this.window.isMaximized() ? constants.css.controlIcons.restore : constants.css.controlIcons.maximize);
 		this.element.title = this.window.isMaximized() ? 'Restore' : 'Maximize';
 		this.element.addEventListener(constants.events.dom.click, () => ResizeButton.prototype.onClick.call(this));
@@ -50,10 +53,11 @@ class ResizeButton extends Button {
 class MinimizeButton extends Button {
 	/**
 	 * Creates a new minimize button
-	 * @param {CreateControlOptions} options 
+	 * @param {CreateButtonOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateButtonOptions.fromJSON(options);
+		super(params);
 		this.icon.element.classList.add(constants.css.controlIcons.minimize);
 		this.element.addEventListener(constants.events.dom.click, () => this.window.minimize());
 		this.element.title = 'Minimize';
@@ -64,10 +68,11 @@ class MinimizeButton extends Button {
 class AlwaysOnTopToggle extends Button {
 	/**
 	 * Creates a new minimize button
-	 * @param {CreateControlOptions} options 
+	 * @param {CreateButtonOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateButtonOptions.fromJSON(options);
+		super(params);
 		this.icon.element.classList.add(constants.css.controlIcons.alwaysOnTopToggle);
 		this.element.addEventListener(constants.events.dom.click, () => this.toggle());
 		this.element.title = 'Always on top';

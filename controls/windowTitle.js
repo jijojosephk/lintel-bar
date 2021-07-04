@@ -1,13 +1,14 @@
 const { Control } = require('./control');
 // eslint-disable-next-line no-unused-vars
-const { CreatWindowTitleOptions } = require('./createWindowTitleOptions');
+const { CreateWindowTitleOptions } = require('./createWindowTitleOptions');
 class WindowTitle extends Control {
 	/**
 	 * 
-	 * @param {CreatWindowTitleOptions} options 
+	 * @param {CreateWindowTitleOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateWindowTitleOptions.fromJSON(options);
+		super(params);
 	}
 }
 

@@ -11,6 +11,14 @@ class CreateIconOptions extends CreateElementOptions {
 	constructor(options = {}) {
 		super(options);
 	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateIconOptions) {
+			return object;
+		} else {
+			return new CreateIconOptions(object);
+		}
+	}
 }
 
 class Icon extends Element {
@@ -29,6 +37,14 @@ class CreateFontIconOptions extends CreateIconOptions {
 	 */
 	constructor(options = {}) {
 		super(options);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateFontIconOptions) {
+			return object;
+		} else {
+			return new CreateFontIconOptions(object);
+		}
 	}
 }
 
@@ -60,6 +76,14 @@ class CreateImageIconOptions extends CreateIconOptions {
 
 	set file(value) {
 		_CreateImageIconOptions_file.set(this, typeof (value) == constants.types.string && value.trim() ? value.trim() : '');
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateImageIconOptions) {
+			return object;
+		} else {
+			return new CreateImageIconOptions(object);
+		}
 	}
 }
 

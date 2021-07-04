@@ -6,6 +6,14 @@ class CreateButtonOptions extends CreateControlOptions {
 	constructor(options = {}) {
 		super(options);
 	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateButtonOptions) {
+			return object;
+		} else {
+			return new CreateButtonOptions(object);
+		}
+	}
 }
 
 module.exports = { CreateButtonOptions };

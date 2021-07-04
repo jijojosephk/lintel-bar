@@ -7,9 +7,10 @@ class Tab extends Control {
 	 * @param {CreateTabOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateTabOptions.fromJSON(options);
+		super(params);
 		this.element = document.createElement('li');
-		this.element.appendChild(new Button(options).element);
+		this.element.appendChild(new Button(params).element);
 	}
 }
 

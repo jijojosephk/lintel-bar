@@ -9,7 +9,8 @@ class LintelBar extends Container {
 	 * @param {CreateLintelBarOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const params = CreateLintelBarOptions.fromJSON(options);
+		super(params);
 		this.element = document.createElement('div');
 		this.element.classList.add(...[constants.css.controls.titleBar, constants.css.controls.control]);
 		this.element.appendChild(document.createTextNode(this.text));
