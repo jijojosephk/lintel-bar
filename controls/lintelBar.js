@@ -4,6 +4,7 @@ const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
 // eslint-disable-next-line no-unused-vars
 const { CreateLintelBarOptions } = require('./createLintelBarOptions');
+const { WindowTitle } = require('./windowTitle');
 class LintelBar extends Container {
 	/**
 	 * @param {CreateLintelBarOptions} options 
@@ -13,7 +14,7 @@ class LintelBar extends Container {
 		super(params);
 		insertStylesheets();
 		this.element = document.createElement('div');
-		this.element.classList.add(...[constants.css.controls.titleBar, constants.css.controls.control]);
+		this.element.classList.add(...[constants.css.controls.lintelBar, constants.css.controls.control]);
 		let dragRegion = document.createElement('div');
 		dragRegion.classList.add(constants.css.controls.titleBarDragRegion);
 		this.element.appendChild(dragRegion);
@@ -52,6 +53,9 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 	create(lintelBar, options) {
 		super.create(lintelBar);
 		let windowControls = new WindowControls();
+		lintelBar.element.appendChild(new WindowTitle({
+			text: 'LintelBar Demo'
+		}).element);
 		lintelBar.element.appendChild(windowControls.element);
 	}
 }

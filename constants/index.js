@@ -15,7 +15,8 @@ function defineConstants() {
 		},
 		css: {
 			controls: {
-				titleBar: 'lintel-bar',
+				title: 'lintel-bar-title',
+				lintelBar: 'lintel-bar',
 				control: 'lintel-bar-control',
 				titleBarDragRegion: 'lintel-bar-drag-region',
 				button: 'lintel-bar-button'

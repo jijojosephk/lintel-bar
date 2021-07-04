@@ -1,3 +1,4 @@
+const constants = require('../constants');
 const { Control } = require('./control');
 // eslint-disable-next-line no-unused-vars
 const { CreateWindowTitleOptions } = require('./createWindowTitleOptions');
@@ -9,6 +10,9 @@ class WindowTitle extends Control {
 	constructor(options = {}) {
 		const params = CreateWindowTitleOptions.fromJSON(options);
 		super(params);
+		this.element = document.createElement('div');
+		this.element.classList.add(...[constants.css.controls.control, constants.css.controls.title, constants.css.controlPosition[this.position]]);
+		this.element.appendChild(document.createTextNode(this.text));
 	}
 }
 
