@@ -82,7 +82,7 @@ class Control extends Element {
 
 	applyStyles() {
 		if (this.element) {
-			this.element.classList.add(...[constants.css.controls.control, constants.css.controlPosition[this.position]]);
+			this.element.classList.add(...[constants.css.controls.control]);
 			if (this.allowDrag) {
 				this.element.classList.add(constants.css.dragable);
 			}

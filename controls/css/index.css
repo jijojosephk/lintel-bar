@@ -71,4 +71,14 @@ body {
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 100%;
+  justify-content: center;
+}
+
+.column {
+  display: flex;
+}
+
+.column.column-middle {
+  flex: 1;
 }

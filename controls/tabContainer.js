@@ -9,7 +9,7 @@ class TabContainer extends Container {
 	constructor(options = {}) {
 		const params = CreateTabContainerOptions.fromJSON(options);
 		super(params);
-		this.element = document.createElement('ul');
+		this.element.appendChild(document.createElement('ul'));
 	}
 
 	/**

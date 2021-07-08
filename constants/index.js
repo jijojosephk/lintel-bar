@@ -14,6 +14,12 @@ function defineConstants() {
 			}
 		},
 		css: {
+			columns: {
+				column: 'column',
+				left: 'column-left',
+				middle: 'column-middle',
+				right: 'column-right'
+			},
 			controls: {
 				title: 'lintel-bar-title',
 				lintelBar: 'lintel-bar',
@@ -57,7 +63,7 @@ function defineConstants() {
 			string: 'string',
 			function: 'function',
 			object: 'object',
-			boolean:'boolean'
+			boolean: 'boolean'
 		},
 		controls: {
 			position: {

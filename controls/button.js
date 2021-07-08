@@ -14,10 +14,15 @@ class Button extends Control {
 		this.icon = new FontIcon();
 		this.icon.element.classList.add(constants.css.controlIcons.primary);
 		this.element = document.createElement('a');
-		this.element.classList.add(...[constants.css.controls.control, constants.css.controls.button, constants.css.controlPosition[this.position]]);
+		this.applyStyles();
 		this.element.appendChild(this.icon.element);
 		this.element.appendChild(document.createTextNode(this.text));
 		this.element.addEventListener(constants.events.dom.click, this.onClick);
+	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.element.classList.add(...[constants.css.controls.button]);
 	}
 }
 

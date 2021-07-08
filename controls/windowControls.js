@@ -1,4 +1,3 @@
-const constants = require('../constants');
 const { Container } = require('./container');
 const { MinimizeButton, ResizeButton, CloseButton, AlwaysOnTopToggle } = require('./windowButtons');
 // eslint-disable-next-line no-unused-vars
@@ -11,23 +10,21 @@ class WindowControls extends Container {
 	constructor(options = {}) {
 		const params = CreateWindowControlsOptions.fromJSON(options);
 		super(params);
-		this.element = document.createElement('div');
-		this.element.classList.add(...[constants.css.controls.control, constants.css.controlPosition[this.position]]);
 
 		if (params.alwaysOnTopToggle) {
-			this.element.appendChild(new AlwaysOnTopToggle().element);
+			this.controls.add(new AlwaysOnTopToggle());
 		}
 
 		if (params.minimize) {
-			this.element.appendChild(new MinimizeButton().element);
+			this.controls.add(new MinimizeButton());
 		}
 
 		if (params.maximize) {
-			this.element.appendChild(new ResizeButton().element);
+			this.controls.add(new ResizeButton());
 		}
 
 		if (params.close) {
-			this.element.appendChild(new CloseButton().element);
+			this.controls.add(new CloseButton());
 		}
 	}
 
