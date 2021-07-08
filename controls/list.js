@@ -1,5 +1,9 @@
+const constants = require('../constants');
+
 /* eslint-disable no-unused-vars */
 let _List_items = new WeakMap();
+let _List_onAdded = new WeakMap();
+let _List_onRemoved = new WeakMap();
 /**
  * @template T
  */
@@ -7,6 +11,8 @@ class List {
 	constructor() {
 		// This is a generic implementation
 		_List_items.set(this, []);
+		_List_onAdded.set(this, () => { });
+		_List_onRemoved.set(this, () => { });
 	}
 
 	/**
@@ -35,6 +41,7 @@ class List {
 		 */
 		let items = _List_items.get(this);
 		items.push(item);
+		this.onAdded(item);
 		return item;
 	}
 
@@ -53,6 +60,7 @@ class List {
 			items.splice(index, 1);
 		}
 
+		this.onRemoved(item);
 		return item;
 	}
 
@@ -69,7 +77,31 @@ class List {
 			if (typeof (callback) == 'function') {
 				callback(item);
 			}
+			this.onRemoved(item);
 			item = items.pop();
+		}
+	}
+
+	/**
+	 * @type {(item:object)=>void}
+	 */
+	get onAdded() {
+		return _List_onAdded.get(this);
+	}
+
+	set onAdded(value) {
+		if (typeof (value) == constants.types.function) {
+			_List_onAdded.set(this, value);
+		}
+	}
+
+	get onRemoved() {
+		return _List_onRemoved.get(this);
+	}
+
+	set onRemoved(value) {
+		if (typeof (value) == constants.types.function) {
+			_List_onRemoved.set(this, value);
 		}
 	}
 }

@@ -48,6 +48,28 @@ class ControlList extends List {
 			}
 		});
 	}
+
+	/**
+	 * @type {(item:Control)=>void}
+	 */
+	get onAdded() {
+		return super.onAdded;
+	}
+
+	set onAdded(value) {
+		super.onAdded = value;
+	}
+
+	/**
+	 * @type {(item:Control)=>void}
+	 */
+	get onRemoved() {
+		return super.onRemoved;
+	}
+
+	set onRemoved(value) {
+		super.onRemoved = value;
+	}
 }
 
 module.exports = { ControlList };
