@@ -1,3 +1,4 @@
+const constants = require('../constants');
 const { CreateControlOptions } = require('./createControlOptions');
 class CreateWindowTitleOptions extends CreateControlOptions {
 	/**
@@ -5,6 +6,9 @@ class CreateWindowTitleOptions extends CreateControlOptions {
 	 */
 	constructor(options = {}) {
 		super(options);
+		if (typeof (options.allowDrag) != constants.types.boolean) {
+			this.allowDrag = true;
+		}
 	}
 
 	static fromJSON(object) {

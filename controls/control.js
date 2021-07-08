@@ -8,6 +8,7 @@ let _window = require('@electron/remote').getCurrentWindow();
 let _Control_theme = new WeakMap();
 let _Control_icon = new WeakMap();
 let _Control_position = new WeakMap();
+let _Control_allowDrag = new WeakMap();
 class Control extends Element {
 	/**
 	 * Creates a new control
@@ -20,6 +21,7 @@ class Control extends Element {
 		this.title = params.title;
 		this.onClick = params.onClick;
 		this.position = params.position;
+		this.allowDrag = params.allowDrag;
 	}
 
 	/**
@@ -67,6 +69,23 @@ class Control extends Element {
 	set position(value) {
 		if (typeof (value) == constants.types.string) {
 			_Control_position.set(this, constants.controls.position[value]);
+		}
+	}
+
+	get allowDrag() {
+		return _Control_allowDrag.get(this) ?? false;
+	}
+
+	set allowDrag(value) {
+		_Control_allowDrag.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
+	applyStyles() {
+		if (this.element) {
+			this.element.classList.add(...[constants.css.controls.control, constants.css.controlPosition[this.position]]);
+			if (this.allowDrag) {
+				this.element.classList.add(constants.css.dragable);
+			}
 		}
 	}
 }

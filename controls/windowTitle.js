@@ -11,8 +11,13 @@ class WindowTitle extends Control {
 		const params = CreateWindowTitleOptions.fromJSON(options);
 		super(params);
 		this.element = document.createElement('div');
-		this.element.classList.add(...[constants.css.controls.control, constants.css.controls.title, constants.css.controlPosition[this.position]]);
+		this.applyStyles();
 		this.element.appendChild(document.createTextNode(this.text));
+	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.element.classList.add(constants.css.controls.title);
 	}
 }
 

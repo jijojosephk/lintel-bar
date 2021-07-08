@@ -40,7 +40,8 @@ function defineConstants() {
 				left: 'position-left',
 				center: 'position-center',
 				right: 'position-right'
-			}
+			},
+			dragable: 'dragable'
 		},
 		themes: [
 			'default',
@@ -55,7 +56,8 @@ function defineConstants() {
 		types: {
 			string: 'string',
 			function: 'function',
-			object: 'object'
+			object: 'object',
+			boolean:'boolean'
 		},
 		controls: {
 			position: {

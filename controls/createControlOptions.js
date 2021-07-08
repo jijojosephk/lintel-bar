@@ -3,6 +3,7 @@ const { CreateElementOptions } = require('./createElementOptions');
 let _CreateControlOptions_theme = new WeakMap();
 let _CreateControlOptions_icon = new WeakMap();
 let _CreateControlOptions_position = new WeakMap();
+let _CreateControlOptions_allowDrag = new WeakMap();
 class CreateControlOptions extends CreateElementOptions {
 	/**
 	 * Creates a new CreateControlOptions instance
@@ -13,6 +14,7 @@ class CreateControlOptions extends CreateElementOptions {
 		this.theme = options.theme;
 		this.icon = options.icon;
 		this.position = options.position;
+		this.allowDrag = options.allowDrag;
 	}
 
 	/**
@@ -55,7 +57,18 @@ class CreateControlOptions extends CreateElementOptions {
 			_CreateControlOptions_position.set(this, constants.controls.position[value]);
 		}
 	}
-	
+
+	/**
+	 * @type {boolean}
+	 */
+	get allowDrag() {
+		return _CreateControlOptions_allowDrag.get(this) ?? false;
+	}
+
+	set allowDrag(value) {
+		_CreateControlOptions_allowDrag.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
 	static fromJSON(object) {
 		if (object instanceof CreateControlOptions) {
 			return object;

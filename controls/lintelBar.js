@@ -54,7 +54,7 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 		super.create(lintelBar);
 		let windowControls = new WindowControls();
 		lintelBar.element.appendChild(new WindowTitle({
-			text: 'LintelBar Demo'
+			text: 'Teams for Linux'
 		}).element);
 		lintelBar.element.appendChild(windowControls.element);
 	}
