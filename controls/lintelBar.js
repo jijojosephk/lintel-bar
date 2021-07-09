@@ -2,6 +2,7 @@ const path = require('path');
 const constants = require('../constants');
 const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
+const { TabContainer } = require('./tabContainer');
 // eslint-disable-next-line no-unused-vars
 const { CreateLintelBarOptions } = require('./createLintelBarOptions');
 const { WindowTitle } = require('./windowTitle');
@@ -51,15 +52,30 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 	// eslint-disable-next-line no-unused-vars
 	create(lintelBar, options) {
 		super.create(lintelBar);
-		let windowControls = new WindowControls({
-			position: 'right'
+
+		let tabContainer = new TabContainer({
+			items: [
+				{
+					text: 'Session 1'
+				},
+				{
+					text: 'Session 2'
+				}
+			]
 		});
+
 		let windowTitle = new WindowTitle({
 			text: 'Teams for Linux',
 			position: 'center'
 		});
-		lintelBar.controls.add(windowControls);
+
+		let windowControls = new WindowControls({
+			position: 'right'
+		});
+
+		lintelBar.controls.add(tabContainer);
 		lintelBar.controls.add(windowTitle);
+		lintelBar.controls.add(windowControls);
 	}
 }
 

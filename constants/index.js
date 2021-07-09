@@ -26,7 +26,8 @@ function defineConstants() {
 				control: 'lintel-bar-control',
 				container: 'lintel-bar-container',
 				titleBarDragRegion: 'lintel-bar-drag-region',
-				button: 'lintel-bar-button'
+				button: 'lintel-bar-button',
+				tab:'lintel-bar-tab'
 			},
 			controlIcons: {
 				controlIcon: 'lintel-bar-control-icon',
@@ -35,13 +36,17 @@ function defineConstants() {
 				maximize: 'mdi-window-maximize',
 				restore: 'mdi-window-restore',
 				alwaysOnTopToggle: 'mdi-chevron-up',
-				close: 'mdi-close'
+				close: 'mdi-close',
+				back:'mdi-chevron-left',
+				forward:'mdi-chevron-right'
 			},
 			controlActions: {
 				minimize: 'minimize',
 				maximize: 'maximize',
 				restore: 'restore',
-				close: 'close'
+				close: 'close',
+				back:'back',
+				forward:'forward'
 			},
 			controlPosition: {
 				left: 'position-left',

@@ -5,7 +5,7 @@ body {
 .lintel-bar {
   width: 100%;
   height: 30px !important;
-  background-color: #333;
+  background-color: #464775;
   -webkit-user-select: none;
   user-select: none;
   font-family: system;
@@ -48,6 +48,11 @@ body {
   opacity: 0.8;
 }
 
+.lintel-bar-control.lintel-bar-button.lintel-bar-tab {
+  font-size: 1rem;
+  margin-left: 0;
+}
+
 .lintel-bar-control.lintel-bar-button:hover {
   background-color: rgb(255, 255, 255, 0.3);
   opacity: 1;
@@ -81,4 +86,17 @@ body {
 
 .lintel-bar-container-column.middle {
   flex: 1;
+}
+
+.lintel-bar-control.lintel-bar-button.back,
+.lintel-bar-control.lintel-bar-button.forward {
+  margin-left: 0;
+  font-size: 1.75rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lintel-bar-control.lintel-bar-button.back:hover,
+.lintel-bar-control.lintel-bar-button.forward:hover {
+  background-color: transparent;
 }

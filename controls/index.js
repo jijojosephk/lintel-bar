@@ -3,7 +3,6 @@ module.exports = {
 	Container: require('./container').Container,
 	Control: require('./control').Control,
 	ControlEvent: require('./controlEvent').ControlEvent,
-	ControlList: require('./controlList').ControlList,
 	CreateButtonOptions: require('./createButtonOptions').CreateButtonOptions,
 	CreateContainerOptions: require('./createContainerOptions').CreateContainerOptions,
 	CreateControlOptions: require('./createControlOptions').CreateControlOptions,

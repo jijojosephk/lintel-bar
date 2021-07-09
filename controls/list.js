@@ -83,7 +83,7 @@ class List {
 	}
 
 	/**
-	 * @type {(item:object)=>void}
+	 * @type {(item:T)=>void}
 	 */
 	get onAdded() {
 		return _List_onAdded.get(this);
@@ -95,6 +95,9 @@ class List {
 		}
 	}
 
+	/**
+	 * @type {(item:T)=>void}
+	 */
 	get onRemoved() {
 		return _List_onRemoved.get(this);
 	}

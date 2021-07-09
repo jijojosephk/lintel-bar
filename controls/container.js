@@ -1,6 +1,6 @@
 const constants = require('../constants');
 const { Control } = require('./control');
-const { ControlList } = require('./controlList');
+const { List } = require('./list');
 // eslint-disable-next-line no-unused-vars
 const { CreateContainerOptions } = require('./createContainerOptions');
 let _Container_controls = new WeakMap();
@@ -35,7 +35,7 @@ class Container extends Control {
 		this.element.appendChild(middleColumn);
 		this.element.appendChild(rightColumn);
 		this.applyStyles();
-		let controls = new ControlList();
+		let controls = new List();
 		controls.onAdded = (control) => {
 			if (control.position == constants.controls.position.left) {
 				_Container_left_column.get(this).appendChild(control.element);
@@ -49,7 +49,7 @@ class Container extends Control {
 	}
 
 	/**
-	 * @type {ControlList}
+	 * @type {List<Control>}
 	 */
 	get controls() {
 		return _Container_controls.get(this);
