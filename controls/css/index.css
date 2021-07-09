@@ -75,10 +75,10 @@ body {
   justify-content: center;
 }
 
-.column {
+.lintel-bar-container-column {
   display: flex;
 }
 
-.column.column-middle {
+.lintel-bar-container-column.middle {
   flex: 1;
 }

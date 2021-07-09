@@ -15,15 +15,16 @@ function defineConstants() {
 		},
 		css: {
 			columns: {
-				column: 'column',
-				left: 'column-left',
-				middle: 'column-middle',
-				right: 'column-right'
+				column: 'lintel-bar-container-column',
+				left: 'left',
+				middle: 'middle',
+				right: 'right'
 			},
 			controls: {
 				title: 'lintel-bar-title',
 				lintelBar: 'lintel-bar',
 				control: 'lintel-bar-control',
+				container: 'lintel-bar-container',
 				titleBarDragRegion: 'lintel-bar-drag-region',
 				button: 'lintel-bar-button'
 			},

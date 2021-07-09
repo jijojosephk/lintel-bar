@@ -54,6 +54,11 @@ class Container extends Control {
 	get controls() {
 		return _Container_controls.get(this);
 	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.element.classList.add(constants.css.controls.container);
+	}
 }
 
 module.exports = { Container };
