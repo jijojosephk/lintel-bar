@@ -81,11 +81,10 @@ class Control extends Element {
 	}
 
 	applyStyles() {
-		if (this.element) {
-			this.element.classList.add(...[constants.css.controls.control]);
-			if (this.allowDrag) {
-				this.element.classList.add(constants.css.dragable);
-			}
+		super.applyStyles();
+		this.element.classList.add(...[constants.css.controls.control]);
+		if (this.allowDrag) {
+			this.element.classList.add(constants.css.dragable);
 		}
 	}
 }

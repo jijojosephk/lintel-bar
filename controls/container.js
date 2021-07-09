@@ -34,7 +34,6 @@ class Container extends Control {
 		this.element.appendChild(leftColumn);
 		this.element.appendChild(middleColumn);
 		this.element.appendChild(rightColumn);
-		this.applyStyles();
 		let controls = new List();
 		controls.onAdded = (control) => {
 			if (control.position == constants.controls.position.left) {

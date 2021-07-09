@@ -14,15 +14,21 @@ class Button extends Control {
 		this.icon = new FontIcon();
 		this.icon.element.classList.add(constants.css.controlIcons.primary);
 		this.element = document.createElement('a');
-		this.applyStyles();
 		this.element.appendChild(this.icon.element);
 		this.element.appendChild(document.createTextNode(this.text));
-		this.element.addEventListener(constants.events.dom.click, this.onClick);
+		this.applyStyles();
+		this.applyEventHandlers();
 	}
 
 	applyStyles() {
 		super.applyStyles();
 		this.element.classList.add(...[constants.css.controls.button]);
+	}
+
+	applyEventHandlers() {
+		if (this.onClick && this.__proto__ == 'Button') {
+			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
+		}
 	}
 }
 

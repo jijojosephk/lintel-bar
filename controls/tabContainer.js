@@ -3,43 +3,10 @@ const { Container } = require('./container');
 const { List } = require('./list');
 // eslint-disable-next-line no-unused-vars
 const { CreateTabContainerOptions } = require('./createTabContainerOptions');
-const { CreateButtonOptions } = require('./createButtonOptions');
 // eslint-disable-next-line no-unused-vars
-const { Button } = require('./button');
 const { Tab } = require('./tab');
+const { BackButton, ForwardButton } = require('./windowButtons');
 const constants = require('../constants');
-
-class BackButton extends Button {
-	/**
-	 * Creates a new minimize button
-	 * @param {CreateButtonOptions} options 
-	 */
-	constructor(options = {}) {
-		const params = CreateButtonOptions.fromJSON(options);
-		super(params);
-	}
-	applyStyles() {
-		super.applyStyles();
-		this.icon.element.classList.add(constants.css.controlIcons.back);
-		this.element.classList.add(constants.css.controlActions.back);
-	}
-}
-
-class ForwardButton extends Button {
-	/**
-	 * Creates a new minimize button
-	 * @param {CreateButtonOptions} options 
-	 */
-	constructor(options = {}) {
-		const params = CreateButtonOptions.fromJSON(options);
-		super(params);
-	}
-	applyStyles() {
-		super.applyStyles();
-		this.icon.element.classList.add(constants.css.controlIcons.forward);
-		this.element.classList.add(constants.css.controlActions.forward);
-	}
-}
 
 class TabContainer extends Container {
 	/**
@@ -60,6 +27,8 @@ class TabContainer extends Container {
 		this.tabs.add(new ForwardButton({
 			position: constants.controls.position.right
 		}));
+
+		this.applyStyles();
 	}
 
 	/**
@@ -67,6 +36,10 @@ class TabContainer extends Container {
 	 */
 	get tabs() {
 		return super.controls;
+	}
+
+	applyStyles() {
+		super.applyStyles();
 	}
 }
 

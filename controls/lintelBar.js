@@ -13,17 +13,26 @@ class LintelBar extends Container {
 	constructor(options = {}) {
 		const params = CreateLintelBarOptions.fromJSON(options);
 		super(params);
-		insertStylesheets();
-		this.element.classList.add(...[constants.css.controls.lintelBar]);
-		let body = document.querySelector('body');
-		let dragRegion = document.createElement('div');
-		dragRegion.classList.add(constants.css.controls.titleBarDragRegion);
-		this.element.insertBefore(dragRegion, this.element.childNodes[0]);
-		body.insertBefore(this.element, body.childNodes[0]);
+		createPlaceholders(this.element);
+		this.applyStyles();
 		let template = LintelBarTemplateFactory.fromTemplate(params.template);
 		template.create(this, params);
-		this.window.show();
+		setTimeout(() => this.window.show(), 100);
 	}
+
+	applyStyles() {
+		super.applyStyles();
+		insertStylesheets();
+		this.element.classList.add(...[constants.css.controls.lintelBar]);
+	}
+}
+
+function createPlaceholders(element) {
+	let body = document.querySelector('body');
+	let dragRegion = document.createElement('div');
+	dragRegion.classList.add(constants.css.controls.titleBarDragRegion);
+	element.insertBefore(dragRegion, element.childNodes[0]);
+	body.insertBefore(element, body.childNodes[0]);
 }
 
 class LintelBarTemplate {

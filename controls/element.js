@@ -74,6 +74,9 @@ class Element {
 	remove() {
 		this.element.remove();
 	}
+
+	applyStyles() {
+	}
 }
 
 module.exports = { Element };
