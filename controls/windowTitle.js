@@ -21,9 +21,6 @@ class WindowTitle extends Control {
 	}
 
 	applyEventHandlers() {
-		if (this.__proto__ == 'WindowTitle' && this.onClick) {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 

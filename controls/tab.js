@@ -19,9 +19,6 @@ class Tab extends Button {
 	}
 
 	applyEventHandlers() {
-		if (this.onClick && this.__proto__ == 'Tab') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 

@@ -21,7 +21,10 @@ class TabContainer extends Container {
 		}
 
 		this.tabs.add(new BackButton({
-			position: constants.controls.position.left
+			position: constants.controls.position.left,
+			onClick: () => {
+				console.log(this);
+			}
 		}));
 
 		this.tabs.add(new ForwardButton({

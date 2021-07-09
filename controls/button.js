@@ -26,9 +26,6 @@ class Button extends Control {
 	}
 
 	applyEventHandlers() {
-		if (this.onClick && this.__proto__ == 'Button') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 

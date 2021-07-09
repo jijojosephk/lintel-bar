@@ -22,9 +22,6 @@ class CloseButton extends Button {
 
 	applyEventHandlers() {
 		this.element.addEventListener(constants.events.dom.click, () => this.window.close());
-		if (this.onClick && this.__proto__ == 'CloseButton') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 
@@ -73,9 +70,6 @@ class ResizeButton extends Button {
 	applyEventHandlers() {
 		this.element.addEventListener(constants.events.dom.click, () => onMaximize.call(this));
 		this.window.on(constants.events.dom.resize, () => onWindowResize.call(this));
-		if (this.onClick && this.__proto__ == 'ResizeButton') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 
@@ -99,9 +93,6 @@ class MinimizeButton extends Button {
 
 	applyEventHandlers() {
 		this.element.addEventListener(constants.events.dom.click, () => this.window.minimize());
-		if (this.onClick && this.__proto__ == 'MinimizeButton') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 
@@ -126,9 +117,6 @@ class AlwaysOnTopToggle extends Button {
 
 	applyEventHandlers() {
 		this.element.addEventListener(constants.events.dom.click, () => onToggleWindowAlwaysOnTop.call(this));
-		if (this.onClick && this.__proto__ == 'AlwaysOnTopToggle') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 
@@ -151,9 +139,6 @@ class BackButton extends Button {
 	}
 
 	applyEventHandlers() {
-		if (this.onClick && this.__proto__ == 'BackButton') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 
@@ -174,9 +159,6 @@ class ForwardButton extends Button {
 	}
 
 	applyEventHandlers() {
-		if (this.onClick && this.__proto__ == 'ForwardButton') {
-			this.element.addEventListener(constants.events.dom.click, () => this.onClick.call(this));
-		}
 	}
 }
 
