@@ -84,7 +84,9 @@ class Element {
 	}
 
 	applyEventListeners() {
-		this.element.addEventListener(constants.events.dom.click, this.onClick);
+		if (this.onClick) {
+			this.element.addEventListener(constants.events.dom.click, this.onClick);
+		}
 	}
 }
 
