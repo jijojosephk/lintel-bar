@@ -21,17 +21,17 @@ class TabContainer extends Container {
 		}
 
 		this.tabs.add(new BackButton({
-			position: constants.controls.position.left,
-			onClick: () => {
-				console.log(this);
-			}
+			position: constants.controls.position.left
 		}));
 
 		this.tabs.add(new ForwardButton({
 			position: constants.controls.position.right
 		}));
 
-		this.applyStyles();
+		if (this.constructor.name == TabContainer.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	/**
@@ -43,6 +43,10 @@ class TabContainer extends Container {
 
 	applyStyles() {
 		super.applyStyles();
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

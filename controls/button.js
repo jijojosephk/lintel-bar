@@ -16,8 +16,10 @@ class Button extends Control {
 		this.element = document.createElement('a');
 		this.element.appendChild(this.icon.element);
 		this.element.appendChild(document.createTextNode(this.text));
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == Button.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -25,7 +27,8 @@ class Button extends Control {
 		this.element.classList.add(...[constants.css.controls.button]);
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

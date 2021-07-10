@@ -22,6 +22,10 @@ class Control extends Element {
 		this.onClick = params.onClick;
 		this.position = params.position;
 		this.allowDrag = params.allowDrag;
+		if (this.constructor.name == Control.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	/**
@@ -86,6 +90,10 @@ class Control extends Element {
 		if (this.allowDrag) {
 			this.element.classList.add(constants.css.dragable);
 		}
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

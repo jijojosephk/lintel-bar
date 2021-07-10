@@ -15,6 +15,10 @@ class Element {
 		this.text = params.text;
 		this.title = params.title;
 		this.onClick = params.onClick;
+		if (this.constructor.name == Element.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	/**
@@ -76,6 +80,11 @@ class Element {
 	}
 
 	applyStyles() {
+		// Template
+	}
+
+	applyEventListeners() {
+		this.element.addEventListener(constants.events.dom.click, this.onClick);
 	}
 }
 

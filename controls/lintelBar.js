@@ -14,9 +14,12 @@ class LintelBar extends Container {
 		const params = CreateLintelBarOptions.fromJSON(options);
 		super(params);
 		createPlaceholders(this.element);
-		this.applyStyles();
 		let template = LintelBarTemplateFactory.fromTemplate(params.template);
 		template.create(this, params);
+		if (this.constructor.name == LintelBar.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 		setTimeout(() => this.window.show(), 100);
 	}
 
@@ -24,6 +27,10 @@ class LintelBar extends Container {
 		super.applyStyles();
 		insertStylesheets();
 		this.element.classList.add(...[constants.css.controls.lintelBar]);
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

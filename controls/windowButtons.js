@@ -9,8 +9,10 @@ class CloseButton extends Button {
 	constructor(options = {}) {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == CloseButton.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -20,7 +22,8 @@ class CloseButton extends Button {
 		this.element.title = 'Close';
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 		this.element.addEventListener(constants.events.dom.click, () => this.window.close());
 	}
 }
@@ -57,8 +60,10 @@ class ResizeButton extends Button {
 	constructor(options = {}) {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == ResizeButton.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -67,7 +72,8 @@ class ResizeButton extends Button {
 		this.element.title = this.window.isMaximized() ? 'Restore' : 'Maximize';
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 		this.element.addEventListener(constants.events.dom.click, () => onMaximize.call(this));
 		this.window.on(constants.events.dom.resize, () => onWindowResize.call(this));
 	}
@@ -81,8 +87,10 @@ class MinimizeButton extends Button {
 	constructor(options = {}) {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == MinimizeButton.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -91,7 +99,8 @@ class MinimizeButton extends Button {
 		this.element.title = 'Minimize';
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 		this.element.addEventListener(constants.events.dom.click, () => this.window.minimize());
 	}
 }
@@ -105,8 +114,10 @@ class AlwaysOnTopToggle extends Button {
 	constructor(options = {}) {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == AlwaysOnTopToggle.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -115,7 +126,8 @@ class AlwaysOnTopToggle extends Button {
 		this.element.title = 'Always on top';
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 		this.element.addEventListener(constants.events.dom.click, () => onToggleWindowAlwaysOnTop.call(this));
 	}
 }
@@ -128,8 +140,10 @@ class BackButton extends Button {
 	constructor(options = {}) {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == BackButton.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -138,7 +152,8 @@ class BackButton extends Button {
 		this.element.classList.add(constants.css.controlActions.back);
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 
@@ -150,6 +165,10 @@ class ForwardButton extends Button {
 	constructor(options = {}) {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
+		if (this.constructor.name == ForwardButton.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -158,7 +177,8 @@ class ForwardButton extends Button {
 		this.element.classList.add(constants.css.controlActions.forward);
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

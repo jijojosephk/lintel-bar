@@ -9,8 +9,10 @@ class Tab extends Button {
 	constructor(options = {}) {
 		const params = CreateTabOptions.fromJSON(options);
 		super(params);
-		this.applyStyles();
-		this.applyEventHandlers();
+		if (this.constructor.name == Tab.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -18,7 +20,8 @@ class Tab extends Button {
 		this.element.classList.add(constants.css.controls.tab);
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

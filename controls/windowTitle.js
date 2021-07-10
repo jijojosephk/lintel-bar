@@ -12,7 +12,10 @@ class WindowTitle extends Control {
 		super(params);
 		this.element = document.createElement('div');
 		this.element.appendChild(document.createTextNode(this.text));
-		this.applyStyles();
+		if (this.constructor.name == WindowTitle.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	applyStyles() {
@@ -20,7 +23,8 @@ class WindowTitle extends Control {
 		this.element.classList.add(constants.css.controls.title);
 	}
 
-	applyEventHandlers() {
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 

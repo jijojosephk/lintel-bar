@@ -15,36 +15,15 @@ class Container extends Control {
 	constructor(options = {}) {
 		const params = CreateContainerOptions.fromJSON(options);
 		super(params);
-		// Left column
-		let leftColumn = document.createElement('div');
-		leftColumn.classList.add(...[constants.css.columns.column, constants.css.columns.left]);
-		_Container_left_column.set(this, leftColumn);
-
-		// Middle column
-		let middleColumn = document.createElement('div');
-		middleColumn.classList.add(...[constants.css.columns.column, constants.css.columns.middle]);
-		_Container_middle_column.set(this, middleColumn);
-
-		// Right Column
-		let rightColumn = document.createElement('div');
-		rightColumn.classList.add(...[constants.css.columns.column, constants.css.columns.right]);
-		_Container_right_column.set(this, rightColumn);
-
 		this.element = document.createElement('div');
-		this.element.appendChild(leftColumn);
-		this.element.appendChild(middleColumn);
-		this.element.appendChild(rightColumn);
 		let controls = new List();
-		controls.onAdded = (control) => {
-			if (control.position == constants.controls.position.left) {
-				_Container_left_column.get(this).appendChild(control.element);
-			} else if (control.position == constants.controls.position.center) {
-				_Container_middle_column.get(this).appendChild(control.element);
-			} else {
-				_Container_right_column.get(this).appendChild(control.element);
-			}
-		};
 		_Container_controls.set(this, controls);
+		createColumns(this);
+		controls.onAdded = (control) => addControl(this, control);
+		if (this.constructor.name == 'Container') {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	/**
@@ -57,6 +36,49 @@ class Container extends Control {
 	applyStyles() {
 		super.applyStyles();
 		this.element.classList.add(constants.css.controls.container);
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
+	}
+}
+
+/**
+ * 
+ * @param {Container} container 
+ */
+function createColumns(container) {
+	let leftColumn = document.createElement('div');
+	leftColumn.classList.add(...[constants.css.columns.column, constants.css.columns.left]);
+	_Container_left_column.set(container, leftColumn);
+
+	// Middle column
+	let middleColumn = document.createElement('div');
+	middleColumn.classList.add(...[constants.css.columns.column, constants.css.columns.middle]);
+	_Container_middle_column.set(container, middleColumn);
+
+	// Right Column
+	let rightColumn = document.createElement('div');
+	rightColumn.classList.add(...[constants.css.columns.column, constants.css.columns.right]);
+	_Container_right_column.set(container, rightColumn);
+
+	container.element.appendChild(leftColumn);
+	container.element.appendChild(middleColumn);
+	container.element.appendChild(rightColumn);
+}
+
+/**
+ * 
+ * @param {Container} container 
+ * @param {Control} control 
+ */
+function addControl(container, control) {
+	if (control.position == constants.controls.position.left) {
+		_Container_left_column.get(container).appendChild(control.element);
+	} else if (control.position == constants.controls.position.center) {
+		_Container_middle_column.get(container).appendChild(control.element);
+	} else {
+		_Container_right_column.get(container).appendChild(control.element);
 	}
 }
 

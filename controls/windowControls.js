@@ -26,6 +26,11 @@ class WindowControls extends Container {
 		if (params.close) {
 			this.controls.add(new CloseButton());
 		}
+
+		if (this.constructor.name == WindowControls.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
 	}
 
 	get items() {
