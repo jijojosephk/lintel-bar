@@ -12,20 +12,23 @@ class Tab extends Button {
 		super(params);
 		let tabIconContainer = document.createElement('div');
 		tabIconContainer.classList.add(constants.css.controls.tabIconContainer);
-		
+
 		// Menu Icon
 		if (options.showMenuIcon) {
 			let tabIconMenu = new FontIcon();
+			tabIconMenu.element.setAttribute(constants.html.attributes.role, constants.html.roles.iconMenu);
 			tabIconMenu.element.classList.add(...[constants.css.fontIcons.menu, constants.css.controlActions.menu]);
 			tabIconContainer.appendChild(tabIconMenu.element);
 		}
 
 		// Close Icon
 		let tabIconClose = new FontIcon();
+		tabIconClose.element.setAttribute(constants.html.attributes.role, constants.html.roles.iconClose);
 		tabIconClose.element.classList.add(...[constants.css.fontIcons.close, constants.css.controlActions.close]);
 		tabIconContainer.appendChild(tabIconClose.element);
-		
+
 		this.element.appendChild(tabIconContainer);
+		this.element.setAttribute(constants.html.attributes.role, constants.html.roles.tab);
 		if (this.constructor.name == Tab.name) {
 			this.applyStyles();
 			this.applyEventListeners();

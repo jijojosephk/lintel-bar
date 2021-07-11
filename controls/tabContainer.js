@@ -15,9 +15,11 @@ class TabContainer extends Container {
 	constructor(options = {}) {
 		const params = CreateTabContainerOptions.fromJSON(options);
 		super(params);
-		for (const tab of options.items) {
-			tab.position = constants.controls.position.center;
-			this.items.add(new Tab(tab));
+		for (const tabOption of options.items) {
+			tabOption.position = constants.controls.position.center;
+			let tabButton = new Tab(tabOption);
+			tabButton.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
+			this.items.add(tabButton);
 		}
 
 		this.items.add(new BackButton({
@@ -48,6 +50,32 @@ class TabContainer extends Container {
 	applyEventListeners() {
 		super.applyEventListeners();
 	}
+}
+
+/**
+ * @param {MouseEvent} e 
+ * @param {TabContainer} container
+ */
+function tabClick(e, container) {
+	let role = e.target.getAttribute(constants.html.attributes.role);
+	if (!role) return;
+
+	let targetTab = role == constants.html.roles.tab ?
+		e.target : getTabElement(e.target, role);
+
+	container.items.items.forEach(i => {
+		console.log(i, targetTab);
+	});
+}
+
+
+/**
+ * @param {HTMLElement} clickTarget 
+ */
+function getTabElement(clickTarget, role) {
+	return role == constants.html.roles.iconMenu || role == constants.html.roles.iconClose ?
+		clickTarget.parentElement.parentElement :
+		null;
 }
 
 module.exports = { TabContainer };

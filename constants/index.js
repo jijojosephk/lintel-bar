@@ -41,7 +41,7 @@ function defineConstants() {
 				back: 'mdi-chevron-left',
 				forward: 'mdi-chevron-right',
 				menu: 'mdi-dots-vertical',
-				close: 'mdi-close'
+				close: 'mdi-close-circle-outline'
 			},
 			controlActions: {
 				minimize: 'minimize',
@@ -80,6 +80,17 @@ function defineConstants() {
 				left: 'left',
 				center: 'center',
 				right: 'right'
+			}
+		},
+		html: {
+			attributes: {
+				role: 'data-role',
+				action: 'data-action'
+			},
+			roles: {
+				tab: 'tab',
+				iconMenu: 'icon-menu',
+				iconClose: 'icon-close'
 			}
 		}
 	};
