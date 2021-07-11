@@ -12,33 +12,25 @@ class WindowControls extends Container {
 		super(params);
 
 		if (params.alwaysOnTopToggle) {
-			this.controls.add(new AlwaysOnTopToggle());
+			this.items.add(new AlwaysOnTopToggle());
 		}
 
 		if (params.minimize) {
-			this.controls.add(new MinimizeButton());
+			this.items.add(new MinimizeButton());
 		}
 
 		if (params.maximize) {
-			this.controls.add(new ResizeButton());
+			this.items.add(new ResizeButton());
 		}
 
 		if (params.close) {
-			this.controls.add(new CloseButton());
+			this.items.add(new CloseButton());
 		}
 
 		if (this.constructor.name == WindowControls.name) {
 			this.applyStyles();
 			this.applyEventListeners();
 		}
-	}
-
-	get items() {
-		return super.controls;
-	}
-
-	set items(value) {
-		super.controls = value;
 	}
 }
 

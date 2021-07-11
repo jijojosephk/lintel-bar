@@ -27,26 +27,30 @@ function defineConstants() {
 				container: 'lintel-bar-container',
 				titleBarDragRegion: 'lintel-bar-drag-region',
 				button: 'lintel-bar-button',
-				tab:'lintel-bar-tab'
+				tab: 'lintel-bar-tab',
+				icon: 'lintel-bar-control-icon',
+				tabIconContainer: 'lintel-bar-tab-icon-container'
 			},
-			controlIcons: {
-				controlIcon: 'lintel-bar-control-icon',
+			fontIcons: {
 				primary: 'mdi',
 				minimize: 'mdi-window-minimize',
 				maximize: 'mdi-window-maximize',
 				restore: 'mdi-window-restore',
 				alwaysOnTopToggle: 'mdi-chevron-up',
-				close: 'mdi-close',
-				back:'mdi-chevron-left',
-				forward:'mdi-chevron-right'
+				closeWindow: 'mdi-close',
+				back: 'mdi-chevron-left-circle-outline',
+				forward: 'mdi-chevron-right-circle-outline',
+				menu: 'mdi-dots-vertical',
+				close: 'mdi-close'
 			},
 			controlActions: {
 				minimize: 'minimize',
 				maximize: 'maximize',
 				restore: 'restore',
 				close: 'close',
-				back:'back',
-				forward:'forward'
+				back: 'back',
+				forward: 'forward',
+				menu: 'menu'
 			},
 			controlPosition: {
 				left: 'position-left',

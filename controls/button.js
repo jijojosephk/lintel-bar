@@ -12,7 +12,6 @@ class Button extends Control {
 		const params = CreateButtonOptions.fromJSON(options);
 		super(params);
 		this.icon = new FontIcon();
-		this.icon.element.classList.add(constants.css.controlIcons.primary);
 		this.element = document.createElement('a');
 		this.element.appendChild(this.icon.element);
 		this.element.appendChild(document.createTextNode(this.text));

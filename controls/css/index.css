@@ -1,6 +1,8 @@
+@import url('./fonts.css');
+
 body {
   margin: 0;
-  font-family: system-ui;
+  font-family: Ubuntu Condensed;
   font-weight: bold;
 }
 
@@ -50,10 +52,11 @@ body {
 .lintel-bar-control.lintel-bar-button.lintel-bar-tab {
   font-size: 1rem;
   margin-left: 0;
+  padding-right: 0;
 }
 
 .lintel-bar-control.lintel-bar-button:hover {
-  background-color: rgb(255, 255, 255, 0.3);
+  background-color: #333;
   opacity: 1;
 }
 
@@ -93,13 +96,21 @@ body {
   cursor: pointer;
 }
 
-.lintel-bar-control.lintel-bar-button.back:hover,
-.lintel-bar-control.lintel-bar-button.forward:hover {
-  background-color: transparent;
+.lintel-bar-control.lintel-bar-button.lintel-bar-tab i {
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
-a.lintel-bar-control.lintel-bar-button.lintel-bar-tab i {
-	font-size: 1.5rem;
-	margin-left: 0.25rem;
-	color: cornflowerblue;
+.lintel-bar-control.lintel-bar-button.lintel-bar-tab i.close:hover {
+  color: red;
+}
+
+.lintel-bar-control.lintel-bar-button.lintel-bar-tab i.menu:hover {
+  color: blue;
+}
+
+.lintel-bar-tab-icon-container {
+  background-color: inherit;
+  margin-left: 0.25rem;
+  height: 100%;
 }

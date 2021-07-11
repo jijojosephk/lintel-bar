@@ -89,9 +89,9 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 			position: 'right'
 		});
 
-		lintelBar.controls.add(tabContainer);
-		lintelBar.controls.add(windowTitle);
-		lintelBar.controls.add(windowControls);
+		lintelBar.items.add(tabContainer);
+		lintelBar.items.add(windowTitle);
+		lintelBar.items.add(windowControls);
 	}
 }
 

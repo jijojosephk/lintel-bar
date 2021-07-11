@@ -17,14 +17,14 @@ class TabContainer extends Container {
 		super(params);
 		for (const tab of options.items) {
 			tab.position = constants.controls.position.center;
-			this.tabs.add(new Tab(tab));
+			this.items.add(new Tab(tab));
 		}
 
-		this.tabs.add(new BackButton({
+		this.items.add(new BackButton({
 			position: constants.controls.position.left
 		}));
 
-		this.tabs.add(new ForwardButton({
+		this.items.add(new ForwardButton({
 			position: constants.controls.position.right
 		}));
 
@@ -37,8 +37,8 @@ class TabContainer extends Container {
 	/**
 	 * @type {List<Tab>}
 	 */
-	get tabs() {
-		return super.controls;
+	get items() {
+		return super.items;
 	}
 
 	applyStyles() {

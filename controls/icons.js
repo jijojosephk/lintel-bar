@@ -53,6 +53,7 @@ class FontIcon extends Icon {
 	constructor() {
 		super();
 		this.element = document.createElement('i');
+		this.element.classList.add(constants.css.fontIcons.primary);
 	}
 }
 

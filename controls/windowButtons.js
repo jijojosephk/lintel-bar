@@ -18,7 +18,7 @@ class CloseButton extends Button {
 	applyStyles() {
 		super.applyStyles();
 		this.element.classList.add(constants.css.controlActions.close);
-		this.icon.element.classList.add(constants.css.controlIcons.close);
+		this.icon.element.classList.add(constants.css.fontIcons.closeWindow);
 		this.element.title = 'Close';
 	}
 
@@ -38,12 +38,12 @@ function onMaximize() {
 
 function onWindowResize() {
 	if (this.window.isMaximized()) {
-		this.icon.element.classList.remove(constants.css.controlIcons.maximize);
-		this.icon.element.classList.add(constants.css.controlIcons.restore);
+		this.icon.element.classList.remove(constants.css.fontIcons.maximize);
+		this.icon.element.classList.add(constants.css.fontIcons.restore);
 		this.element.title = 'Restore';
 	} else {
-		this.icon.element.classList.add(constants.css.controlIcons.maximize);
-		this.icon.element.classList.remove(constants.css.controlIcons.restore);
+		this.icon.element.classList.add(constants.css.fontIcons.maximize);
+		this.icon.element.classList.remove(constants.css.fontIcons.restore);
 		this.element.title = 'Maximize';
 	}
 }
@@ -68,7 +68,7 @@ class ResizeButton extends Button {
 
 	applyStyles() {
 		super.applyStyles();
-		this.icon.element.classList.add(this.window.isMaximized() ? constants.css.controlIcons.restore : constants.css.controlIcons.maximize);
+		this.icon.element.classList.add(this.window.isMaximized() ? constants.css.fontIcons.restore : constants.css.fontIcons.maximize);
 		this.element.title = this.window.isMaximized() ? 'Restore' : 'Maximize';
 	}
 
@@ -95,7 +95,7 @@ class MinimizeButton extends Button {
 
 	applyStyles() {
 		super.applyStyles();
-		this.icon.element.classList.add(constants.css.controlIcons.minimize);
+		this.icon.element.classList.add(constants.css.fontIcons.minimize);
 		this.element.title = 'Minimize';
 	}
 
@@ -122,7 +122,7 @@ class AlwaysOnTopToggle extends Button {
 
 	applyStyles() {
 		super.applyStyles();
-		this.icon.element.classList.add(constants.css.controlIcons.alwaysOnTopToggle);
+		this.icon.element.classList.add(constants.css.fontIcons.alwaysOnTopToggle);
 		this.element.title = 'Always on top';
 	}
 
@@ -148,7 +148,7 @@ class BackButton extends Button {
 
 	applyStyles() {
 		super.applyStyles();
-		this.icon.element.classList.add(constants.css.controlIcons.back);
+		this.icon.element.classList.add(constants.css.fontIcons.back);
 		this.element.classList.add(constants.css.controlActions.back);
 	}
 
@@ -173,7 +173,7 @@ class ForwardButton extends Button {
 
 	applyStyles() {
 		super.applyStyles();
-		this.icon.element.classList.add(constants.css.controlIcons.forward);
+		this.icon.element.classList.add(constants.css.fontIcons.forward);
 		this.element.classList.add(constants.css.controlActions.forward);
 	}
 

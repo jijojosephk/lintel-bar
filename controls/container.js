@@ -29,7 +29,7 @@ class Container extends Control {
 	/**
 	 * @type {List<Control>}
 	 */
-	get controls() {
+	get items() {
 		return _Container_controls.get(this);
 	}
 
