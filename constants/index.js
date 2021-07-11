@@ -38,8 +38,8 @@ function defineConstants() {
 				restore: 'mdi-window-restore',
 				alwaysOnTopToggle: 'mdi-chevron-up',
 				closeWindow: 'mdi-close',
-				back: 'mdi-chevron-left-circle-outline',
-				forward: 'mdi-chevron-right-circle-outline',
+				back: 'mdi-chevron-left',
+				forward: 'mdi-chevron-right',
 				menu: 'mdi-dots-vertical',
 				close: 'mdi-close'
 			},
