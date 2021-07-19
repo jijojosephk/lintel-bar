@@ -1,5 +1,5 @@
 const { Container } = require('./container');
-const { TabActivateEvent } = require('./events/tabActivateEvent');
+const { TabContainerEvent } = require('./events/tabContainerEvent');
 // eslint-disable-next-line no-unused-vars
 const { List } = require('./list');
 const { CreateTabContainerOptions } = require('./options/createTabContainerOptions');
@@ -99,7 +99,7 @@ class TabContainer extends Container {
 	}
 
 	/**
-	 * @type {(event: TabActivateEvent)=>boolean}
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>boolean}
 	 */
 	get onTabActivate() {
 		return _TabContainer_onTabActivate.get(this);
@@ -136,7 +136,7 @@ function tabClick(e, container) {
 	// Tab, Close Icon, Menu Icon
 	if (!role) return;
 	let tabElement = getTabElement(e.target, role);
-	let tabControlInfo = getTabAndIndex(container, tabElement);
+	let tabControlInfo = getTabControlInfo(container, tabElement);
 	tabControlInfo.originalTarget = e.target;
 	tabEventHandlers.click[role](tabControlInfo, container);
 }
@@ -146,13 +146,11 @@ function tabClick(e, container) {
  * @param {TabContainer} container 
  */
 function tabActivateHandler(tabControlInfo, container) {
-	let event = new TabActivateEvent();
-	event.originalTarget = tabControlInfo.originalTarget;
-	event.control = tabControlInfo.item;
-	let response = container.onTabActivate(event);
-	if (typeof (response) == constants.types.boolean && !response) {
-		console.log('cancelled');
-	}
+	container.onTabActivate(createEventInfo(tabControlInfo), cancel => {
+		if (!cancel) {
+			// To do
+		}
+	});
 }
 
 /**
@@ -160,10 +158,7 @@ function tabActivateHandler(tabControlInfo, container) {
  * @param {TabContainer} container 
  */
 function tabCloseHandler(tabControlInfo, container) {
-	let event = new TabActivateEvent();
-	event.originalTarget = tabControlInfo.originalTarget;
-	event.control = tabControlInfo.item;
-	container.onTabClose(event);
+	container.onTabClose(createEventInfo(tabControlInfo));
 }
 
 /**
@@ -171,17 +166,27 @@ function tabCloseHandler(tabControlInfo, container) {
  * @param {TabContainer} container 
  */
 function tabMenuHandler(tabControlInfo, container) {
-	let event = new TabActivateEvent();
+	container.onActivate(createEventInfo(tabControlInfo));
+}
+
+/**
+ * @param {Object} tabControlInfo 
+ * @param {TabContainer} container
+ * @returns {TabContainerEvent}
+ */
+function createEventInfo(tabControlInfo) {
+	let event = new TabContainerEvent();
 	event.originalTarget = tabControlInfo.originalTarget;
 	event.control = tabControlInfo.item;
-	container.onActivate(event);
+	event.index = tabControlInfo.index;
+	return event;
 }
 
 /**
  * @param {TabContainer} container 
  * @param {HTMLElement} tabElement 
  */
-function getTabAndIndex(container, tabElement) {
+function getTabControlInfo(container, tabElement) {
 	for (var i = 0; i < container.tabs.items.length; i++) {
 		if (tabElement == container.tabs.items[i].element) {
 			return {

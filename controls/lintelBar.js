@@ -78,9 +78,8 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 					text: 'Session 2'
 				}
 			],
-			onTabActivate: (e) => {
-				console.log(e);
-				return false;
+			onTabActivate: (e, callback) => {
+				callback(true);
 			}
 		});
 

@@ -1,4 +1,6 @@
 const constants = require('../../constants');
+// eslint-disable-next-line no-unused-vars
+const { TabContainerEvent } = require('../events/tabContainerEvent');
 const { CreateContainerOptions } = require('./createContainerOptions');
 const defaultFunction = () => { return true; };
 // eslint-disable-next-line no-unused-vars
@@ -76,6 +78,9 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 		_CreateTabContainerOptions_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>boolean}
+	 */
 	get onTabActivate() {
 		return _CreateTabContainerOptions_onTabActivate.get(this);
 	}

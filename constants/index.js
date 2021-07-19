@@ -73,7 +73,8 @@ function defineConstants() {
 			string: 'string',
 			function: 'function',
 			object: 'object',
-			boolean: 'boolean'
+			boolean: 'boolean',
+			number:'number'
 		},
 		controls: {
 			position: {
