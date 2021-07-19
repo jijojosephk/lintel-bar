@@ -15,21 +15,21 @@ function defineConstants() {
 		},
 		css: {
 			columns: {
-				column: 'lintel-bar-container-column',
+				column: 'lb-container-column',
 				left: 'left',
 				middle: 'middle',
 				right: 'right'
 			},
 			controls: {
-				title: 'lintel-bar-title',
-				lintelBar: 'lintel-bar',
-				control: 'lintel-bar-control',
-				container: 'lintel-bar-container',
-				titleBarDragRegion: 'lintel-bar-drag-region',
-				button: 'lintel-bar-button',
-				tab: 'lintel-bar-tab',
-				icon: 'lintel-bar-control-icon',
-				tabIconContainer: 'lintel-bar-tab-icon-container'
+				title: 'lb-title',
+				lintelBar: 'lb',
+				control: 'lb-control',
+				container: 'lb-container',
+				titleBarDragRegion: 'lb-drag-region',
+				button: 'lb-button',
+				tab: 'lb-tab',
+				icon: 'lb-control-icon',
+				tabIconContainer: 'lb-tab-icon-container'
 			},
 			fontIcons: {
 				primary: 'mdi',
@@ -89,8 +89,8 @@ function defineConstants() {
 			},
 			roles: {
 				tab: 'tab',
-				iconMenu: 'icon-menu',
-				iconClose: 'icon-close'
+				iconMenu: 'iconmenu',
+				iconClose: 'iconclose'
 			}
 		}
 	};

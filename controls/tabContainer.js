@@ -1,16 +1,17 @@
 const { Container } = require('./container');
+const { TabActivateEvent } = require('./events/tabActivateEvent');
 // eslint-disable-next-line no-unused-vars
 const { List } = require('./list');
 const { CreateTabContainerOptions } = require('./options/createTabContainerOptions');
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton } = require('./windowButtons');
 const constants = require('../constants');
-const defaultFunction = () => { };
+const defaultFunction = () => { return true; };
 const tabEventHandlers = {
 	click: {
 		tab: tabActivateHandler,
-		'icon-menu': tabActivateHandler,
-		'icon-close': tabActivateHandler
+		iconmenu: tabMenuHandler,
+		iconclose: tabCloseHandler
 	}
 };
 
@@ -28,12 +29,12 @@ class TabContainer extends Container {
 	constructor(options = {}) {
 		const params = CreateTabContainerOptions.fromJSON(options);
 		super(params);
-		this.onAdd = options.onTabAdd;
-		this.onAdded = options.onTabAdded;
-		this.onRemove = options.onTabRemove;
-		this.onRemoved = options.onTabRemoved;
-		this.onActivate = options.onTabActivate;
-		this.onActivated = options.onTabActivated;
+		this.onTabAdd = options.onTabAdd;
+		this.onTabAdded = options.onTabAdded;
+		this.onTabClose = options.onTabClose;
+		this.onTabClosed = options.onTabClosed;
+		this.onTabActivate = options.onTabActivate;
+		this.onTabActivated = options.onTabActivated;
 		_TabContainer_tabs.set(this, new List());
 
 		for (const tabOption of options.items) {
@@ -81,22 +82,25 @@ class TabContainer extends Container {
 		_TabContainer_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 
-	get onTabRemove() {
+	get onTabClose() {
 		return _TabContainer_onTabRemove.get(this);
 	}
 
-	set onTabRemove(value) {
+	set onTabClose(value) {
 		_TabContainer_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 
-	get onTabRemoved() {
+	get onTabClosed() {
 		return _TabContainer_onTabRemoved.get(this);
 	}
 
-	set onTabRemoved(value) {
+	set onTabClosed(value) {
 		_TabContainer_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 
+	/**
+	 * @type {(event: TabActivateEvent)=>boolean}
+	 */
 	get onTabActivate() {
 		return _TabContainer_onTabActivate.get(this);
 	}
@@ -133,11 +137,44 @@ function tabClick(e, container) {
 	if (!role) return;
 	let tabElement = getTabElement(e.target, role);
 	let tabControlInfo = getTabAndIndex(container, tabElement);
-	tabEventHandlers.click[role](tabControlInfo);
+	tabControlInfo.originalTarget = e.target;
+	tabEventHandlers.click[role](tabControlInfo, container);
 }
 
-function tabActivateHandler(tabControlInfo) {
-	console.log(tabControlInfo);
+/**
+ * @param {Object} tabControlInfo 
+ * @param {TabContainer} container 
+ */
+function tabActivateHandler(tabControlInfo, container) {
+	let event = new TabActivateEvent();
+	event.originalTarget = tabControlInfo.originalTarget;
+	event.control = tabControlInfo.item;
+	let response = container.onTabActivate(event);
+	if (typeof (response) == constants.types.boolean && !response) {
+		console.log('cancelled');
+	}
+}
+
+/**
+ * @param {Object} tabControlInfo 
+ * @param {TabContainer} container 
+ */
+function tabCloseHandler(tabControlInfo, container) {
+	let event = new TabActivateEvent();
+	event.originalTarget = tabControlInfo.originalTarget;
+	event.control = tabControlInfo.item;
+	container.onTabClose(event);
+}
+
+/**
+ * @param {Object} tabControlInfo 
+ * @param {TabContainer} container 
+ */
+function tabMenuHandler(tabControlInfo, container) {
+	let event = new TabActivateEvent();
+	event.originalTarget = tabControlInfo.originalTarget;
+	event.control = tabControlInfo.item;
+	container.onActivate(event);
 }
 
 /**

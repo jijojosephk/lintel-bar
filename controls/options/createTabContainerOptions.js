@@ -1,6 +1,6 @@
 const constants = require('../../constants');
 const { CreateContainerOptions } = require('./createContainerOptions');
-const defaultFunction = () => { };
+const defaultFunction = () => { return true; };
 // eslint-disable-next-line no-unused-vars
 const { CreateTabOptions } = require('./createTabOptions');
 let _CreateTabContainerOptions_showAddButton = new WeakMap();
@@ -17,12 +17,12 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 	constructor(options = {}) {
 		super(options);
 		this.showAddButton = options.showAddButton;
-		this.onAdd = options.onTabAdd;
-		this.onAdded = options.onTabAdded;
-		this.onRemove = options.onTabRemove;
-		this.onRemoved = options.onTabRemoved;
-		this.onActivate = options.onTabActivate;
-		this.onActivated = options.onTabActivated;
+		this.onTabAdd = options.onTabAdd;
+		this.onTabAdded = options.onTabAdded;
+		this.onTabClose = options.onTabClose;
+		this.onTabClosed = options.onTabClosed;
+		this.onTabActivate = options.onTabActivate;
+		this.onTabActivated = options.onTabActivated;
 	}
 
 	/**
@@ -60,19 +60,19 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 		_CreateTabContainerOptions_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 
-	get onTabRemove() {
+	get onTabClose() {
 		return _CreateTabContainerOptions_onTabRemove.get(this);
 	}
 
-	set onTabRemove(value) {
+	set onTabClose(value) {
 		_CreateTabContainerOptions_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 
-	get onTabRemoved() {
+	get onTabClosed() {
 		return _CreateTabContainerOptions_onTabRemoved.get(this);
 	}
 
-	set onTabRemoved(value) {
+	set onTabClosed(value) {
 		_CreateTabContainerOptions_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
 	}
 

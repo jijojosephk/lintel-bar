@@ -6,7 +6,7 @@ body {
   font-weight: bold;
 }
 
-.lintel-bar {
+.lb {
   width: 100%;
   height: 30px !important;
   background-color: #464775;
@@ -18,7 +18,7 @@ body {
   top: 0;
 }
 
-.lintel-bar-drag-region {
+.lb-drag-region {
   z-index: -1;
   width: 100%;
   height: inherit;
@@ -28,17 +28,17 @@ body {
   top: 0;
 }
 
-.lintel-bar-control {
+.lb-control {
   -webkit-app-region: no-drag;
   height: 100%;
   display: flex;
 }
 
-.lintel-bar-control.dragable {
+.lb-control.dragable {
   -webkit-app-region: drag;
 }
 
-.lintel-bar-control.lintel-bar-button {
+.lb-control.lb-button {
   align-items: center;
   text-align: center;
   font-size: 1.5rem;
@@ -49,18 +49,18 @@ body {
   opacity: 0.8;
 }
 
-.lintel-bar-control.lintel-bar-button.lintel-bar-tab {
+.lb-control.lb-button.lb-tab {
   font-size: 1rem;
   margin-left: 0;
   padding-right: 0;
 }
 
-.lintel-bar-control.lintel-bar-button:hover {
+.lb-control.lb-button:hover {
   background-color: #333;
   opacity: 1;
 }
 
-.lintel-bar-control.lintel-bar-button.close:hover {
+.lb-control.lb-button.close:hover {
   background-color: red;
 }
 
@@ -74,42 +74,42 @@ body {
   margin-left: auto;
 }
 
-.lintel-bar-control.lintel-bar-title {
+.lb-control.lb-title {
   color: #fff;
   width: 100%;
   justify-content: center;
 }
 
-.lintel-bar-container-column {
+.lb-container-column {
   display: flex;
 }
 
-.lintel-bar-container-column.middle {
+.lb-container-column.middle {
   flex: 1;
 }
 
-.lintel-bar-control.lintel-bar-button.back,
-.lintel-bar-control.lintel-bar-button.forward {
+.lb-control.lb-button.back,
+.lb-control.lb-button.forward {
   margin-left: 0;
   font-size: 1.75rem;
   padding: 0;
   cursor: pointer;
 }
 
-.lintel-bar-control.lintel-bar-button.lintel-bar-tab i {
+.lb-control.lb-button.lb-tab i {
   font-size: 1.5rem;
   cursor: pointer;
 }
 
-.lintel-bar-control.lintel-bar-button.lintel-bar-tab i.close:hover {
+.lb-control.lb-button.lb-tab i.close:hover {
   color: red;
 }
 
-.lintel-bar-control.lintel-bar-button.lintel-bar-tab i.menu:hover {
+.lb-control.lb-button.lb-tab i.menu:hover {
   color: blue;
 }
 
-.lintel-bar-tab-icon-container {
+.lb-tab-icon-container {
   background-color: inherit;
   margin-left: 0.25rem;
   height: 100%;
