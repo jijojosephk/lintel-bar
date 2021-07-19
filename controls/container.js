@@ -2,7 +2,7 @@ const constants = require('../constants');
 const { Control } = require('./control');
 const { List } = require('./list');
 // eslint-disable-next-line no-unused-vars
-const { CreateContainerOptions } = require('./createContainerOptions');
+const { CreateContainerOptions } = require('./options/createContainerOptions');
 let _Container_controls = new WeakMap();
 let _Container_left_column = new WeakMap();
 let _Container_middle_column = new WeakMap();

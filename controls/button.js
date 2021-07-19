@@ -2,7 +2,7 @@ const constants = require('../constants');
 const { Control } = require('./control');
 const { FontIcon } = require('./icons');
 // eslint-disable-next-line no-unused-vars
-const { CreateButtonOptions } = require('./createButtonOptions');
+const { CreateButtonOptions } = require('./options/createButtonOptions');
 class Button extends Control {
 	/**
 	 * Creates a new button

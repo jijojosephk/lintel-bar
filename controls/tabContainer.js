@@ -1,12 +1,20 @@
 const { Container } = require('./container');
 // eslint-disable-next-line no-unused-vars
 const { List } = require('./list');
-const { CreateTabContainerOptions } = require('./createTabContainerOptions');
+const { CreateTabContainerOptions } = require('./options/createTabContainerOptions');
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton } = require('./windowButtons');
 const constants = require('../constants');
 const defaultFunction = () => { };
+const tabEventHandlers = {
+	click: {
+		tab: tabActivateHandler,
+		'icon-menu': tabActivateHandler,
+		'icon-close': tabActivateHandler
+	}
+};
 
+let _TabContainer_tabs = new WeakMap();
 let _TabContainer_onTabAdd = new WeakMap();
 let _TabContainer_onTabAdded = new WeakMap();
 let _TabContainer_onTabRemove = new WeakMap();
@@ -26,12 +34,14 @@ class TabContainer extends Container {
 		this.onRemoved = options.onTabRemoved;
 		this.onActivate = options.onTabActivate;
 		this.onActivated = options.onTabActivated;
-		
+		_TabContainer_tabs.set(this, new List());
+
 		for (const tabOption of options.items) {
 			tabOption.position = constants.controls.position.center;
 			let tabButton = new Tab(tabOption);
 			tabButton.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
 			this.items.add(tabButton);
+			this.tabs.add(tabButton);
 		}
 
 		this.items.add(new BackButton({
@@ -51,8 +61,8 @@ class TabContainer extends Container {
 	/**
 	 * @type {List<Tab>}
 	 */
-	get items() {
-		return super.items;
+	get tabs() {
+		return _TabContainer_tabs.get(this);
 	}
 
 	get onTabAdd() {
@@ -118,23 +128,42 @@ class TabContainer extends Container {
  */
 function tabClick(e, container) {
 	let role = e.target.getAttribute(constants.html.attributes.role);
+	// Tab controls have 3 different roles.
+	// Tab, Close Icon, Menu Icon
 	if (!role) return;
+	let tabElement = getTabElement(e.target, role);
+	let tabControlInfo = getTabAndIndex(container, tabElement);
+	tabEventHandlers.click[role](tabControlInfo);
+}
 
-	let targetTab = role == constants.html.roles.tab ?
-		e.target : getTabElement(e.target, role);
+function tabActivateHandler(tabControlInfo) {
+	console.log(tabControlInfo);
+}
 
-	container.items.items.forEach(i => {
-		console.log(i, targetTab);
-	});
+/**
+ * @param {TabContainer} container 
+ * @param {HTMLElement} tabElement 
+ */
+function getTabAndIndex(container, tabElement) {
+	for (var i = 0; i < container.tabs.items.length; i++) {
+		if (tabElement == container.tabs.items[i].element) {
+			return {
+				index: i,
+				item: container.tabs.items[i]
+			};
+		}
+	}
 }
 
 /**
  * @param {HTMLElement} clickTarget 
  */
 function getTabElement(clickTarget, role) {
-	return role == constants.html.roles.iconMenu || role == constants.html.roles.iconClose ?
-		clickTarget.parentElement.parentElement :
-		null;
+	return role == constants.html.roles.tab ?
+		clickTarget :
+		role == constants.html.roles.iconMenu || role == constants.html.roles.iconClose ?
+			clickTarget.parentElement.parentElement :
+			null;
 }
 
 module.exports = { TabContainer };

@@ -1,4 +1,4 @@
-const constants = require('../constants');
+const constants = require('../../constants');
 const { CreateControlOptions } = require('./createControlOptions');
 class CreateWindowTitleOptions extends CreateControlOptions {
 	/**

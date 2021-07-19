@@ -1,7 +1,7 @@
 const constants = require('../constants');
 const { Control } = require('./control');
 // eslint-disable-next-line no-unused-vars
-const { CreateWindowTitleOptions } = require('./createWindowTitleOptions');
+const { CreateWindowTitleOptions } = require('./options/createWindowTitleOptions');
 class WindowTitle extends Control {
 	/**
 	 * 

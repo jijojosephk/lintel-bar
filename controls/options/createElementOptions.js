@@ -1,4 +1,4 @@
-const constants = require('../constants');
+const constants = require('../../constants');
 
 let _CreateElementOptions_text = new WeakMap();
 let _CreateElementOptions_title = new WeakMap();
@@ -40,9 +40,6 @@ class CreateElementOptions {
 		}
 	}
 
-	/**
-	 * @type {(event: ControlEvent)=>void}
-	 */
 	get onClick() {
 		return _CreateElementOptions_onClick.get(this);
 	}

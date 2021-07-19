@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const { CreateTabOptions } = require('./createTabOptions');
+const { CreateTabOptions } = require('./options/createTabOptions');
 const { Button } = require('./button');
 const constants = require('../constants');
 const { FontIcon } = require('./icons');

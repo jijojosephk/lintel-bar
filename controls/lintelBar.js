@@ -4,7 +4,7 @@ const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
 const { TabContainer } = require('./tabContainer');
 // eslint-disable-next-line no-unused-vars
-const { CreateLintelBarOptions } = require('./createLintelBarOptions');
+const { CreateLintelBarOptions } = require('./options/createLintelBarOptions');
 const { WindowTitle } = require('./windowTitle');
 class LintelBar extends Container {
 	/**

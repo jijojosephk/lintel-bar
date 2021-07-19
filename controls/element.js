@@ -1,6 +1,6 @@
 const constants = require('../constants');
 // eslint-disable-next-line no-unused-vars
-const { CreateElementOptions } = require('./createElementOptions');
+const { CreateElementOptions } = require('./options/createElementOptions');
 
 let _Element_text = new WeakMap();
 let _Element_title = new WeakMap();
@@ -47,9 +47,6 @@ class Element {
 		}
 	}
 
-	/**
-	 * @type {(event: ControlEvent)=>void}
-	 */
 	get onClick() {
 		return _Element_onClick.get(this);
 	}

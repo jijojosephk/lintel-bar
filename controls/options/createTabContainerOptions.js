@@ -1,4 +1,4 @@
-const constants = require('../constants');
+const constants = require('../../constants');
 const { CreateContainerOptions } = require('./createContainerOptions');
 const defaultFunction = () => { };
 // eslint-disable-next-line no-unused-vars

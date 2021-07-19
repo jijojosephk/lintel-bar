@@ -1,6 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-const { Control } = require('./control');
-// eslint-disable-next-line no-unused-vars
 const { CreateControlOptions } = require('./createControlOptions');
 let _CreateContainerOptions_items = new WeakMap();
 class CreateContainerOptions extends CreateControlOptions {

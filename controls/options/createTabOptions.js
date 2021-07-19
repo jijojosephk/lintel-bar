@@ -1,4 +1,4 @@
-const constants = require('../constants');
+const constants = require('../../constants');
 const { CreateControlOptions } = require('./createControlOptions');
 
 let _CreateTabOptions_showMenuIcon = new WeakMap();

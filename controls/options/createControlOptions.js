@@ -1,4 +1,4 @@
-const constants = require('../constants');
+const constants = require('../../constants');
 const { CreateElementOptions } = require('./createElementOptions');
 let _CreateControlOptions_theme = new WeakMap();
 let _CreateControlOptions_icon = new WeakMap();

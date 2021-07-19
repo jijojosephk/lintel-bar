@@ -2,7 +2,7 @@ const constants = require('../constants');
 const { Element } = require('./element');
 // eslint-disable-next-line no-unused-vars
 const { BrowserWindow } = require('electron');
-const { CreateControlOptions } = require('./createControlOptions');
+const { CreateControlOptions } = require('./options/createControlOptions');
 
 let _window = require('@electron/remote').getCurrentWindow();
 let _Control_theme = new WeakMap();
