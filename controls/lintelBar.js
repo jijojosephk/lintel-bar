@@ -79,7 +79,10 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 				}
 			],
 			onTabActivate: (e, callback) => {
-				callback(true);
+				callback(false);
+			},
+			onTabClose: (e, callback) => {
+				callback(false);
 			}
 		});
 

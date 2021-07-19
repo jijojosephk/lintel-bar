@@ -2,7 +2,10 @@ const constants = require('../../constants');
 // eslint-disable-next-line no-unused-vars
 const { TabContainerEvent } = require('../events/tabContainerEvent');
 const { CreateContainerOptions } = require('./createContainerOptions');
-const defaultFunction = () => { return true; };
+// eslint-disable-next-line no-unused-vars
+const defaultEventHandler = (item) => { };
+// eslint-disable-next-line no-unused-vars
+const defaultCancellableEventHandler = (item, callback) => { callback(false); };
 // eslint-disable-next-line no-unused-vars
 const { CreateTabOptions } = require('./createTabOptions');
 let _CreateTabContainerOptions_showAddButton = new WeakMap();
@@ -46,55 +49,70 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 		_CreateTabContainerOptions_showAddButton.set(this, typeof (value) == 'boolean' ? value : false);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 */
 	get onTabAdd() {
 		return _CreateTabContainerOptions_onTabAdd.get(this);
 	}
 
 	set onTabAdd(value) {
-		_CreateTabContainerOptions_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_CreateTabContainerOptions_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
 	get onTabAdded() {
 		return _CreateTabContainerOptions_onTabAdded.get(this);
 	}
 
 	set onTabAdded(value) {
-		_CreateTabContainerOptions_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_CreateTabContainerOptions_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 */
 	get onTabClose() {
 		return _CreateTabContainerOptions_onTabRemove.get(this);
 	}
 
 	set onTabClose(value) {
-		_CreateTabContainerOptions_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_CreateTabContainerOptions_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
 	get onTabClosed() {
 		return _CreateTabContainerOptions_onTabRemoved.get(this);
 	}
 
 	set onTabClosed(value) {
-		_CreateTabContainerOptions_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_CreateTabContainerOptions_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
 	/**
-	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>boolean}
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
 	 */
 	get onTabActivate() {
 		return _CreateTabContainerOptions_onTabActivate.get(this);
 	}
 
 	set onTabActivate(value) {
-		_CreateTabContainerOptions_onTabActivate.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_CreateTabContainerOptions_onTabActivate.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
 	get onTabActivated() {
 		return _CreateTabContainerOptions_onTabActivated.get(this);
 	}
 
 	set onTabActivated(value) {
-		_CreateTabContainerOptions_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_CreateTabContainerOptions_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
 	static fromJSON(object) {

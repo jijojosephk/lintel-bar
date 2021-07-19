@@ -6,7 +6,10 @@ const { CreateTabContainerOptions } = require('./options/createTabContainerOptio
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton } = require('./windowButtons');
 const constants = require('../constants');
-const defaultFunction = () => { return true; };
+// eslint-disable-next-line no-unused-vars
+const defaultEventHandler = (event) => { };
+// eslint-disable-next-line no-unused-vars
+const defaultCancellableEventHandler = (event, callback) => { callback(false); };
 const tabEventHandlers = {
 	click: {
 		tab: tabActivateHandler,
@@ -36,7 +39,6 @@ class TabContainer extends Container {
 		this.onTabActivate = options.onTabActivate;
 		this.onTabActivated = options.onTabActivated;
 		_TabContainer_tabs.set(this, new List());
-
 		for (const tabOption of options.items) {
 			tabOption.position = constants.controls.position.center;
 			let tabButton = new Tab(tabOption);
@@ -66,55 +68,70 @@ class TabContainer extends Container {
 		return _TabContainer_tabs.get(this);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 */
 	get onTabAdd() {
 		return _TabContainer_onTabAdd.get(this);
 	}
 
 	set onTabAdd(value) {
-		_TabContainer_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_TabContainer_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
 	get onTabAdded() {
 		return _TabContainer_onTabAdded.get(this);
 	}
 
 	set onTabAdded(value) {
-		_TabContainer_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_TabContainer_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 */
 	get onTabClose() {
 		return _TabContainer_onTabRemove.get(this);
 	}
 
 	set onTabClose(value) {
-		_TabContainer_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_TabContainer_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
 	get onTabClosed() {
 		return _TabContainer_onTabRemoved.get(this);
 	}
 
 	set onTabClosed(value) {
-		_TabContainer_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_TabContainer_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
 	/**
-	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>boolean}
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
 	 */
 	get onTabActivate() {
 		return _TabContainer_onTabActivate.get(this);
 	}
 
 	set onTabActivate(value) {
-		_TabContainer_onTabActivate.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_TabContainer_onTabActivate.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
 	}
 
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
 	get onTabActivated() {
 		return _TabContainer_onTabActivated.get(this);
 	}
 
 	set onTabActivated(value) {
-		_TabContainer_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultFunction);
+		_TabContainer_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
 	applyStyles() {
@@ -123,6 +140,14 @@ class TabContainer extends Container {
 
 	applyEventListeners() {
 		super.applyEventListeners();
+		this.tabs.onRemoved = (tab, index) => {
+			this.items.remove(index);
+			tab.element.remove();
+			let event = new TabContainerEvent();
+			event.control = tab;
+			event.index = index;
+			this.onTabClosed(event);
+		};
 	}
 }
 
@@ -146,9 +171,10 @@ function tabClick(e, container) {
  * @param {TabContainer} container 
  */
 function tabActivateHandler(tabControlInfo, container) {
-	container.onTabActivate(createEventInfo(tabControlInfo), cancel => {
+	let event = createEventInfo(tabControlInfo);
+	container.onTabActivate(event, cancel => {
 		if (!cancel) {
-			// To do
+			container.onTabActivated(event);
 		}
 	});
 }
@@ -158,7 +184,12 @@ function tabActivateHandler(tabControlInfo, container) {
  * @param {TabContainer} container 
  */
 function tabCloseHandler(tabControlInfo, container) {
-	container.onTabClose(createEventInfo(tabControlInfo));
+	container.onTabClose(createEventInfo(tabControlInfo), cancel => {
+		if (!cancel) {
+			// To do
+			container.tabs.remove(tabControlInfo.index);
+		}
+	});
 }
 
 /**

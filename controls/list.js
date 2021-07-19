@@ -58,9 +58,9 @@ class List {
 		let item = items[index];
 		if (item) {
 			items.splice(index, 1);
+			this.onRemoved(item, index);
 		}
 
-		this.onRemoved(item);
 		return item;
 	}
 
@@ -72,12 +72,13 @@ class List {
 		 * @type {Array<T>}
 		 */
 		let items = _List_items.get(this);
+		let count = items.length;
 		let item = items.pop();
 		while (item) {
 			if (typeof (callback) == 'function') {
 				callback(item);
 			}
-			this.onRemoved(item);
+			this.onRemoved(item, --count);
 			item = items.pop();
 		}
 	}
@@ -96,7 +97,7 @@ class List {
 	}
 
 	/**
-	 * @type {(item:T)=>void}
+	 * @type {(item:T, index:number)=>void}
 	 */
 	get onRemoved() {
 		return _List_onRemoved.get(this);
