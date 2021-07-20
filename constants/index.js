@@ -52,10 +52,13 @@ function defineConstants() {
 				forward: 'forward',
 				menu: 'menu'
 			},
-			controlPosition: {
+			controlPositions: {
 				left: 'position-left',
 				center: 'position-center',
 				right: 'position-right'
+			},
+			controlStates: {
+				active: 'active'
 			},
 			dragable: 'dragable'
 		},
@@ -74,7 +77,7 @@ function defineConstants() {
 			function: 'function',
 			object: 'object',
 			boolean: 'boolean',
-			number:'number'
+			number: 'number'
 		},
 		controls: {
 			position: {
@@ -86,7 +89,8 @@ function defineConstants() {
 		html: {
 			attributes: {
 				role: 'data-role',
-				action: 'data-action'
+				action: 'data-action',
+				disabled: 'disabled'
 			},
 			roles: {
 				tab: 'tab',

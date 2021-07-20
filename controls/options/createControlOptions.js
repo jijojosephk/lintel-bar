@@ -4,6 +4,8 @@ let _CreateControlOptions_theme = new WeakMap();
 let _CreateControlOptions_icon = new WeakMap();
 let _CreateControlOptions_position = new WeakMap();
 let _CreateControlOptions_allowDrag = new WeakMap();
+let _CreateControlOptions_enabled = new WeakMap();
+let _CreateControlOptions_active = new WeakMap();
 class CreateControlOptions extends CreateElementOptions {
 	/**
 	 * Creates a new CreateControlOptions instance
@@ -15,6 +17,8 @@ class CreateControlOptions extends CreateElementOptions {
 		this.icon = options.icon;
 		this.position = options.position;
 		this.allowDrag = options.allowDrag;
+		this.enabled = options.enabled;
+		this.active = options.active;
 	}
 
 	/**
@@ -67,6 +71,22 @@ class CreateControlOptions extends CreateElementOptions {
 
 	set allowDrag(value) {
 		_CreateControlOptions_allowDrag.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
+	get enabled() {
+		return _CreateControlOptions_enabled.get(this) ?? true;
+	}
+
+	set enabled(value) {
+		_CreateControlOptions_enabled.set(this, typeof (value) == constants.types.boolean ? value : true);
+	}
+
+	get active() {
+		return _CreateControlOptions_active.get(this) ?? false;
+	}
+
+	set active(value) {
+		_CreateControlOptions_active.set(this, typeof (value) == constants.types.boolean ? value : false);
 	}
 
 	static fromJSON(object) {

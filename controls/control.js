@@ -9,6 +9,8 @@ let _Control_theme = new WeakMap();
 let _Control_icon = new WeakMap();
 let _Control_position = new WeakMap();
 let _Control_allowDrag = new WeakMap();
+let _Control_enabled = new WeakMap();
+let _Control_active = new WeakMap();
 class Control extends Element {
 	/**
 	 * Creates a new control
@@ -22,6 +24,8 @@ class Control extends Element {
 		this.onClick = params.onClick;
 		this.position = params.position;
 		this.allowDrag = params.allowDrag;
+		this.enabled = params.enabled;
+		this.active = params.active;
 		if (this.constructor.name == Control.name) {
 			this.applyStyles();
 			this.applyEventListeners();
@@ -84,9 +88,48 @@ class Control extends Element {
 		_Control_allowDrag.set(this, typeof (value) == constants.types.boolean ? value : false);
 	}
 
+	get enabled() {
+		return _Control_enabled.get(this) ?? true;
+	}
+
+	set enabled(value) {
+		_Control_enabled.set(this, typeof (value) == constants.types.boolean ? value : true);
+		if (this.element) {
+			if (this.enabled) {
+				this.element.removeAttribute(constants.html.attributes.disabled);
+			} else {
+				this.element.setAttribute(constants.html.attributes.disabled, true);
+			}
+		}
+	}
+
+	get active() {
+		return _Control_active.get(this) ?? false;
+	}
+
+	set active(value) {
+		_Control_active.set(this, typeof (value) == constants.types.boolean ? value : false);
+		if (this.element) {
+			if (this.active) {
+				this.element.classList.add(constants.css.controlStates.active);
+			} else {
+				this.element.classList.remove(constants.css.controlStates.active);
+			}
+		}
+	}
+
 	applyStyles() {
 		super.applyStyles();
 		this.element.classList.add(...[constants.css.controls.control]);
+
+		if (!this.enabled) {
+			this.element.setAttribute(constants.html.attributes.disabled, constants.html.attributes.disabled);
+		}
+
+		if (this.active) {
+			this.element.classList.add(constants.css.controlStates.active);
+		}
+
 		if (this.allowDrag) {
 			this.element.classList.add(constants.css.dragable);
 		}
