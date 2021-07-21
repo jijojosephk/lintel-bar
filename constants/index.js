@@ -58,7 +58,8 @@ function defineConstants() {
 				right: 'position-right'
 			},
 			controlStates: {
-				active: 'active'
+				active: 'active',
+				disabled: 'disabled'
 			},
 			dragable: 'dragable'
 		},

@@ -96,9 +96,11 @@ class Control extends Element {
 		_Control_enabled.set(this, typeof (value) == constants.types.boolean ? value : true);
 		if (this.element) {
 			if (this.enabled) {
-				this.element.removeAttribute(constants.html.attributes.disabled);
+				this.element.style.pointerEvents = 'auto';
+				this.element.classList.remove(constants.css.controlStates.disabled);
 			} else {
-				this.element.setAttribute(constants.html.attributes.disabled, true);
+				this.element.style.pointerEvents = 'none';
+				this.element.classList.add(constants.css.controlStates.disabled);
 			}
 		}
 	}
@@ -123,7 +125,8 @@ class Control extends Element {
 		this.element.classList.add(...[constants.css.controls.control]);
 
 		if (!this.enabled) {
-			this.element.setAttribute(constants.html.attributes.disabled, constants.html.attributes.disabled);
+			this.element.style.pointerEvents = 'none';
+			this.element.classList.add(constants.css.controlStates.disabled);
 		}
 
 		if (this.active) {

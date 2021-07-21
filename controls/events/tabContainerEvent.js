@@ -7,6 +7,9 @@ class TabContainerEvent extends ControlEvent {
 		super();
 	}
 
+	/**
+	 * @type {number}
+	 */
 	get index() {
 		return _TabContainerEvent_index.get(this) ?? -1;
 	}

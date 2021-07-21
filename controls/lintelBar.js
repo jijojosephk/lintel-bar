@@ -72,8 +72,7 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 		let tabContainer = new TabContainer({
 			items: [
 				{
-					text: 'Session 1',
-					enabled: false
+					text: 'Session 1'
 				},
 				{
 					text: 'Session 2'

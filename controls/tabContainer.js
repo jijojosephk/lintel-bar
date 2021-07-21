@@ -174,6 +174,7 @@ function tabActivateHandler(tabControlInfo, container) {
 	let event = createEventInfo(tabControlInfo);
 	container.onTabActivate(event, cancel => {
 		if (!cancel) {
+			event.control.active = true;
 			container.onTabActivated(event);
 		}
 	});

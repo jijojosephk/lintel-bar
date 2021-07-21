@@ -114,3 +114,11 @@ body {
   margin-left: 0.25rem;
   height: 100%;
 }
+
+a.lb-control.active.lb-button.lb-tab {
+	background-color: #333;
+}
+
+a.lb-control.disabled.lb-button.lb-tab {
+	background-color: dimgray;
+}
