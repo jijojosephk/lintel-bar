@@ -25,6 +25,7 @@ let _TabContainer_onTabRemove = new WeakMap();
 let _TabContainer_onTabRemoved = new WeakMap();
 let _TabContainer_onTabActivate = new WeakMap();
 let _TabContainer_onTabActivated = new WeakMap();
+let _TabContainer_selectedIndex = new WeakMap();
 class TabContainer extends Container {
 	/**
 	 * @param {CreateTabContainerOptions} options 
@@ -134,6 +135,19 @@ class TabContainer extends Container {
 		_TabContainer_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
+	get selectedIndex() {
+		return _TabContainer_selectedIndex.get(this) ?? -1;
+	}
+
+	set selectedIndex(value) {
+		if (typeof (value) == constants.types.number && value > -1 && value < this.tabs.items.length) {
+			tabActivateHandler({
+				index: value,
+				item: this.tabs.get(value)
+			}, this);
+		}
+	}
+
 	applyStyles() {
 		super.applyStyles();
 	}
@@ -162,7 +176,6 @@ function tabClick(e, container) {
 	if (!role) return;
 	let tabElement = getTabElement(e.target, role);
 	let tabControlInfo = getTabControlInfo(container, tabElement);
-	tabControlInfo.originalTarget = e.target;
 	tabEventHandlers.click[role](tabControlInfo, container);
 }
 
@@ -175,6 +188,14 @@ function tabActivateHandler(tabControlInfo, container) {
 	container.onTabActivate(event, cancel => {
 		if (!cancel) {
 			event.control.active = true;
+			if (container.selectedIndex > -1) {
+				const previousTab = container.tabs.get(container.selectedIndex);
+				if (previousTab) {
+					previousTab.active = false;
+				}
+			}
+			_TabContainer_selectedIndex.set(container, event.index);
+			container.tabs.get(event.index).active = true;
 			container.onTabActivated(event);
 		}
 	});
@@ -185,10 +206,12 @@ function tabActivateHandler(tabControlInfo, container) {
  * @param {TabContainer} container 
  */
 function tabCloseHandler(tabControlInfo, container) {
-	container.onTabClose(createEventInfo(tabControlInfo), cancel => {
+	let event = createEventInfo(tabControlInfo);
+	container.onTabClose(event, cancel => {
 		if (!cancel) {
 			// To do
 			container.tabs.remove(tabControlInfo.index);
+			container.onTabClosed(event);
 		}
 	});
 }
@@ -208,7 +231,6 @@ function tabMenuHandler(tabControlInfo, container) {
  */
 function createEventInfo(tabControlInfo) {
 	let event = new TabContainerEvent();
-	event.originalTarget = tabControlInfo.originalTarget;
 	event.control = tabControlInfo.item;
 	event.index = tabControlInfo.index;
 	return event;
