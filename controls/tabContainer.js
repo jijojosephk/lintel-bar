@@ -3,6 +3,7 @@ const { TabContainerEvent } = require('./events/tabContainerEvent');
 // eslint-disable-next-line no-unused-vars
 const { List } = require('./list');
 const { CreateTabContainerOptions } = require('./options/createTabContainerOptions');
+const { CreateTabOptions } = require('./options/createTabOptions');
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton, AddButton } = require('./buttonTypes');
 const constants = require('../constants');
@@ -31,25 +32,27 @@ class TabContainer extends Container {
 	 * @param {CreateTabContainerOptions} options 
 	 */
 	constructor(options = {}) {
-		const params = CreateTabContainerOptions.fromJSON(options);
-		super(params);
-		this.onTabAdd = options.onTabAdd;
-		this.onTabAdded = options.onTabAdded;
-		this.onTabClose = options.onTabClose;
-		this.onTabClosed = options.onTabClosed;
-		this.onTabActivate = options.onTabActivate;
-		this.onTabActivated = options.onTabActivated;
-		_TabContainer_tabs.set(this, new List());
-		for (const tabOption of options.items) {
+		const tabContainerOptions = CreateTabContainerOptions.fromJSON(options);
+		super(tabContainerOptions);
+		this.onTabAdd = tabContainerOptions.onTabAdd;
+		this.onTabAdded = tabContainerOptions.onTabAdded;
+		this.onTabClose = tabContainerOptions.onTabClose;
+		this.onTabClosed = tabContainerOptions.onTabClosed;
+		this.onTabActivate = tabContainerOptions.onTabActivate;
+		this.onTabActivated = tabContainerOptions.onTabActivated;
+		const tabs = new List();
+		_TabContainer_tabs.set(this, tabs);
+		for (const tabOption of tabContainerOptions.items) {
 			tabOption.position = constants.controls.position.center;
-			let tabButton = new Tab(tabOption);
-			tabButton.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
-			this.items.add(tabButton);
-			this.tabs.add(tabButton);
+			let tab = new Tab(tabOption);
+			tab.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
+			this.items.add(tab);
+			tabs.add(tab);
 		}
 
 		this.items.add(new AddButton({
-			position: constants.controls.position.left
+			position: constants.controls.position.left,
+			onClick: () => this.addTab()
 		}));
 
 		this.items.add(new BackButton({
@@ -64,13 +67,6 @@ class TabContainer extends Container {
 			this.applyStyles();
 			this.applyEventListeners();
 		}
-	}
-
-	/**
-	 * @type {List<Tab>}
-	 */
-	get tabs() {
-		return _TabContainer_tabs.get(this);
 	}
 
 	/**
@@ -144,10 +140,11 @@ class TabContainer extends Container {
 	}
 
 	set selectedIndex(value) {
-		if (typeof (value) == constants.types.number && value > -1 && value < this.tabs.items.length) {
+		const tabs = getTabs(this);
+		if (typeof (value) == constants.types.number && value > -1 && value < tabs.items.length) {
 			tabActivateHandler(new TabControlInfo({
 				index: value,
-				item: this.tabs.get(value)
+				item: tabs.get(value)
 			}), this);
 		}
 	}
@@ -158,7 +155,8 @@ class TabContainer extends Container {
 
 	applyEventListeners() {
 		super.applyEventListeners();
-		this.tabs.onRemoved = (tab, index) => {
+		const tabs = getTabs(this);
+		tabs.onRemoved = (tab, index) => {
 			this.items.remove(index);
 			tab.element.remove();
 			let event = new TabContainerEvent();
@@ -166,6 +164,21 @@ class TabContainer extends Container {
 			event.index = index;
 			this.onTabClosed(event);
 		};
+	}
+
+	/**
+	 * 
+	 * @param {CreateTabOptions} tab 
+	 */
+	addTab(options = {}) {
+		const tabs = getTabs(this);
+		options.position = constants.controls.position.center;
+		const tabOptions = CreateTabOptions.fromJSON(options);
+		tabOptions.text = `Session ${tabs.items.length + 1}`;
+		const tab = new Tab(tabOptions);
+		tab.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
+		this.items.add(tab);
+		tabs.add(tab);
 	}
 }
 
@@ -192,14 +205,15 @@ function tabActivateHandler(tabControlInfo, container) {
 	container.onTabActivate(event, cancel => {
 		if (!cancel) {
 			event.control.active = true;
+			const tabs = getTabs(container);
 			if (container.selectedIndex > -1) {
-				const previousTab = container.tabs.get(container.selectedIndex);
+				const previousTab = tabs.get(container.selectedIndex);
 				if (previousTab) {
 					previousTab.active = false;
 				}
 			}
 			_TabContainer_selectedIndex.set(container, event.index);
-			container.tabs.get(event.index).active = true;
+			tabs.get(event.index).active = true;
 			container.onTabActivated(event);
 		}
 	});
@@ -211,10 +225,11 @@ function tabActivateHandler(tabControlInfo, container) {
  */
 function tabCloseHandler(tabControlInfo, container) {
 	let event = createEventInfo(tabControlInfo);
+	const tabs = getTabs(container);
 	container.onTabClose(event, cancel => {
 		if (!cancel) {
 			// To do
-			container.tabs.remove(tabControlInfo.index);
+			tabs.remove(tabControlInfo.index);
 			container.onTabClosed(event);
 		}
 	});
@@ -245,11 +260,12 @@ function createEventInfo(tabControlInfo) {
  * @param {HTMLElement} tabElement
  */
 function getTabControlInfo(container, tabElement) {
-	for (var i = 0; i < container.tabs.items.length; i++) {
-		if (tabElement == container.tabs.items[i].element) {
+	const tabs = getTabs(container);
+	for (var i = 0; i < tabs.items.length; i++) {
+		if (tabElement == tabs.items[i].element) {
 			return new TabControlInfo({
 				index: i,
-				item: container.tabs.get(i)
+				item: tabs.get(i)
 			});
 		}
 	}
@@ -264,6 +280,14 @@ function getTabElement(clickTarget, role) {
 		role == constants.html.roles.iconMenu || role == constants.html.roles.iconClose ?
 			clickTarget.parentElement.parentElement :
 			null;
+}
+
+/**
+ * @param {TabContainer} container 
+ * @returns {List<Tab>}
+ */
+function getTabs(container) {
+	return _TabContainer_tabs.get(container);
 }
 
 class TabControlInfo {

@@ -70,14 +70,9 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 		super.create(lintelBar);
 
 		let tabContainer = new TabContainer({
-			items: [
-				{
-					text: 'Session 1'
-				},
-				{
-					text: 'Session 2'
-				}
-			],
+			onTabAdd: (e, callback) => {
+				callback(false);
+			},
 			onTabActivate: (e, callback) => {
 				callback(false);
 			},
