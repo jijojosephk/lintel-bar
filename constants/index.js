@@ -41,7 +41,7 @@ function defineConstants() {
 				back: 'mdi-chevron-left',
 				forward: 'mdi-chevron-right',
 				menu: 'mdi-dots-vertical',
-				close: 'mdi-close-circle-outline'
+				close: 'mdi-close-box'
 			},
 			controlActions: {
 				minimize: 'minimize',

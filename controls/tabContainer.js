@@ -141,10 +141,10 @@ class TabContainer extends Container {
 
 	set selectedIndex(value) {
 		if (typeof (value) == constants.types.number && value > -1 && value < this.tabs.items.length) {
-			tabActivateHandler({
+			tabActivateHandler(new TabControlInfo({
 				index: value,
 				item: this.tabs.get(value)
-			}, this);
+			}), this);
 		}
 	}
 
@@ -180,7 +180,7 @@ function tabClick(e, container) {
 }
 
 /**
- * @param {Object} tabControlInfo 
+ * @param {TabControlInfo} tabControlInfo 
  * @param {TabContainer} container 
  */
 function tabActivateHandler(tabControlInfo, container) {
@@ -202,7 +202,7 @@ function tabActivateHandler(tabControlInfo, container) {
 }
 
 /**
- * @param {Object} tabControlInfo 
+ * @param {TabControlInfo} tabControlInfo 
  * @param {TabContainer} container 
  */
 function tabCloseHandler(tabControlInfo, container) {
@@ -217,15 +217,15 @@ function tabCloseHandler(tabControlInfo, container) {
 }
 
 /**
- * @param {Object} tabControlInfo 
+ * @param {TabControlInfo} tabControlInfo 
  * @param {TabContainer} container 
  */
+// eslint-disable-next-line no-unused-vars
 function tabMenuHandler(tabControlInfo, container) {
-	container.onActivate(createEventInfo(tabControlInfo));
 }
 
 /**
- * @param {Object} tabControlInfo 
+ * @param {TabControlInfo} tabControlInfo 
  * @param {TabContainer} container
  * @returns {TabContainerEvent}
  */
@@ -238,15 +238,15 @@ function createEventInfo(tabControlInfo) {
 
 /**
  * @param {TabContainer} container 
- * @param {HTMLElement} tabElement 
+ * @param {HTMLElement} tabElement
  */
 function getTabControlInfo(container, tabElement) {
 	for (var i = 0; i < container.tabs.items.length; i++) {
 		if (tabElement == container.tabs.items[i].element) {
-			return {
+			return new TabControlInfo({
 				index: i,
-				item: container.tabs.items[i]
-			};
+				item: container.tabs.get(i)
+			});
 		}
 	}
 }
@@ -260,6 +260,23 @@ function getTabElement(clickTarget, role) {
 		role == constants.html.roles.iconMenu || role == constants.html.roles.iconClose ?
 			clickTarget.parentElement.parentElement :
 			null;
+}
+
+class TabControlInfo {
+	/**
+	 * 
+	 * @param {TabControlInfo} tabControlInfo 
+	 */
+	constructor(tabControlInfo) {
+		/**
+		 * @type {number}
+		 */
+		this.index = tabControlInfo.index;
+		/**
+		 * @type {Tab}
+		 */
+		this.item = tabControlInfo.item;
+	}
 }
 
 module.exports = { TabContainer };

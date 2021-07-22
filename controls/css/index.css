@@ -1,4 +1,4 @@
-@import url('./fonts.css');
+@import url("./fonts.css");
 
 body {
   margin: 0;
@@ -52,7 +52,10 @@ body {
 .lb-control.lb-button.lb-tab {
   font-size: 1rem;
   margin-left: 0;
-  padding-right: 0;
+  padding-right: 0.25rem;
+  padding-left: 0.5rem;
+  opacity: 1;
+  cursor: pointer;
 }
 
 .lb-control.lb-button:hover {
@@ -97,7 +100,7 @@ body {
 }
 
 .lb-control.lb-button.lb-tab i {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   cursor: pointer;
 }
 
@@ -116,9 +119,9 @@ body {
 }
 
 a.lb-control.active.lb-button.lb-tab {
-	background-color: #333;
+  background-color: #333;
 }
 
 a.lb-control.disabled.lb-button.lb-tab {
-	background-color: dimgray;
+  background-color: dimgray;
 }

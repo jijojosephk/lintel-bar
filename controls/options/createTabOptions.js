@@ -2,6 +2,7 @@ const constants = require('../../constants');
 const { CreateControlOptions } = require('./createControlOptions');
 
 let _CreateTabOptions_showMenuIcon = new WeakMap();
+let _CreateTabOptions_showCloseIcon = new WeakMap();
 class CreateTabOptions extends CreateControlOptions {
 	/**
 	 * @param {CreateTabOptions} options 
@@ -9,6 +10,7 @@ class CreateTabOptions extends CreateControlOptions {
 	constructor(options = {}) {
 		super(options);
 		this.showMenuIcon = options.showMenuIcon;
+		this.showCloseIcon = options.showCloseIcon;
 	}
 
 	/**
@@ -20,6 +22,17 @@ class CreateTabOptions extends CreateControlOptions {
 
 	set showMenuIcon(value) {
 		_CreateTabOptions_showMenuIcon.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get showCloseIcon() {
+		return _CreateTabOptions_showCloseIcon.get(this) ?? true;
+	}
+
+	set showCloseIcon(value) {
+		_CreateTabOptions_showCloseIcon.set(this, typeof (value) == constants.types.boolean ? value : true);
 	}
 
 	static fromJSON(object) {
