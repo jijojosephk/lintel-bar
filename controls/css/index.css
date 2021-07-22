@@ -46,7 +46,6 @@ body {
   padding-right: 0.25rem;
   padding-left: 0.25rem;
   margin-left: 0.5rem;
-  opacity: 0.8;
 }
 
 .lb-control.lb-button.lb-tab {
@@ -54,13 +53,11 @@ body {
   margin-left: 0;
   padding-right: 0.25rem;
   padding-left: 0.5rem;
-  opacity: 1;
   cursor: pointer;
 }
 
 .lb-control.lb-button:hover {
   background-color: #333;
-  opacity: 1;
 }
 
 .lb-control.lb-button.close:hover {
@@ -92,16 +89,26 @@ body {
 }
 
 .lb-control.lb-button.back,
-.lb-control.lb-button.forward {
+.lb-control.lb-button.forward,
+.lb-control.lb-button.add {
   margin-left: 0;
   font-size: 1.75rem;
   padding: 0;
   cursor: pointer;
+	color: darkgrey;
+}
+
+.lb-control.lb-button.back:hover,
+.lb-control.lb-button.forward:hover,
+.lb-control.lb-button.add:hover {
+  color: #fff;
+	background-color: transparent;
 }
 
 .lb-control.lb-button.lb-tab i {
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   cursor: pointer;
+	color: darkgrey;
 }
 
 .lb-control.lb-button.lb-tab i.close:hover {

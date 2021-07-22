@@ -4,7 +4,7 @@ const { TabContainerEvent } = require('./events/tabContainerEvent');
 const { List } = require('./list');
 const { CreateTabContainerOptions } = require('./options/createTabContainerOptions');
 const { Tab } = require('./tab');
-const { BackButton, ForwardButton } = require('./windowButtons');
+const { BackButton, ForwardButton, AddButton } = require('./buttonTypes');
 const constants = require('../constants');
 // eslint-disable-next-line no-unused-vars
 const defaultEventHandler = (event) => { };
@@ -47,6 +47,10 @@ class TabContainer extends Container {
 			this.items.add(tabButton);
 			this.tabs.add(tabButton);
 		}
+
+		this.items.add(new AddButton({
+			position: constants.controls.position.left
+		}));
 
 		this.items.add(new BackButton({
 			position: constants.controls.position.left

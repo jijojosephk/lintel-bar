@@ -20,10 +20,10 @@ module.exports = {
 	List: require('./list').List,
 	Tab: require('./tab').Tab,
 	TabContainer: require('./tabContainer').TabContainer,
-	MinimizeButton: require('./windowButtons').MinimizeButton,
-	ResizeButton: require('./windowButtons').ResizeButton,
-	CloseButton: require('./windowButtons').CloseButton,
-	AlwaysOnTopToggle: require('./windowButtons').AlwaysOnTopToggle,
+	MinimizeButton: require('./buttonTypes').MinimizeButton,
+	ResizeButton: require('./buttonTypes').ResizeButton,
+	CloseButton: require('./buttonTypes').CloseButton,
+	AlwaysOnTopToggle: require('./buttonTypes').AlwaysOnTopToggle,
 	WindowControls: require('./windowControls').WindowControls,
 	WindowTitle: require('./windowTitle').WindowTitle
 };

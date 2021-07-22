@@ -1,5 +1,5 @@
 const { Container } = require('./container');
-const { MinimizeButton, ResizeButton, CloseButton, AlwaysOnTopToggle } = require('./windowButtons');
+const { MinimizeButton, ResizeButton, CloseButton, AlwaysOnTopToggle } = require('./buttonTypes');
 // eslint-disable-next-line no-unused-vars
 const { CreateWindowControlsOptions } = require('./options/createWindowControlsOptions');
 class WindowControls extends Container {

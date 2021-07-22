@@ -37,11 +37,12 @@ function defineConstants() {
 				maximize: 'mdi-window-maximize',
 				restore: 'mdi-window-restore',
 				alwaysOnTopToggle: 'mdi-chevron-up',
-				closeWindow: 'mdi-close',
-				back: 'mdi-chevron-left',
-				forward: 'mdi-chevron-right',
+				closeWindow: 'mdi-window-close',
+				back: 'mdi-chevron-left-box',
+				forward: 'mdi-chevron-right-box',
 				menu: 'mdi-dots-vertical',
-				close: 'mdi-close-box'
+				close: 'mdi-close-box',
+				add: 'mdi-plus-box'
 			},
 			controlActions: {
 				minimize: 'minimize',
@@ -50,7 +51,8 @@ function defineConstants() {
 				close: 'close',
 				back: 'back',
 				forward: 'forward',
-				menu: 'menu'
+				menu: 'menu',
+				add: 'add'
 			},
 			controlPositions: {
 				left: 'position-left',

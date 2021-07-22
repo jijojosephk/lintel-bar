@@ -182,11 +182,37 @@ class ForwardButton extends Button {
 	}
 }
 
+class AddButton extends Button {
+	/**
+	 * Creates a new minimize button
+	 * @param {CreateButtonOptions} options 
+	 */
+	constructor(options = {}) {
+		const params = CreateButtonOptions.fromJSON(options);
+		super(params);
+		if (this.constructor.name == AddButton.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
+	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.icon.element.classList.add(constants.css.fontIcons.add);
+		this.element.classList.add(constants.css.controlActions.add);
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
+	}
+}
+
 module.exports = {
 	CloseButton,
 	ResizeButton,
 	MinimizeButton,
 	AlwaysOnTopToggle,
 	BackButton,
-	ForwardButton
+	ForwardButton,
+	AddButton
 };
