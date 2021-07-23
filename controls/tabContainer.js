@@ -1,12 +1,12 @@
-const { Container } = require('./container');
-const { TabContainerEvent } = require('./events/tabContainerEvent');
-// eslint-disable-next-line no-unused-vars
-const { List } = require('./list');
-const { CreateTabContainerOptions } = require('./options/createTabContainerOptions');
+const constants = require('../constants');
 const { CreateTabOptions } = require('./options/createTabOptions');
+const { CreateContainerOptions } = require('./options/createContainerOptions');
+const { ContainerEvent } = require('./events/containerEvent');
+const { Container } = require('./container');
+const { List } = require('./list');
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton, AddButton } = require('./buttonTypes');
-const constants = require('../constants');
+
 const tabEventHandlers = {
 	click: {
 		tab: tabActivateHandler,
@@ -14,6 +14,13 @@ const tabEventHandlers = {
 		iconclose: tabCloseHandler
 	}
 };
+
+// eslint-disable-next-line no-unused-vars
+const defaultEventHandler = (item) => { };
+// eslint-disable-next-line no-unused-vars
+const defaultCancellableEventHandler = (item, callback) => { callback(false); };
+// eslint-disable-next-line no-unused-vars
+const defaultCancellableAddEventHandler = (event, callback) => { callback(event.control); };
 
 let _TabContainer_tabs = new WeakMap();
 let _TabContainer_onTabAdd = new WeakMap();
@@ -140,8 +147,9 @@ class TabContainer extends Container {
 		if (typeof (value) == constants.types.number && value > -1 && value < tabs.items.length) {
 			tabActivateHandler(new TabControlInfo({
 				index: value,
-				item: tabs.get(value)
-			}), this);
+				tab: tabs.get(value),
+				container: this
+			}));
 		}
 	}
 
@@ -173,14 +181,21 @@ class TabContainer extends Container {
 		tabOptions.text = `Session ${tabs.items.length + 1}`;
 		let event = createEventInfo({
 			index: tabs.items.length,
-			item: tabOptions
+			tab: tabOptions,
+			container: this
 		});
 		this.onTabAdd(event, (response) => {
 			if (response.constructor.name == CreateTabOptions.name) {
 				const tab = new Tab(response);
 				tab.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
+				let event2 = createEventInfo({
+					index: tabs.items.length,
+					tab: tab,
+					container: this
+				});
 				this.items.add(tab);
 				tabs.add(tab);
+				this.onTabAdded(event2);
 			}
 		});
 	}
@@ -197,65 +212,62 @@ function tabClick(e, container) {
 	if (!role) return;
 	let tabElement = getTabElement(e.target, role);
 	let tabControlInfo = getTabControlInfo(container, tabElement);
-	tabEventHandlers.click[role](tabControlInfo, container);
+	tabEventHandlers.click[role](tabControlInfo);
 }
 
 /**
  * @param {TabControlInfo} tabControlInfo 
- * @param {TabContainer} container 
  */
-function tabActivateHandler(tabControlInfo, container) {
+function tabActivateHandler(tabControlInfo) {
 	let event = createEventInfo(tabControlInfo);
-	container.onTabActivate(event, cancel => {
+	tabControlInfo.container.onTabActivate(event, cancel => {
 		if (!cancel) {
 			event.control.active = true;
-			const tabs = getTabs(container);
-			if (container.selectedIndex > -1) {
-				const previousTab = tabs.get(container.selectedIndex);
+			const tabs = getTabs(tabControlInfo.container);
+			if (tabControlInfo.container.selectedIndex > -1) {
+				const previousTab = tabs.get(tabControlInfo.container.selectedIndex);
 				if (previousTab) {
 					previousTab.active = false;
 				}
 			}
-			_TabContainer_selectedIndex.set(container, event.index);
+			_TabContainer_selectedIndex.set(tabControlInfo.container, event.index);
 			tabs.get(event.index).active = true;
-			container.onTabActivated(event);
+			tabControlInfo.container.onTabActivated(event);
 		}
 	});
 }
 
 /**
  * @param {TabControlInfo} tabControlInfo 
- * @param {TabContainer} container 
  */
-function tabCloseHandler(tabControlInfo, container) {
+function tabCloseHandler(tabControlInfo) {
 	let event = createEventInfo(tabControlInfo);
-	const tabs = getTabs(container);
-	container.onTabClose(event, cancel => {
+	const tabs = getTabs(tabControlInfo.container);
+	tabControlInfo.container.onTabClose(event, cancel => {
 		if (!cancel) {
 			// To do
 			tabs.remove(tabControlInfo.index);
-			container.onTabClosed(event);
+			tabControlInfo.container.onTabClosed(event);
 		}
 	});
 }
 
 /**
  * @param {TabControlInfo} tabControlInfo 
- * @param {TabContainer} container 
  */
 // eslint-disable-next-line no-unused-vars
-function tabMenuHandler(tabControlInfo, container) {
+function tabMenuHandler(tabControlInfo) {
 }
 
 /**
  * @param {TabControlInfo} tabControlInfo 
- * @param {TabContainer} container
  * @returns {TabContainerEvent}
  */
 function createEventInfo(tabControlInfo) {
 	let event = new TabContainerEvent();
-	event.control = tabControlInfo.item;
+	event.control = tabControlInfo.tab;
 	event.index = tabControlInfo.index;
+	event.container = tabControlInfo.container;
 	return event;
 }
 
@@ -269,7 +281,8 @@ function getTabControlInfo(container, tabElement) {
 		if (tabElement == tabs.items[i].element) {
 			return new TabControlInfo({
 				index: i,
-				item: tabs.get(i)
+				tab: tabs.get(i),
+				container: container
 			});
 		}
 	}
@@ -294,6 +307,139 @@ function getTabs(container) {
 	return _TabContainer_tabs.get(container);
 }
 
+let _CreateTabContainerOptions_showAddButton = new WeakMap();
+let _CreateTabContainerOptions_onTabAdd = new WeakMap();
+let _CreateTabContainerOptions_onTabAdded = new WeakMap();
+let _CreateTabContainerOptions_onTabRemove = new WeakMap();
+let _CreateTabContainerOptions_onTabRemoved = new WeakMap();
+let _CreateTabContainerOptions_onTabActivate = new WeakMap();
+let _CreateTabContainerOptions_onTabActivated = new WeakMap();
+class CreateTabContainerOptions extends CreateContainerOptions {
+	/**
+	 * @param {CreateTabContainerOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.showAddButton = options.showAddButton;
+		this.onTabAdd = options.onTabAdd;
+		this.onTabAdded = options.onTabAdded;
+		this.onTabClose = options.onTabClose;
+		this.onTabClosed = options.onTabClosed;
+		this.onTabActivate = options.onTabActivate;
+		this.onTabActivated = options.onTabActivated;
+	}
+
+	/**
+	 * @type {Array<CreateTabOptions>}
+	 */
+	get items() {
+		return super.items;
+	}
+
+	set items(value) {
+		super.items = value;
+	}
+
+	get showAddButton() {
+		return _CreateTabContainerOptions_showAddButton.get(this) ?? false;
+	}
+
+	set showAddButton(value) {
+		_CreateTabContainerOptions_showAddButton.set(this, typeof (value) == 'boolean' ? value : false);
+	}
+
+	/**
+	 * @type {(event: TabContainerEvent, callback:(response:boolean|CreateTabOptions)=>void)=>void}
+	 */
+	get onTabAdd() {
+		return _CreateTabContainerOptions_onTabAdd.get(this);
+	}
+
+	set onTabAdd(value) {
+		_CreateTabContainerOptions_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultCancellableAddEventHandler);
+	}
+
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
+	get onTabAdded() {
+		return _CreateTabContainerOptions_onTabAdded.get(this);
+	}
+
+	set onTabAdded(value) {
+		_CreateTabContainerOptions_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
+	}
+
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 */
+	get onTabClose() {
+		return _CreateTabContainerOptions_onTabRemove.get(this);
+	}
+
+	set onTabClose(value) {
+		_CreateTabContainerOptions_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
+	}
+
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
+	get onTabClosed() {
+		return _CreateTabContainerOptions_onTabRemoved.get(this);
+	}
+
+	set onTabClosed(value) {
+		_CreateTabContainerOptions_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
+	}
+
+	/**
+	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 */
+	get onTabActivate() {
+		return _CreateTabContainerOptions_onTabActivate.get(this);
+	}
+
+	set onTabActivate(value) {
+		_CreateTabContainerOptions_onTabActivate.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
+	}
+
+	/**
+	 * @type {(event: TabContainerEvent)=>void}
+	 */
+	get onTabActivated() {
+		return _CreateTabContainerOptions_onTabActivated.get(this);
+	}
+
+	set onTabActivated(value) {
+		_CreateTabContainerOptions_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateTabContainerOptions) {
+			return object;
+		} else {
+			return new CreateTabContainerOptions(object);
+		}
+	}
+}
+
+class TabContainerEvent extends ContainerEvent {
+	constructor() {
+		super();
+	}
+
+	/**
+	 * @type {TabContainer}
+	 */
+	get container() {
+		return super.container;
+	}
+
+	set container(value) {
+		super.container = value;
+	}
+}
+
 class TabControlInfo {
 	/**
 	 * 
@@ -307,8 +453,13 @@ class TabControlInfo {
 		/**
 		 * @type {Tab}
 		 */
-		this.item = tabControlInfo.item;
+		this.tab = tabControlInfo.tab;
+
+		/**
+		 * @type {Container}
+		 */
+		this.container = tabControlInfo.container;
 	}
 }
 
-module.exports = { TabContainer };
+module.exports = { TabContainer, CreateTabContainerOptions, TabContainerEvent };

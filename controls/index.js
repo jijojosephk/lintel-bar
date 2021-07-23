@@ -8,7 +8,6 @@ module.exports = {
 	CreateControlOptions: require('./options/createControlOptions').CreateControlOptions,
 	CreateElementOptions: require('./options/createElementOptions').CreateElementOptions,
 	CreateLintelBarOptions: require('./options/createLintelBarOptions').CreateLintelBarOptions,
-	CreateTabContainerOptions: require('./options/createTabContainerOptions').CreateTabContainerOptions,
 	CreateTabOptions: require('./options/createTabOptions').CreateTabOptions,
 	CreateWindowTitleOptions: require('./options/createWindowTitleOptions').CreateWindowTitleOptions,
 	Element: require('./element').Element,

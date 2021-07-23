@@ -70,6 +70,9 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 		super.create(lintelBar);
 
 		let tabContainer = new TabContainer({
+			onTabAdded: (e) => {
+				e.container.selectedIndex = e.index;
+			}
 		});
 
 		let windowTitle = new WindowTitle({
