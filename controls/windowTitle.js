@@ -1,7 +1,26 @@
 const constants = require('../constants');
-const { Control } = require('./control');
-// eslint-disable-next-line no-unused-vars
-const { CreateWindowTitleOptions } = require('./options/createWindowTitleOptions');
+const { Control, CreateControlOptions } = require('./control');
+
+class CreateWindowTitleOptions extends CreateControlOptions {
+	/**
+	 * @param {CreateWindowTitleOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		if (typeof (options.allowDrag) != constants.types.boolean) {
+			this.allowDrag = true;
+		}
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateWindowTitleOptions) {
+			return object;
+		} else {
+			return new CreateWindowTitleOptions(object);
+		}
+	}
+}
+
 class WindowTitle extends Control {
 	/**
 	 * 
@@ -28,4 +47,4 @@ class WindowTitle extends Control {
 	}
 }
 
-module.exports = { WindowTitle };
+module.exports = { WindowTitle, CreateWindowTitleOptions };

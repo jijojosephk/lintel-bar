@@ -1,7 +1,6 @@
 const constants = require('../constants');
-const { Control } = require('./control');
 const { List } = require('./list');
-const { CreateControlOptions } = require('./options/createControlOptions');
+const { Control, CreateControlOptions, ControlEvent } = require('./control');
 
 let _CreateContainerOptions_items = new WeakMap();
 class CreateContainerOptions extends CreateControlOptions {
@@ -73,6 +72,36 @@ class Container extends Control {
 	}
 }
 
+let _ContainerEvent_index = new WeakMap();
+let _ContainerEvent_container = new WeakMap();
+class ContainerEvent extends ControlEvent {
+	constructor() {
+		super();
+	}
+
+	/**
+	 * @type {number}
+	 */
+	get index() {
+		return _ContainerEvent_index.get(this) ?? -1;
+	}
+
+	set index(value) {
+		_ContainerEvent_index.set(this, typeof (value) == constants.types.number && value > -1 ? value : -1);
+	}
+
+	/**
+	 * @type {Container}
+	 */
+	get container() {
+		return _ContainerEvent_container.get(this);
+	}
+
+	set container(value) {
+		_ContainerEvent_container.set(this, value);
+	}
+}
+
 /**
  * 
  * @param {Container} container 
@@ -112,4 +141,4 @@ function addControl(container, control) {
 	}
 }
 
-module.exports = { Container, CreateContainerOptions };
+module.exports = { Container, CreateContainerOptions, ContainerEvent };

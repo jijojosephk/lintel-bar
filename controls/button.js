@@ -1,8 +1,23 @@
 const constants = require('../constants');
-const { Control } = require('./control');
+const { Control, CreateControlOptions } = require('./control');
 const { FontIcon } = require('./icons');
-// eslint-disable-next-line no-unused-vars
-const { CreateButtonOptions } = require('./options/createButtonOptions');
+class CreateButtonOptions extends CreateControlOptions {
+	/**
+	 * @param {CreateButtonOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateButtonOptions) {
+			return object;
+		} else {
+			return new CreateButtonOptions(object);
+		}
+	}
+}
+
 class Button extends Control {
 	/**
 	 * Creates a new button
@@ -31,4 +46,4 @@ class Button extends Control {
 	}
 }
 
-module.exports = { Button };
+module.exports = { Button, CreateButtonOptions };

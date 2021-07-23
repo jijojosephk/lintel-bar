@@ -1,8 +1,50 @@
-// eslint-disable-next-line no-unused-vars
-const { CreateTabOptions } = require('./options/createTabOptions');
-const { Button } = require('./button');
 const constants = require('../constants');
+const { Button, CreateButtonOptions } = require('./button');
 const { FontIcon } = require('./icons');
+
+let _CreateTabOptions_showMenuIcon = new WeakMap();
+let _CreateTabOptions_showCloseIcon = new WeakMap();
+class CreateTabOptions extends CreateButtonOptions {
+	/**
+	 * @param {CreateTabOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.showMenuIcon = options.showMenuIcon;
+		this.showCloseIcon = options.showCloseIcon;
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get showMenuIcon() {
+		return _CreateTabOptions_showMenuIcon.get(this) ?? false;
+	}
+
+	set showMenuIcon(value) {
+		_CreateTabOptions_showMenuIcon.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get showCloseIcon() {
+		return _CreateTabOptions_showCloseIcon.get(this) ?? true;
+	}
+
+	set showCloseIcon(value) {
+		_CreateTabOptions_showCloseIcon.set(this, typeof (value) == constants.types.boolean ? value : true);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateTabOptions) {
+			return object;
+		} else {
+			return new CreateTabOptions(object);
+		}
+	}
+}
+
 class Tab extends Button {
 	/**
 	 * @param {CreateTabOptions} options 
@@ -47,4 +89,4 @@ class Tab extends Button {
 	}
 }
 
-module.exports = { Tab };
+module.exports = { Tab, CreateTabOptions };

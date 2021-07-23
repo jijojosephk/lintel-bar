@@ -1,6 +1,6 @@
 const constants = require('../constants');
-const { Button } = require('./button');
-const { CreateButtonOptions } = require('./options/createButtonOptions');
+const { Button, CreateButtonOptions } = require('./button');
+
 class CloseButton extends Button {
 	/**
 	 * Creates a new close button

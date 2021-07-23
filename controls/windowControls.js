@@ -1,7 +1,76 @@
-const { Container } = require('./container');
+const { Container, CreateContainerOptions } = require('./container');
 const { MinimizeButton, ResizeButton, CloseButton, AlwaysOnTopToggle } = require('./buttonTypes');
-// eslint-disable-next-line no-unused-vars
-const { CreateWindowControlsOptions } = require('./options/createWindowControlsOptions');
+
+let _CreateWindowControlsOptions_minimize = new WeakMap();
+let _CreateWindowControlsOptions_maximize = new WeakMap();
+let _CreateWindowControlsOptions_close = new WeakMap();
+let _CreateWindowControlsOptions_alwaysOnTopToggle = new WeakMap();
+class CreateWindowControlsOptions extends CreateContainerOptions {
+	/**
+	 * @param {CreateWindowControlsOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.minimize = options.minimize;
+		this.maximize = options.maximize;
+		this.close = options.close;
+		this.alwaysOnTopToggle = options.alwaysOnTopToggle;
+		this.position = options.position ? options.position : 'right';
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get minimize() {
+		return _CreateWindowControlsOptions_minimize.get(this);
+	}
+
+	set minimize(value) {
+		_CreateWindowControlsOptions_minimize.set(this, typeof (value) == 'boolean' ? value : true);
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get maximize() {
+		return _CreateWindowControlsOptions_maximize.get(this);
+	}
+
+	set maximize(value) {
+		_CreateWindowControlsOptions_maximize.set(this, typeof (value) == 'boolean' ? value : true);
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get close() {
+		return _CreateWindowControlsOptions_close.get(this);
+	}
+
+	set close(value) {
+		_CreateWindowControlsOptions_close.set(this, typeof (value) == 'boolean' ? value : true);
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get alwaysOnTopToggle() {
+		return _CreateWindowControlsOptions_alwaysOnTopToggle.get(this);
+	}
+
+	set alwaysOnTopToggle(value) {
+		_CreateWindowControlsOptions_alwaysOnTopToggle.set(this, typeof (value) == 'boolean' ? value : false);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateWindowControlsOptions) {
+			return object;
+		} else {
+			return new CreateWindowControlsOptions(object);
+		}
+	}
+}
+
 class WindowControls extends Container {
 	/**
 	 * Creates a new button
@@ -34,4 +103,4 @@ class WindowControls extends Container {
 	}
 }
 
-module.exports = { WindowControls };
+module.exports = { WindowControls, CreateWindowControlsOptions };

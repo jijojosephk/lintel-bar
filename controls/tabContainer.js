@@ -1,9 +1,7 @@
 const constants = require('../constants');
-const { CreateTabOptions } = require('./options/createTabOptions');
-const { ContainerEvent } = require('./events/containerEvent');
-const { Container, CreateContainerOptions } = require('./container');
 const { List } = require('./list');
-const { Tab } = require('./tab');
+const { Container, CreateContainerOptions, ContainerEvent } = require('./container');
+const { Tab, CreateTabOptions } = require('./tab');
 const { BackButton, ForwardButton, AddButton } = require('./buttonTypes');
 // eslint-disable-next-line no-unused-vars
 const defaultEventHandler = (item) => { };

@@ -1,8 +1,105 @@
 const constants = require('../constants');
-const { Element } = require('./element');
+const { Element, CreateElementOptions, ElementEvent } = require('./element');
 // eslint-disable-next-line no-unused-vars
 const { BrowserWindow } = require('electron');
-const { CreateControlOptions } = require('./options/createControlOptions');
+
+let _CreateControlOptions_theme = new WeakMap();
+let _CreateControlOptions_icon = new WeakMap();
+let _CreateControlOptions_position = new WeakMap();
+let _CreateControlOptions_allowDrag = new WeakMap();
+let _CreateControlOptions_enabled = new WeakMap();
+let _CreateControlOptions_active = new WeakMap();
+class CreateControlOptions extends CreateElementOptions {
+	/**
+	 * Creates a new CreateControlOptions instance
+	 * @param {CreateControlOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.theme = options.theme;
+		this.icon = options.icon;
+		this.position = options.position;
+		this.allowDrag = options.allowDrag;
+		this.enabled = options.enabled;
+		this.active = options.active;
+	}
+
+	/**
+	 * @type {'default'|'teams'|'slack'|'github'}
+	 */
+	get theme() {
+		return _CreateControlOptions_theme.get(this) ?? 'default';
+	}
+
+	set theme(value) {
+		if (typeof (value) == constants.types.string && constants.themes.some(t => {
+			return t == value;
+		})) {
+			_CreateControlOptions_theme.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {Icon}
+	 */
+	get icon() {
+		return _CreateControlOptions_icon.get(this);
+	}
+
+	set icon(value) {
+		if (typeof (value) == constants.types.object) {
+			_CreateControlOptions_icon.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return _CreateControlOptions_position.get(this) ?? constants.controls.position.left;
+	}
+
+	set position(value) {
+		if (typeof (value) == constants.types.string) {
+			_CreateControlOptions_position.set(this, constants.controls.position[value]);
+		}
+	}
+
+	/**
+	 * @type {boolean}
+	 */
+	get allowDrag() {
+		return _CreateControlOptions_allowDrag.get(this) ?? false;
+	}
+
+	set allowDrag(value) {
+		_CreateControlOptions_allowDrag.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
+	get enabled() {
+		return _CreateControlOptions_enabled.get(this) ?? true;
+	}
+
+	set enabled(value) {
+		_CreateControlOptions_enabled.set(this, typeof (value) == constants.types.boolean ? value : true);
+	}
+
+	get active() {
+		return _CreateControlOptions_active.get(this) ?? false;
+	}
+
+	set active(value) {
+		_CreateControlOptions_active.set(this, typeof (value) == constants.types.boolean ? value : false);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateControlOptions) {
+			return object;
+		} else {
+			return new CreateControlOptions(object);
+		}
+	}
+}
 
 let _window = require('@electron/remote').getCurrentWindow();
 let _Control_theme = new WeakMap();
@@ -143,4 +240,22 @@ class Control extends Element {
 	}
 }
 
-module.exports = { Control };
+let _ControlEvent_control = new WeakMap();
+class ControlEvent extends ElementEvent {
+	constructor() {
+		super();
+	}
+
+	/**
+	 * @type {Control}
+	 */
+	get control() {
+		return _ControlEvent_control.get(this);
+	}
+
+	set control(value) {
+		_ControlEvent_control.set(this, value);
+	}
+}
+
+module.exports = { Control, CreateControlOptions, ControlEvent };

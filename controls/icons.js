@@ -1,8 +1,6 @@
 const path = require('path');
 const constants = require('../constants');
-const { Element } = require('./element');
-// eslint-disable-next-line no-unused-vars
-const { CreateElementOptions } = require('./options/createElementOptions');
+const { Element, CreateElementOptions } = require('./element');
 
 class CreateIconOptions extends CreateElementOptions {
 	/**

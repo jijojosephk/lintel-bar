@@ -3,9 +3,39 @@ const constants = require('../constants');
 const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
 const { TabContainer } = require('./tabContainer');
-// eslint-disable-next-line no-unused-vars
-const { CreateLintelBarOptions } = require('./options/createLintelBarOptions');
 const { WindowTitle } = require('./windowTitle');
+
+let _CreateLintelBarOptions_template = new WeakMap();
+class CreateLintelBarOptions {
+	/**
+	 * @param {CreateLintelBarOptions} options 
+	 */
+	constructor(options = {}) {
+		this.template = options.template;
+	}
+
+	/**
+	 * @type {'default'|'tabbed'}
+	 */
+	get template() {
+		return _CreateLintelBarOptions_template.get(this);
+	}
+
+	set template(value) {
+		if (typeof (value) == 'string') {
+			_CreateLintelBarOptions_template.set(this, constants.templates[value]);
+		}
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateLintelBarOptions) {
+			return object;
+		} else {
+			return new CreateLintelBarOptions(object);
+		}
+	}
+}
+
 class LintelBar extends Container {
 	/**
 	 * @param {CreateLintelBarOptions} options 
