@@ -1,8 +1,38 @@
 const constants = require('../constants');
 const { Control } = require('./control');
 const { List } = require('./list');
-// eslint-disable-next-line no-unused-vars
-const { CreateContainerOptions } = require('./options/createContainerOptions');
+const { CreateControlOptions } = require('./options/createControlOptions');
+
+let _CreateContainerOptions_items = new WeakMap();
+class CreateContainerOptions extends CreateControlOptions {
+	/**
+	 * @param {CreateContainerOptions} options 
+	 */
+	constructor(options = {}) {
+		super(options);
+		this.items = options.items;
+	}
+
+	/**
+	 * @type {Array<CreateControlOptions>}
+	 */
+	get items() {
+		return _CreateContainerOptions_items.get(this);
+	}
+
+	set items(value) {
+		_CreateContainerOptions_items.set(this, Array.isArray(value) ? value : []);
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateContainerOptions) {
+			return object;
+		} else {
+			return new CreateContainerOptions(object);
+		}
+	}
+}
+
 let _Container_controls = new WeakMap();
 let _Container_left_column = new WeakMap();
 let _Container_middle_column = new WeakMap();
@@ -82,4 +112,4 @@ function addControl(container, control) {
 	}
 }
 
-module.exports = { Container };
+module.exports = { Container, CreateContainerOptions };

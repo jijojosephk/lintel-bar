@@ -4,7 +4,6 @@ module.exports = {
 	Control: require('./control').Control,
 	ControlEvent: require('./events/controlEvent').ControlEvent,
 	CreateButtonOptions: require('./options/createButtonOptions').CreateButtonOptions,
-	CreateContainerOptions: require('./options/createContainerOptions').CreateContainerOptions,
 	CreateControlOptions: require('./options/createControlOptions').CreateControlOptions,
 	CreateElementOptions: require('./options/createElementOptions').CreateElementOptions,
 	CreateLintelBarOptions: require('./options/createLintelBarOptions').CreateLintelBarOptions,

@@ -1,8 +1,7 @@
 const constants = require('../constants');
 const { CreateTabOptions } = require('./options/createTabOptions');
-const { CreateContainerOptions } = require('./options/createContainerOptions');
 const { ContainerEvent } = require('./events/containerEvent');
-const { Container } = require('./container');
+const { Container, CreateContainerOptions } = require('./container');
 const { List } = require('./list');
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton, AddButton } = require('./buttonTypes');
