@@ -25,6 +25,7 @@ function defineConstants() {
 				lintelBar: 'lb',
 				control: 'lb-control',
 				container: 'lb-container',
+				tabContainer: 'lb-tab-container',
 				titleBarDragRegion: 'lb-drag-region',
 				button: 'lb-button',
 				tab: 'lb-tab',

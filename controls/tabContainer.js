@@ -57,6 +57,9 @@ class TabContainerScope {
 			if (!cancel) {
 				// To do
 				tabs.remove(tabControlInfo.index);
+				if (tabControlInfo.container.selectedIndex >= tabControlInfo.index) {
+					tabControlInfo.container.selectedIndex--;
+				}
 				tabControlInfo.container.onTabClosed(event);
 			}
 		});
@@ -156,11 +159,17 @@ class TabContainer extends Container {
 		}));
 
 		this.items.add(new BackButton({
-			position: constants.controls.position.left
+			position: constants.controls.position.left,
+			onClick: () => {
+				this.activatePreviousTab();
+			}
 		}));
 
 		this.items.add(new ForwardButton({
-			position: constants.controls.position.right
+			position: constants.controls.position.right,
+			onClick: () => {
+				this.activateNextTab();
+			}
 		}));
 
 		if (this.constructor.name == TabContainer.name) {
@@ -252,6 +261,7 @@ class TabContainer extends Container {
 
 	applyStyles() {
 		super.applyStyles();
+		this.element.classList.add(constants.css.controls.tabContainer);
 	}
 
 	applyEventListeners() {
@@ -310,6 +320,17 @@ class TabContainer extends Container {
 				tab: tab
 			});
 		}
+	}
+
+	activatePreviousTab() {
+		if (this.selectedIndex > 0)
+			this.selectedIndex--;
+	}
+
+	activateNextTab() {
+		const tabs = TabContainerScope.getTabs(this);
+		if (this.selectedIndex < tabs.items.length - 1)
+			this.selectedIndex++;
 	}
 }
 
@@ -463,7 +484,7 @@ class TabControlInfo {
 		this.tab = tabControlInfo.tab;
 
 		/**
-		 * @type {Container}
+		 * @type {TabContainer}
 		 */
 		this.container = tabControlInfo.container;
 	}

@@ -95,20 +95,20 @@ body {
   font-size: 1.75rem;
   padding: 0;
   cursor: pointer;
-	color: darkgrey;
+  color: darkgrey;
 }
 
 .lb-control.lb-button.back:hover,
 .lb-control.lb-button.forward:hover,
 .lb-control.lb-button.add:hover {
   color: #fff;
-	background-color: transparent;
+  background-color: transparent;
 }
 
 .lb-control.lb-button.lb-tab i {
   font-size: 1rem;
   cursor: pointer;
-	color: darkgrey;
+  color: darkgrey;
 }
 
 .lb-control.lb-button.lb-tab i.close:hover {
@@ -131,4 +131,15 @@ a.lb-control.active.lb-button.lb-tab {
 
 a.lb-control.disabled.lb-button.lb-tab {
   background-color: dimgray;
+}
+
+.lb-tab-container .lb-container-column.middle {
+  max-width: 15rem;
+  overflow-x: hidden;
+  flex-wrap: nowrap;
+  flex-flow: row;
+}
+
+.lb-tab-container .lb-control.lb-button.lb-tab {
+  flex: 0 0 auto;
 }
