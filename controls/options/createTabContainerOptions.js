@@ -7,6 +7,8 @@ const defaultEventHandler = (item) => { };
 // eslint-disable-next-line no-unused-vars
 const defaultCancellableEventHandler = (item, callback) => { callback(false); };
 // eslint-disable-next-line no-unused-vars
+const defaultCancellableAddEventHandler = (event, callback) => { callback(event.control); };
+// eslint-disable-next-line no-unused-vars
 const { CreateTabOptions } = require('./createTabOptions');
 let _CreateTabContainerOptions_showAddButton = new WeakMap();
 let _CreateTabContainerOptions_onTabAdd = new WeakMap();
@@ -50,14 +52,14 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 	}
 
 	/**
-	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 * @type {(event: TabContainerEvent, callback:(response:boolean|CreateTabOptions)=>void)=>void}
 	 */
 	get onTabAdd() {
 		return _CreateTabContainerOptions_onTabAdd.get(this);
 	}
 
 	set onTabAdd(value) {
-		_CreateTabContainerOptions_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
+		_CreateTabContainerOptions_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultCancellableAddEventHandler);
 	}
 
 	/**

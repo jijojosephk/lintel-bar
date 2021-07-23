@@ -7,10 +7,6 @@ const { CreateTabOptions } = require('./options/createTabOptions');
 const { Tab } = require('./tab');
 const { BackButton, ForwardButton, AddButton } = require('./buttonTypes');
 const constants = require('../constants');
-// eslint-disable-next-line no-unused-vars
-const defaultEventHandler = (event) => { };
-// eslint-disable-next-line no-unused-vars
-const defaultCancellableEventHandler = (event, callback) => { callback(false); };
 const tabEventHandlers = {
 	click: {
 		tab: tabActivateHandler,
@@ -70,14 +66,14 @@ class TabContainer extends Container {
 	}
 
 	/**
-	 * @type {(event: TabContainerEvent, callback:(cancel:boolean)=>void)=>void}
+	 * @type {(event: TabContainerEvent, callback:(response:boolean|CreateTabOptions)=>void)=>void}
 	 */
 	get onTabAdd() {
 		return _TabContainer_onTabAdd.get(this);
 	}
 
 	set onTabAdd(value) {
-		_TabContainer_onTabAdd.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
+		_TabContainer_onTabAdd.set(this, typeof (value) == constants.types.function ? value : null);
 	}
 
 	/**
@@ -88,7 +84,7 @@ class TabContainer extends Container {
 	}
 
 	set onTabAdded(value) {
-		_TabContainer_onTabAdded.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
+		_TabContainer_onTabAdded.set(this, typeof (value) == constants.types.function ? value : null);
 	}
 
 	/**
@@ -99,7 +95,7 @@ class TabContainer extends Container {
 	}
 
 	set onTabClose(value) {
-		_TabContainer_onTabRemove.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
+		_TabContainer_onTabRemove.set(this, typeof (value) == constants.types.function ? value : null);
 	}
 
 	/**
@@ -110,7 +106,7 @@ class TabContainer extends Container {
 	}
 
 	set onTabClosed(value) {
-		_TabContainer_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
+		_TabContainer_onTabRemoved.set(this, typeof (value) == constants.types.function ? value : null);
 	}
 
 	/**
@@ -121,7 +117,7 @@ class TabContainer extends Container {
 	}
 
 	set onTabActivate(value) {
-		_TabContainer_onTabActivate.set(this, typeof (value) == constants.types.function ? value : defaultCancellableEventHandler);
+		_TabContainer_onTabActivate.set(this, typeof (value) == constants.types.function ? value : null);
 	}
 
 	/**
@@ -132,7 +128,7 @@ class TabContainer extends Container {
 	}
 
 	set onTabActivated(value) {
-		_TabContainer_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
+		_TabContainer_onTabActivated.set(this, typeof (value) == constants.types.function ? value : null);
 	}
 
 	get selectedIndex() {
@@ -175,10 +171,18 @@ class TabContainer extends Container {
 		options.position = constants.controls.position.center;
 		const tabOptions = CreateTabOptions.fromJSON(options);
 		tabOptions.text = `Session ${tabs.items.length + 1}`;
-		const tab = new Tab(tabOptions);
-		tab.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
-		this.items.add(tab);
-		tabs.add(tab);
+		let event = createEventInfo({
+			index: tabs.items.length,
+			item: tabOptions
+		});
+		this.onTabAdd(event, (response) => {
+			if (response.constructor.name == CreateTabOptions.name) {
+				const tab = new Tab(response);
+				tab.element.addEventListener(constants.events.dom.click, (e) => tabClick(e, this));
+				this.items.add(tab);
+				tabs.add(tab);
+			}
+		});
 	}
 }
 

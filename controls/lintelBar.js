@@ -70,15 +70,6 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 		super.create(lintelBar);
 
 		let tabContainer = new TabContainer({
-			onTabAdd: (e, callback) => {
-				callback(false);
-			},
-			onTabActivate: (e, callback) => {
-				callback(false);
-			},
-			onTabClose: (e, callback) => {
-				callback(false);
-			}
 		});
 
 		let windowTitle = new WindowTitle({
