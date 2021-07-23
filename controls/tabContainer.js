@@ -28,7 +28,7 @@ class TabContainerScope {
 	/**
 	 * @param {TabControlInfo} tabControlInfo 
 	 */
-	static tabActivateHandler(tabControlInfo) {
+	static tabActivateActionHandler(tabControlInfo) {
 		let event = TabContainerScope.createTabContainerEvent(tabControlInfo);
 		tabControlInfo.container.onTabActivate(event, cancel => {
 			if (!cancel) {
@@ -50,7 +50,7 @@ class TabContainerScope {
 	/**
 	 * @param {TabControlInfo} tabControlInfo 
 	 */
-	static tabCloseHandler(tabControlInfo) {
+	static tabCloseActionHandler(tabControlInfo) {
 		let event = TabContainerScope.createTabContainerEvent(tabControlInfo);
 		const tabs = TabContainerScope.getTabs(tabControlInfo.container);
 		tabControlInfo.container.onTabClose(event, cancel => {
@@ -113,8 +113,8 @@ class TabContainerScope {
 
 const tabEventHandlers = {
 	click: {
-		tab: TabContainerScope.tabActivateHandler,
-		iconclose: TabContainerScope.tabCloseHandler
+		tab: TabContainerScope.tabActivateActionHandler,
+		iconclose: TabContainerScope.tabCloseActionHandler
 	}
 };
 
@@ -242,7 +242,7 @@ class TabContainer extends Container {
 	set selectedIndex(value) {
 		const tabs = TabContainerScope.getTabs(this);
 		if (typeof (value) == constants.types.number && value > -1 && value < tabs.items.length) {
-			TabContainerScope.tabActivateHandler(new TabControlInfo({
+			TabContainerScope.tabActivateActionHandler(new TabControlInfo({
 				index: value,
 				tab: tabs.get(value),
 				container: this
@@ -295,6 +295,21 @@ class TabContainer extends Container {
 				this.onTabAdded(event2);
 			}
 		});
+	}
+
+	/**
+	 * @param {number} index 
+	 */
+	closeTab(index) {
+		const tabs = TabContainerScope.getTabs(this);
+		const tab = tabs.get(index);
+		if (tab) {
+			TabContainerScope.tabCloseActionHandler({
+				container: this,
+				index: index,
+				tab: tab
+			});
+		}
 	}
 }
 
