@@ -22,7 +22,7 @@ class TabContainerScope {
 		if (!role) return;
 		let tabElement = this.getTabElement(e.target, role);
 		let tabControlInfo = this.getTabControlInfo(container, tabElement);
-		tabEventHandlers.click[role](tabControlInfo);
+		tabEventHandlers.click[role].call(this, tabControlInfo);
 	}
 
 	/**
@@ -41,10 +41,34 @@ class TabContainerScope {
 					}
 				}
 				_TabContainer_selectedIndex.set(tabControlInfo.container, event.index);
-				tabs.get(event.index).active = true;
+				let activeTab = tabs.get(event.index);
+				activeTab.active = true;
+				this.scrollTabToVisibility(tabControlInfo);
 				tabControlInfo.container.onTabActivated(event);
 			}
 		});
+	}
+
+	/**
+	 * @param {TabControlInfo} tabControlInfo
+	 */
+	static scrollTabToVisibility(tabControlInfo) {
+		let widthTillTab = 0;
+		const tabs = this.getTabs(tabControlInfo.container);
+		const child = tabs.get(tabControlInfo.index).element;
+		const parent = child.parentElement;
+		if (parent.offsetWidth < parent.scrollWidth) {
+			for (var i = 0; i <= tabControlInfo.index; i++) {
+				widthTillTab += tabs.get(i).element.offsetWidth;
+			}
+
+			const visibleWidth = widthTillTab - parent.scrollLeft;
+			if (visibleWidth > parent.offsetWidth) {
+				parent.scrollLeft += (visibleWidth - parent.offsetWidth);
+			} else if ((visibleWidth - child.offsetWidth) < 0) {
+				parent.scrollLeft -= Math.abs(visibleWidth - child.offsetWidth);
+			}
+		}
 	}
 
 	/**
