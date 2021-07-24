@@ -62,13 +62,21 @@ class TabContainerScope {
 				widthTillTab += tabs.get(i).element.offsetWidth;
 			}
 
-			const visibleWidth = widthTillTab - parent.scrollLeft;
-			if (visibleWidth > parent.offsetWidth) {
-				parent.scrollLeft += (visibleWidth - parent.offsetWidth);
-			} else if ((visibleWidth - child.offsetWidth) < 0) {
-				parent.scrollLeft -= Math.abs(visibleWidth - child.offsetWidth);
-			}
+			this.doScroll(widthTillTab, parent, child);
 		}
+	}
+
+	static doScroll(widthTillTab, parent, child) {
+		const visibleWidth1 = widthTillTab - parent.scrollLeft;
+		const visibleWidth2 = visibleWidth1 - child.offsetWidth;
+		let scrollValue = 0;
+		if (visibleWidth1 > parent.offsetWidth) {
+			scrollValue = visibleWidth1 - parent.offsetWidth;
+		} else if (visibleWidth2 < 0) {
+			scrollValue = visibleWidth2;
+		}
+
+		parent.scrollLeft += scrollValue;
 	}
 
 	/**
