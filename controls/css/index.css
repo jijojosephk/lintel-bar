@@ -143,3 +143,11 @@ a.lb-control.disabled.lb-button.lb-tab {
 .lb-tab-container .lb-control.lb-button.lb-tab {
   flex: 0 0 auto;
 }
+
+.lb-icon.lb-image-icon.lb-app-icon {
+  width: 28px;
+  height: 28px;
+  background-size: cover !important;
+  padding: 0;
+  margin: 1px 0px 0px 1px;
+}

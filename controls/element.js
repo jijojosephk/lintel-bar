@@ -3,6 +3,7 @@ const constants = require('../constants');
 let _CreateElementOptions_text = new WeakMap();
 let _CreateElementOptions_title = new WeakMap();
 let _CreateElementOptions_onClick = new WeakMap();
+let _CreateElementOptions_position = new WeakMap();
 // eslint-disable-next-line no-unused-vars
 class CreateElementOptions {
 	/**
@@ -12,6 +13,7 @@ class CreateElementOptions {
 		this.text = options.text;
 		this.title = options.title;
 		this.onClick = options.onClick;
+		this.position = options.position;
 	}
 
 	/**
@@ -50,6 +52,19 @@ class CreateElementOptions {
 		}
 	}
 
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return _CreateElementOptions_position.get(this) ?? constants.controls.position.left;
+	}
+
+	set position(value) {
+		if (typeof (value) == constants.types.string) {
+			_CreateElementOptions_position.set(this, constants.controls.position[value]);
+		}
+	}
+
 	static fromJSON(object) {
 		if (object instanceof CreateElementOptions) {
 			return object;
@@ -63,6 +78,7 @@ let _Element_text = new WeakMap();
 let _Element_title = new WeakMap();
 let _Element_onClick = new WeakMap();
 let _Element_element = new WeakMap();
+let _Element_position = new WeakMap();
 class Element {
 	/**
 	 * @param {CreateElementOptions} options 
@@ -72,6 +88,7 @@ class Element {
 		this.text = params.text;
 		this.title = params.title;
 		this.onClick = params.onClick;
+		this.position = params.position;
 		if (this.constructor.name == Element.name) {
 			this.applyStyles();
 			this.applyEventListeners();
@@ -126,6 +143,19 @@ class Element {
 			throw new Error(constants.messages.errors.elementOnlyOnce);
 		} else {
 			_Element_element.set(this, value);
+		}
+	}
+
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return _Element_position.get(this) ?? constants.controls.position.left;
+	}
+
+	set position(value) {
+		if (typeof (value) == constants.types.string) {
+			_Element_position.set(this, constants.controls.position[value]);
 		}
 	}
 

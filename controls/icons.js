@@ -1,4 +1,3 @@
-const path = require('path');
 const constants = require('../constants');
 const { Element, CreateElementOptions } = require('./element');
 
@@ -24,7 +23,18 @@ class Icon extends Element {
 	 * @param {CreateIconOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
+		const iconOptions = CreateIconOptions.fromJSON(options);
+		super(iconOptions);
+	}
+
+	applyStyles() {
+		this.element.classList.add(constants.css.controls.icon);
+	}
+
+	applyEventListeners() {
+		if (this.onClick) {
+			this.element.addEventListener(constants.events.dom.click, this.onClick);
+		}
 	}
 }
 
@@ -48,10 +58,26 @@ class CreateFontIconOptions extends CreateIconOptions {
 
 // eslint-disable-next-line no-unused-vars
 class FontIcon extends Icon {
-	constructor() {
-		super();
+	/**
+	 * @param {CreateFontIconOptions} options 
+	 */
+	constructor(options = {}) {
+		const fontIconOptions = CreateFontIconOptions.fromJSON(options);
+		super(fontIconOptions);
 		this.element = document.createElement('i');
-		this.element.classList.add(constants.css.fontIcons.primary);
+		if (this.constructor.name == FontIcon.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
+	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.element.classList.add(...[constants.css.controls.fontIcon, constants.css.fontIcons.primary]);
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 
@@ -92,9 +118,14 @@ class ImageIcon extends Icon {
 	 * @param {CreateImageIconOptions} options 
 	 */
 	constructor(options = {}) {
-		super(options);
-		this.element = document.createElement('img');
-		this.element.src = path.resolve(this.file);
+		const imageIconOptions = CreateImageIconOptions.fromJSON(options);
+		super(imageIconOptions);
+		this.element = document.createElement('div');
+		if (this.constructor.name == ImageIcon.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
+		this.file = imageIconOptions.file;
 	}
 
 	/**
@@ -106,6 +137,38 @@ class ImageIcon extends Icon {
 
 	set file(value) {
 		_ImageIcon_file.set(this, typeof (value) == constants.types.string && value.trim() ? value.trim() : '');
+		this.element.style.background = `url(${this.file})`;
+	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.element.classList.add(constants.css.controls.imageIcon);
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
+	}
+}
+
+class AppIcon extends ImageIcon {
+	/**
+	 * @param {CreateImageIconOptions} options 
+	 */
+	constructor(options) {
+		super(options);
+		if (this.constructor.name == AppIcon.name) {
+			this.applyStyles();
+			this.applyEventListeners();
+		}
+	}
+
+	applyStyles() {
+		super.applyStyles();
+		this.element.classList.add(constants.css.controls.appIcon);
+	}
+
+	applyEventListeners() {
+		super.applyEventListeners();
 	}
 }
 
@@ -115,5 +178,6 @@ module.exports = {
 	CreateFontIconOptions,
 	FontIcon,
 	CreateImageIconOptions,
-	ImageIcon
+	ImageIcon,
+	AppIcon
 };

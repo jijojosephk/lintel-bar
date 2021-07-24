@@ -5,7 +5,6 @@ const { BrowserWindow } = require('electron');
 
 let _CreateControlOptions_theme = new WeakMap();
 let _CreateControlOptions_icon = new WeakMap();
-let _CreateControlOptions_position = new WeakMap();
 let _CreateControlOptions_allowDrag = new WeakMap();
 let _CreateControlOptions_enabled = new WeakMap();
 let _CreateControlOptions_active = new WeakMap();
@@ -18,7 +17,6 @@ class CreateControlOptions extends CreateElementOptions {
 		super(options);
 		this.theme = options.theme;
 		this.icon = options.icon;
-		this.position = options.position;
 		this.allowDrag = options.allowDrag;
 		this.enabled = options.enabled;
 		this.active = options.active;
@@ -49,19 +47,6 @@ class CreateControlOptions extends CreateElementOptions {
 	set icon(value) {
 		if (typeof (value) == constants.types.object) {
 			_CreateControlOptions_icon.set(this, value);
-		}
-	}
-
-	/**
-	 * @type {'left'|'center'|'right'}
-	 */
-	get position() {
-		return _CreateControlOptions_position.get(this) ?? constants.controls.position.left;
-	}
-
-	set position(value) {
-		if (typeof (value) == constants.types.string) {
-			_CreateControlOptions_position.set(this, constants.controls.position[value]);
 		}
 	}
 
@@ -104,7 +89,6 @@ class CreateControlOptions extends CreateElementOptions {
 let _window = require('@electron/remote').getCurrentWindow();
 let _Control_theme = new WeakMap();
 let _Control_icon = new WeakMap();
-let _Control_position = new WeakMap();
 let _Control_allowDrag = new WeakMap();
 let _Control_enabled = new WeakMap();
 let _Control_active = new WeakMap();
@@ -119,7 +103,6 @@ class Control extends Element {
 		this.text = params.text;
 		this.title = params.title;
 		this.onClick = params.onClick;
-		this.position = params.position;
 		this.allowDrag = params.allowDrag;
 		this.enabled = params.enabled;
 		this.active = params.active;
@@ -161,19 +144,6 @@ class Control extends Element {
 	set icon(value) {
 		if (typeof (value) == constants.types.object) {
 			_Control_icon.set(this, value);
-		}
-	}
-
-	/**
-	 * @type {'left'|'center'|'right'}
-	 */
-	get position() {
-		return _Control_position.get(this) ?? constants.controls.position.left;
-	}
-
-	set position(value) {
-		if (typeof (value) == constants.types.string) {
-			_Control_position.set(this, constants.controls.position[value]);
 		}
 	}
 

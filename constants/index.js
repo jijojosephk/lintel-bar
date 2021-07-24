@@ -29,7 +29,10 @@ function defineConstants() {
 				titleBarDragRegion: 'lb-drag-region',
 				button: 'lb-button',
 				tab: 'lb-tab',
-				icon: 'lb-control-icon',
+				icon: 'lb-icon',
+				fontIcon:'lb-font-icon',
+				imageIcon:'lb-image-icon',
+				appIcon:'lb-app-icon',
 				tabIconContainer: 'lb-tab-icon-container'
 			},
 			fontIcons: {

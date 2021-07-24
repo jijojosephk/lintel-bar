@@ -4,8 +4,7 @@ const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
 const { TabContainer } = require('./tabContainer');
 const { WindowTitle } = require('./windowTitle');
-// eslint-disable-next-line no-unused-vars
-const { ImageIcon } = require('./icons');
+const { AppIcon } = require('./icons');
 
 let _CreateLintelBarOptions_template = new WeakMap();
 class CreateLintelBarOptions {
@@ -60,7 +59,7 @@ class LintelBar extends Container {
 	}
 
 	/**
-	 * @type {ImageIcon}
+	 * @type {AppIcon}
 	 */
 	get appIcon() {
 		return _LintelBar_appIcon.get(this);
@@ -132,6 +131,9 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 	// eslint-disable-next-line no-unused-vars
 	create(lintelBar, options) {
 		super.create(lintelBar);
+		// Application icon
+		_LintelBar_appIcon.set(lintelBar, new AppIcon());
+
 		// Window title
 		_LintelBar_windowTitle.set(lintelBar, new WindowTitle({
 			text: 'Window Title',
@@ -143,6 +145,7 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 			position: 'right'
 		}));
 
+		lintelBar.items.add(lintelBar.appIcon);
 		lintelBar.items.add(lintelBar.windowTitle);
 		lintelBar.items.add(lintelBar.windowControls);
 	}
@@ -160,6 +163,9 @@ class LintelBarTemplateTabbed extends LintelBarTemplate {
 	// eslint-disable-next-line no-unused-vars
 	create(lintelBar, options) {
 		super.create(lintelBar);
+		// Application icon
+		_LintelBar_appIcon.set(lintelBar, new AppIcon());
+
 		// Tabs
 		_LintelBar_tabContainer.set(lintelBar, new TabContainer());
 
@@ -174,6 +180,7 @@ class LintelBarTemplateTabbed extends LintelBarTemplate {
 			position: 'right'
 		}));
 
+		lintelBar.items.add(lintelBar.appIcon);
 		lintelBar.items.add(lintelBar.tabContainer);
 		lintelBar.items.add(lintelBar.windowTitle);
 		lintelBar.items.add(lintelBar.windowControls);
