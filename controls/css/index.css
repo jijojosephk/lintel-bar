@@ -77,7 +77,7 @@ body {
 .lb-control.lb-title {
   color: #fff;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .lb-container-column {
