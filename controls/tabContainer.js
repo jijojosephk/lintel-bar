@@ -20,8 +20,8 @@ class TabContainerScope {
 		// Tab controls have 3 different roles.
 		// Tab, Close Icon, Menu Icon
 		if (!role) return;
-		let tabElement = TabContainerScope.getTabElement(e.target, role);
-		let tabControlInfo = TabContainerScope.getTabControlInfo(container, tabElement);
+		let tabElement = this.getTabElement(e.target, role);
+		let tabControlInfo = this.getTabControlInfo(container, tabElement);
 		tabEventHandlers.click[role](tabControlInfo);
 	}
 
@@ -29,11 +29,11 @@ class TabContainerScope {
 	 * @param {TabControlInfo} tabControlInfo 
 	 */
 	static tabActivateActionHandler(tabControlInfo) {
-		let event = TabContainerScope.createTabContainerEvent(tabControlInfo);
+		let event = this.createTabContainerEvent(tabControlInfo);
 		tabControlInfo.container.onTabActivate(event, cancel => {
 			if (!cancel) {
 				event.control.active = true;
-				const tabs = TabContainerScope.getTabs(tabControlInfo.container);
+				const tabs = this.getTabs(tabControlInfo.container);
 				if (tabControlInfo.container.selectedIndex > -1) {
 					const previousTab = tabs.get(tabControlInfo.container.selectedIndex);
 					if (previousTab) {
@@ -51,8 +51,8 @@ class TabContainerScope {
 	 * @param {TabControlInfo} tabControlInfo 
 	 */
 	static tabCloseActionHandler(tabControlInfo) {
-		let event = TabContainerScope.createTabContainerEvent(tabControlInfo);
-		const tabs = TabContainerScope.getTabs(tabControlInfo.container);
+		let event = this.createTabContainerEvent(tabControlInfo);
+		const tabs = this.getTabs(tabControlInfo.container);
 		tabControlInfo.container.onTabClose(event, cancel => {
 			if (!cancel) {
 				// To do
@@ -82,7 +82,7 @@ class TabContainerScope {
 	 * @param {HTMLElement} tabElement
 	 */
 	static getTabControlInfo(container, tabElement) {
-		const tabs = TabContainerScope.getTabs(container);
+		const tabs = this.getTabs(container);
 		for (var i = 0; i < tabs.items.length; i++) {
 			if (tabElement == tabs.items[i].element) {
 				return new TabControlInfo({
@@ -112,6 +112,44 @@ class TabContainerScope {
 	static getTabs(container) {
 		return _TabContainer_tabs.get(container);
 	}
+
+	/**
+	 * @param {TabContainer} container 
+	 * @param {CreateTabContainerOptions} tabContainerOptions 
+	 */
+	static createTabs(container, tabContainerOptions) {
+		const tabs = new List();
+		_TabContainer_tabs.set(container, tabs);
+		for (const tabOption of tabContainerOptions.items) {
+			tabOption.position = constants.controls.position.center;
+			let tab = new Tab(tabOption);
+			tab.element.addEventListener(constants.events.dom.click, (e) => this.tabClick(e, container));
+			container.items.add(tab);
+			tabs.add(tab);
+		}
+
+		this.createTabContainerControls(container);
+	}
+
+	/**
+	 * @param {TabContainer} container 
+	 */
+	static createTabContainerControls(container) {
+		container.items.add(new AddButton({
+			position: constants.controls.position.left,
+			onClick: () => container.addTab()
+		}));
+
+		container.items.add(new BackButton({
+			position: constants.controls.position.left,
+			onClick: () => container.activatePreviousTab()
+		}));
+
+		container.items.add(new ForwardButton({
+			position: constants.controls.position.right,
+			onClick: () => container.activateNextTab()
+		}));
+	}
 }
 
 const tabEventHandlers = {
@@ -135,42 +173,19 @@ class TabContainer extends Container {
 	 * @param {CreateTabContainerOptions} options 
 	 */
 	constructor(options = {}) {
+		// Create default settings
 		const tabContainerOptions = CreateTabContainerOptions.fromJSON(options);
 		super(tabContainerOptions);
+		// Assign settings
 		this.onTabAdd = tabContainerOptions.onTabAdd;
 		this.onTabAdded = tabContainerOptions.onTabAdded;
 		this.onTabClose = tabContainerOptions.onTabClose;
 		this.onTabClosed = tabContainerOptions.onTabClosed;
 		this.onTabActivate = tabContainerOptions.onTabActivate;
 		this.onTabActivated = tabContainerOptions.onTabActivated;
-		const tabs = new List();
-		_TabContainer_tabs.set(this, tabs);
-		for (const tabOption of tabContainerOptions.items) {
-			tabOption.position = constants.controls.position.center;
-			let tab = new Tab(tabOption);
-			tab.element.addEventListener(constants.events.dom.click, (e) => TabContainerScope.tabClick(e, this));
-			this.items.add(tab);
-			tabs.add(tab);
-		}
 
-		this.items.add(new AddButton({
-			position: constants.controls.position.left,
-			onClick: () => this.addTab()
-		}));
-
-		this.items.add(new BackButton({
-			position: constants.controls.position.left,
-			onClick: () => {
-				this.activatePreviousTab();
-			}
-		}));
-
-		this.items.add(new ForwardButton({
-			position: constants.controls.position.right,
-			onClick: () => {
-				this.activateNextTab();
-			}
-		}));
+		// Create tabs
+		TabContainerScope.createTabs(this, tabContainerOptions);
 
 		if (this.constructor.name == TabContainer.name) {
 			this.applyStyles();
