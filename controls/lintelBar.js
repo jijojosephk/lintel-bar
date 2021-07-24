@@ -4,6 +4,8 @@ const { Container } = require('./container');
 const { WindowControls } = require('./windowControls');
 const { TabContainer } = require('./tabContainer');
 const { WindowTitle } = require('./windowTitle');
+// eslint-disable-next-line no-unused-vars
+const { ImageIcon } = require('./icons');
 
 let _CreateLintelBarOptions_template = new WeakMap();
 class CreateLintelBarOptions {
@@ -36,6 +38,10 @@ class CreateLintelBarOptions {
 	}
 }
 
+let _LintelBar_appIcon = new WeakMap();
+let _LintelBar_tabContainer = new WeakMap();
+let _LintelBar_windowTitle = new WeakMap();
+let _LintelBar_windowControls = new WeakMap();
 class LintelBar extends Container {
 	/**
 	 * @param {CreateLintelBarOptions} options 
@@ -51,6 +57,34 @@ class LintelBar extends Container {
 			this.applyEventListeners();
 		}
 		setTimeout(() => this.window.show(), 100);
+	}
+
+	/**
+	 * @type {ImageIcon}
+	 */
+	get appIcon() {
+		return _LintelBar_appIcon.get(this);
+	}
+
+	/**
+	 * @type {TabContainer}
+	 */
+	get tabContainer() {
+		return _LintelBar_tabContainer.get(this);
+	}
+
+	/**
+	 * @type {WindowTitle}
+	 */
+	get windowTitle() {
+		return _LintelBar_windowTitle.get(this);
+	}
+
+	/**
+	 * @type {WindowControls}
+	 */
+	get windowControls() {
+		return _LintelBar_windowControls.get(this);
 	}
 
 	applyStyles() {
@@ -98,25 +132,19 @@ class LintelBarTemplateDefault extends LintelBarTemplate {
 	// eslint-disable-next-line no-unused-vars
 	create(lintelBar, options) {
 		super.create(lintelBar);
-
-		let tabContainer = new TabContainer({
-			onTabAdded: (e) => {
-				e.container.selectedIndex = e.index;
-			}
-		});
-
-		let windowTitle = new WindowTitle({
-			text: 'Teams for Linux',
+		// Window title
+		_LintelBar_windowTitle.set(lintelBar, new WindowTitle({
+			text: 'Window Title',
 			position: 'center'
-		});
+		}));
 
-		let windowControls = new WindowControls({
+		// Window controls
+		_LintelBar_windowControls.set(lintelBar, new WindowControls({
 			position: 'right'
-		});
+		}));
 
-		lintelBar.items.add(tabContainer);
-		lintelBar.items.add(windowTitle);
-		lintelBar.items.add(windowControls);
+		lintelBar.items.add(lintelBar.windowTitle);
+		lintelBar.items.add(lintelBar.windowControls);
 	}
 }
 
@@ -132,11 +160,23 @@ class LintelBarTemplateTabbed extends LintelBarTemplate {
 	// eslint-disable-next-line no-unused-vars
 	create(lintelBar, options) {
 		super.create(lintelBar);
-		let windowControls = new WindowControls({
-			alwaysOnTopToggle: true,
-			maximize: false
-		});
-		lintelBar.element.appendChild(windowControls.element);
+		// Tabs
+		_LintelBar_tabContainer.set(lintelBar, new TabContainer());
+
+		// Window title
+		_LintelBar_windowTitle.set(lintelBar, new WindowTitle({
+			text: 'Window Title',
+			position: 'center'
+		}));
+
+		// Window controls
+		_LintelBar_windowControls.set(lintelBar, new WindowControls({
+			position: 'right'
+		}));
+
+		lintelBar.items.add(lintelBar.tabContainer);
+		lintelBar.items.add(lintelBar.windowTitle);
+		lintelBar.items.add(lintelBar.windowControls);
 	}
 }
 

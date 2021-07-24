@@ -332,7 +332,7 @@ class TabContainer extends Container {
 		const tabs = TabContainerScope.getTabs(this);
 		options.position = constants.controls.position.center;
 		const tabOptions = CreateTabOptions.fromJSON(options);
-		tabOptions.text = `Session ${tabs.items.length + 1}`;
+		tabOptions.text = `Tab ${tabs.items.length + 1}`;
 		let event1 = TabContainerScope.createTabContainerEvent({
 			index: tabs.items.length,
 			tab: tabOptions,
@@ -349,6 +349,7 @@ class TabContainer extends Container {
 				});
 				this.items.add(tab);
 				tabs.add(tab);
+				this.selectedIndex = event2.index;
 				this.onTabAdded(event2);
 			}
 		});
