@@ -8,6 +8,7 @@ let _CreateControlOptions_icon = new WeakMap();
 let _CreateControlOptions_allowDrag = new WeakMap();
 let _CreateControlOptions_enabled = new WeakMap();
 let _CreateControlOptions_active = new WeakMap();
+let _CreateControlOptions_data = new WeakMap();
 class CreateControlOptions extends CreateElementOptions {
 	/**
 	 * Creates a new CreateControlOptions instance
@@ -20,6 +21,7 @@ class CreateControlOptions extends CreateElementOptions {
 		this.allowDrag = options.allowDrag;
 		this.enabled = options.enabled;
 		this.active = options.active;
+		this.data = options.data;
 	}
 
 	/**
@@ -77,6 +79,14 @@ class CreateControlOptions extends CreateElementOptions {
 		_CreateControlOptions_active.set(this, typeof (value) == constants.types.boolean ? value : false);
 	}
 
+	get data() {
+		return _CreateControlOptions_data.get(this);
+	}
+
+	set data(value) {
+		_CreateControlOptions_data.set(this, value);
+	}
+
 	static fromJSON(object) {
 		if (object instanceof CreateControlOptions) {
 			return object;
@@ -92,6 +102,7 @@ let _Control_icon = new WeakMap();
 let _Control_allowDrag = new WeakMap();
 let _Control_enabled = new WeakMap();
 let _Control_active = new WeakMap();
+let _Control_data = new WeakMap();
 class Control extends Element {
 	/**
 	 * Creates a new control
@@ -106,6 +117,7 @@ class Control extends Element {
 		this.allowDrag = params.allowDrag;
 		this.enabled = params.enabled;
 		this.active = params.active;
+		this.data = params.data;
 		if (this.constructor.name == Control.name) {
 			this.applyStyles();
 			this.applyEventListeners();
@@ -185,6 +197,14 @@ class Control extends Element {
 				this.element.classList.remove(constants.css.controlStates.active);
 			}
 		}
+	}
+
+	get data() {
+		return _Control_data.get(this);
+	}
+
+	set data(value) {
+		_Control_data.set(this, value);
 	}
 
 	applyStyles() {

@@ -325,8 +325,7 @@ class TabContainer extends Container {
 	}
 
 	/**
-	 * 
-	 * @param {CreateTabOptions} tab 
+	 * @param {CreateTabOptions} options 
 	 */
 	addTab(options = {}) {
 		const tabs = TabContainerScope.getTabs(this);
