@@ -490,6 +490,17 @@ class CreateTabContainerOptions extends CreateContainerOptions {
 		_CreateTabContainerOptions_onTabActivated.set(this, typeof (value) == constants.types.function ? value : defaultEventHandler);
 	}
 
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return super.position ?? constants.controls.position.left;
+	}
+
+	set position(value) {
+		super.position = value;
+	}
+
 	static fromJSON(object) {
 		if (object instanceof CreateTabContainerOptions) {
 			return object;

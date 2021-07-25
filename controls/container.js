@@ -132,7 +132,7 @@ function createColumns(container) {
  * @param {Control} control 
  */
 function addControl(container, control) {
-	if (control.position == constants.controls.position.left) {
+	if (control.position == null || control.position == constants.controls.position.left) {
 		_Container_left_column.get(container).appendChild(control.element);
 	} else if (control.position == constants.controls.position.center) {
 		_Container_middle_column.get(container).appendChild(control.element);

@@ -1,5 +1,6 @@
 const { Container, CreateContainerOptions } = require('./container');
 const { MinimizeButton, ResizeButton, CloseButton, AlwaysOnTopToggle } = require('./buttonTypes');
+const constants = require('../constants');
 
 let _CreateWindowControlsOptions_minimize = new WeakMap();
 let _CreateWindowControlsOptions_maximize = new WeakMap();
@@ -15,7 +16,6 @@ class CreateWindowControlsOptions extends CreateContainerOptions {
 		this.maximize = options.maximize;
 		this.close = options.close;
 		this.alwaysOnTopToggle = options.alwaysOnTopToggle;
-		this.position = options.position ? options.position : 'right';
 	}
 
 	/**
@@ -60,6 +60,17 @@ class CreateWindowControlsOptions extends CreateContainerOptions {
 
 	set alwaysOnTopToggle(value) {
 		_CreateWindowControlsOptions_alwaysOnTopToggle.set(this, typeof (value) == 'boolean' ? value : false);
+	}
+
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return super.position ?? constants.controls.position.right;
+	}
+
+	set position(value) {
+		super.position = value;
 	}
 
 	static fromJSON(object) {

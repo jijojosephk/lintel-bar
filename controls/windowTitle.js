@@ -12,6 +12,17 @@ class CreateWindowTitleOptions extends CreateControlOptions {
 		}
 	}
 
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return super.position ?? constants.controls.position.center;
+	}
+
+	set position(value) {
+		super.position = value;
+	}
+
 	static fromJSON(object) {
 		if (object instanceof CreateWindowTitleOptions) {
 			return object;

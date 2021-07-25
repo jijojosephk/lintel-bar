@@ -56,7 +56,7 @@ class CreateElementOptions {
 	 * @type {'left'|'center'|'right'}
 	 */
 	get position() {
-		return _CreateElementOptions_position.get(this) ?? constants.controls.position.left;
+		return _CreateElementOptions_position.get(this);
 	}
 
 	set position(value) {
@@ -150,7 +150,7 @@ class Element {
 	 * @type {'left'|'center'|'right'}
 	 */
 	get position() {
-		return _Element_position.get(this) ?? constants.controls.position.left;
+		return _Element_position.get(this);
 	}
 
 	set position(value) {

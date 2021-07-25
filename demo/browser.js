@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const { LintelBar } = require('../');
 	const path = require('path');
-	let lb = new LintelBar({
-		template: 'tabbed'
+	new LintelBar({
+		template: 'tabbed',
+		appIcon: {
+			file: path.join(__dirname, 'icon.png')
+		},
+		windowTitle:{
+			text: 'Team for Linux 1.0'
+		}
 	});
-	lb.appIcon.file = path.join(__dirname,'icon.png');
 });
-

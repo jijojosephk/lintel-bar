@@ -150,12 +150,42 @@ class ImageIcon extends Icon {
 	}
 }
 
-class AppIcon extends ImageIcon {
+// eslint-disable-next-line no-unused-vars
+class CreateAppIconOptions extends CreateImageIconOptions {
 	/**
-	 * @param {CreateImageIconOptions} options 
+	 * @param {CreateAppIconOptions} options 
 	 */
 	constructor(options) {
 		super(options);
+	}
+
+	/**
+	 * @type {'left'|'center'|'right'}
+	 */
+	get position() {
+		return super.position ?? constants.controls.position.left;
+	}
+
+	set position(value) {
+		super.position = value;
+	}
+
+	static fromJSON(object) {
+		if (object instanceof CreateAppIconOptions) {
+			return object;
+		} else {
+			return new CreateAppIconOptions(object);
+		}
+	}
+}
+
+class AppIcon extends ImageIcon {
+	/**
+	 * @param {CreateAppIconOptions} options 
+	 */
+	constructor(options) {
+		const appIconOptions = CreateAppIconOptions.fromJSON(options);
+		super(appIconOptions);
 		if (this.constructor.name == AppIcon.name) {
 			this.applyStyles();
 			this.applyEventListeners();
@@ -179,5 +209,6 @@ module.exports = {
 	FontIcon,
 	CreateImageIconOptions,
 	ImageIcon,
+	CreateAppIconOptions,
 	AppIcon
 };
