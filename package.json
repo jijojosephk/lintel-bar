@@ -1,6 +1,6 @@
 {
   "name": "lintel-bar",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Custom title bar for Electron based cross-platform applications",
   "main": "index.js",
   "author": "Jijo Joseph <jijojosephk@hotmail.com>",
