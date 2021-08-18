@@ -4,6 +4,7 @@ const { FontIcon } = require('./icons');
 
 let _CreateTabOptions_showMenuIcon = new WeakMap();
 let _CreateTabOptions_showCloseIcon = new WeakMap();
+let _CreateTabOptions_autoHideActions = new WeakMap();
 class CreateTabOptions extends CreateButtonOptions {
 	/**
 	 * @param {CreateTabOptions} options 
@@ -36,6 +37,17 @@ class CreateTabOptions extends CreateButtonOptions {
 		_CreateTabOptions_showCloseIcon.set(this, typeof (value) == constants.types.boolean ? value : true);
 	}
 
+	/**
+	 * @type {boolean}
+	 */
+	get autoHideActions() {
+		return _CreateTabOptions_autoHideActions.get(this) ?? true;
+	}
+
+	set autoHideActions(value) {
+		_CreateTabOptions_autoHideActions.set(this, typeof (value) == constants.types.boolean ? value : true);
+	}
+
 	static fromJSON(object) {
 		if (object instanceof CreateTabOptions) {
 			return object;
@@ -54,6 +66,9 @@ class Tab extends Button {
 		super(params);
 		let tabIconContainer = document.createElement('div');
 		tabIconContainer.classList.add(constants.css.controls.tabIconContainer);
+		if (params.autoHideActions) {
+			tabIconContainer.classList.add(constants.css.controlStates.hidden);
+		}
 
 		// Menu Icon
 		if (params.showMenuIcon) {
@@ -75,8 +90,16 @@ class Tab extends Button {
 		this.element.setAttribute(constants.html.attributes.role, constants.html.roles.tab);
 		if (this.constructor.name == Tab.name) {
 			this.applyStyles();
-			this.applyEventListeners();
+			this.applyEventListeners(params);
 		}
+	}
+
+	hideActions() {
+		this.element.querySelector(`.${constants.css.controls.tabIconContainer}`).classList.add(constants.css.controlStates.hidden);
+	}
+
+	showActions() {
+		this.element.querySelector(`.${constants.css.controls.tabIconContainer}`).classList.remove(constants.css.controlStates.hidden);
 	}
 
 	applyStyles() {
@@ -84,7 +107,14 @@ class Tab extends Button {
 		this.element.classList.add(constants.css.controls.tab);
 	}
 
-	applyEventListeners() {
+	/**
+	 * @param {CreateTabOptions} options 
+	 */
+	applyEventListeners(options) {
+		if (options.autoHideActions) {
+			this.element.addEventListener('mouseenter', () => this.showActions());
+			this.element.addEventListener('mouseleave', () => this.hideActions());
+		}
 		super.applyEventListeners();
 	}
 }
