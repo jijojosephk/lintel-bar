@@ -144,12 +144,24 @@ class LintelBar extends Container {
 
 	applyStyles() {
 		super.applyStyles();
-		insertStylesheets();
+		LintelBar.loadStyles();
 		this.element.classList.add(...[constants.css.controls.lintelBar]);
 	}
 
 	applyEventListeners() {
 		super.applyEventListeners();
+	}
+
+	static loadStyles() {
+		let head = document.querySelector('head');
+		let materialCss = document.createElement('link');
+		materialCss.rel = 'stylesheet';
+		materialCss.href = path.join(__dirname, 'css/materialdesignicons.min.css');
+		let customCss = document.createElement('link');
+		customCss.rel = 'stylesheet';
+		customCss.href = path.join(__dirname, 'css/index.css');
+		head.appendChild(materialCss);
+		head.appendChild(customCss);
 	}
 }
 
@@ -253,17 +265,5 @@ const templateEngines = {
 	default: LintelBarTemplateDefault,
 	tabbed: LintelBarTemplateTabbed
 };
-
-function insertStylesheets() {
-	let head = document.querySelector('head');
-	let materialCss = document.createElement('link');
-	materialCss.rel = 'stylesheet';
-	materialCss.href = path.join(__dirname, 'css/materialdesignicons.min.css');
-	let customCss = document.createElement('link');
-	customCss.rel = 'stylesheet';
-	customCss.href = path.join(__dirname, 'css/index.css');
-	head.appendChild(materialCss);
-	head.appendChild(customCss);
-}
 
 module.exports = { LintelBar };
