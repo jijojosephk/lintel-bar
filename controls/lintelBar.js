@@ -156,7 +156,7 @@ class LintelBar extends Container {
 		let head = document.querySelector('head');
 		let materialCss = document.createElement('link');
 		materialCss.rel = 'stylesheet';
-		materialCss.href = path.join(__dirname, 'css/materialdesignicons.min.css');
+		materialCss.href = path.join(process.cwd(), 'node_modules/@mdi/font/css/materialdesignicons.min.css');
 		let customCss = document.createElement('link');
 		customCss.rel = 'stylesheet';
 		customCss.href = path.join(__dirname, 'css/index.css');

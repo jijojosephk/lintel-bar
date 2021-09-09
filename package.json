@@ -20,7 +20,8 @@
     "eslint-plugin-promise": "^5.1.0"
   },
   "dependencies": {
-    "@electron/remote": "^1.2.0"
+    "@electron/remote": "^1.2.0",
+    "@mdi/font": "^6.1.95"
   },
   "repository": {
     "type": "git",
