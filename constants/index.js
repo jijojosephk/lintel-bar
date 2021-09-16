@@ -58,11 +58,6 @@ function defineConstants() {
 				menu: 'menu',
 				add: 'add'
 			},
-			controlPositions: {
-				left: 'position-left',
-				center: 'position-center',
-				right: 'position-right'
-			},
 			controlStates: {
 				active: 'active',
 				disabled: 'disabled',
