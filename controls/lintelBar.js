@@ -154,13 +154,21 @@ class LintelBar extends Container {
 
 	static loadStyles() {
 		let head = document.querySelector('head');
-		let materialCss = document.createElement('link');
-		materialCss.rel = 'stylesheet';
-		materialCss.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/@mdi/font/css/materialdesignicons.min.css');
+		
+		let md_icons = document.createElement('link');
+		md_icons.rel = 'stylesheet';
+		md_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/@mdi/font/css/materialdesignicons.min.css');
+
+		let bs_icons = document.createElement('link');
+		bs_icons.rel = 'stylesheet';
+		bs_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/bootstrap-icons/font/bootstrap-icons.css');
+
 		let customCss = document.createElement('link');
 		customCss.rel = 'stylesheet';
 		customCss.href = path.join(__dirname, 'css/index.css');
-		head.appendChild(materialCss);
+		
+		head.appendChild(md_icons);
+		head.appendChild(bs_icons);
 		head.appendChild(customCss);
 	}
 }

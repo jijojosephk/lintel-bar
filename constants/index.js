@@ -10,7 +10,6 @@ function defineConstants() {
 			dom: {
 				click: 'click',
 				resize: 'resize'
-				// All DOM events should be defined here.
 			}
 		},
 		css: {

@@ -1,6 +1,6 @@
 {
   "name": "lintel-bar",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Custom title bar for Electron based cross-platform applications",
   "main": "index.js",
   "author": "Jijo Joseph <jijojosephk@hotmail.com>",
@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "@electron/remote": "^2.0.1",
-    "@mdi/font": "^6.1.95"
+    "@mdi/font": "^6.1.95",
+    "bootstrap-icons": "^1.5.0"
   },
   "repository": {
     "type": "git",
