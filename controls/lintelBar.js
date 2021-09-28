@@ -163,12 +163,17 @@ class LintelBar extends Container {
 		bs_icons.rel = 'stylesheet';
 		bs_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/bootstrap-icons/font/bootstrap-icons.css');
 
+		let la_icons = document.createElement('link');
+		la_icons.rel = 'stylesheet';
+		la_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css');
+
 		let customCss = document.createElement('link');
 		customCss.rel = 'stylesheet';
 		customCss.href = path.join(__dirname, 'css/index.css');
 		
 		head.appendChild(md_icons);
 		head.appendChild(bs_icons);
+		head.appendChild(la_icons);
 		head.appendChild(customCss);
 	}
 }
