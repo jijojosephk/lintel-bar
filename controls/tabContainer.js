@@ -50,6 +50,17 @@ class TabContainerScope {
 	}
 
 	/**
+	 * @param {HTMLElement} element 
+	 */
+	static getWidthOfElement(element) {
+		var style = element.currentStyle || window.getComputedStyle(element),
+			width = element.offsetWidth,
+			margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight),
+			border = parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+		return (width + margin + border);
+	}
+
+	/**
 	 * @param {TabControlInfo} tabControlInfo
 	 */
 	static scrollTabToVisibility(tabControlInfo) {
@@ -57,9 +68,10 @@ class TabContainerScope {
 		const tabs = this.getTabs(tabControlInfo.container);
 		const child = tabs.get(tabControlInfo.index).element;
 		const parent = child.parentElement;
-		if (parent.offsetWidth < parent.scrollWidth) {
+		const parentWidth = this.getWidthOfElement(parent);
+		if (parentWidth < parent.scrollWidth) {
 			for (var i = 0; i <= tabControlInfo.index; i++) {
-				widthTillTab += tabs.get(i).element.offsetWidth;
+				widthTillTab += this.getWidthOfElement(tabs.get(i).element);
 			}
 
 			this.doScroll(widthTillTab, parent, child);
@@ -67,11 +79,12 @@ class TabContainerScope {
 	}
 
 	static doScroll(widthTillTab, parent, child) {
+		const parentWidth = this.getWidthOfElement(parent);
 		const visibleWidth1 = widthTillTab - parent.scrollLeft;
-		const visibleWidth2 = visibleWidth1 - child.offsetWidth;
+		const visibleWidth2 = visibleWidth1 - this.getWidthOfElement(child);
 		let scrollValue = 0;
-		if (visibleWidth1 > parent.offsetWidth) {
-			scrollValue = visibleWidth1 - parent.offsetWidth;
+		if (visibleWidth1 > parentWidth) {
+			scrollValue = visibleWidth1 - parentWidth;
 		} else if (visibleWidth2 < 0) {
 			scrollValue = visibleWidth2;
 		}
