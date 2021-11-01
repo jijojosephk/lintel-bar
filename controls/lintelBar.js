@@ -157,15 +157,16 @@ class LintelBar extends Container {
 		
 		let md_icons = document.createElement('link');
 		md_icons.rel = 'stylesheet';
-		md_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/@mdi/font/css/materialdesignicons.min.css');
+		const nodeModulesDir = path.join(path.dirname(require.resolve('lintel-bar/package.json')),'../');
+		md_icons.href = path.join(nodeModulesDir,'@mdi/font/css/materialdesignicons.min.css');
 
 		let bs_icons = document.createElement('link');
 		bs_icons.rel = 'stylesheet';
-		bs_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/bootstrap-icons/font/bootstrap-icons.css');
+		bs_icons.href = path.join(nodeModulesDir,'bootstrap-icons/font/bootstrap-icons.css');
 
 		let la_icons = document.createElement('link');
 		la_icons.rel = 'stylesheet';
-		la_icons.href = path.join(require('@electron/remote').app.getAppPath(),'node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css');
+		la_icons.href = path.join(nodeModulesDir,'line-awesome/dist/line-awesome/css/line-awesome.min.css');
 
 		let customCss = document.createElement('link');
 		customCss.rel = 'stylesheet';

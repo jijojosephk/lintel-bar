@@ -1,6 +1,6 @@
 {
   "name": "lintel-bar",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Custom title bar for Electron based cross-platform applications",
   "main": "index.js",
   "author": "Jijo Joseph <jijojosephk@hotmail.com>",
@@ -9,11 +9,11 @@
     "start": "electron demo/"
   },
   "devDependencies": {
-    "electron": "^14.0.1",
+    "electron": "^15.3.0",
     "electron-builder": "^22.11.7",
     "electron-installer-debian": "^3.1.0",
     "electron-packager": "^15.2.0",
-    "eslint": "^7.29.0",
+    "eslint": "^8.1.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
